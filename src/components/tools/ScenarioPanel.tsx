@@ -8,17 +8,7 @@ import {
   type ScenarioDTO,
 } from "@/scenarios";
 import type { Locale } from "@/lib/types";
-import {
-  Pin,
-  PinOff,
-  Trash2,
-  Save,
-  FolderOpen,
-  Loader2,
-  ChevronDown,
-  ChevronUp,
-  AlertCircle,
-} from "lucide-react";
+import { Pin, PinOff, Trash2, Save, FolderOpen, Loader as Loader2, ChevronDown, ChevronUp, CircleAlert as AlertCircle } from "lucide-react";
 
 interface ScenarioPanelProps {
   toolSlug: string;

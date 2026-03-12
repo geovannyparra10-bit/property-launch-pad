@@ -11,13 +11,7 @@ import {
   type StepResponse,
 } from "@/onboarding";
 import type { Locale } from "@/lib/types";
-import {
-  ChevronRight,
-  ChevronLeft,
-  Loader2,
-  Check,
-  AlertCircle,
-} from "lucide-react";
+import { ChevronRight, ChevronLeft, Loader as Loader2, Check, CircleAlert as AlertCircle } from "lucide-react";
 
 // ---------------------------------------------------------------------------
 // Step config

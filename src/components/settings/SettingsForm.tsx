@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { updateProfile } from "@/profile";
 import type { Locale } from "@/lib/types";
-import { Loader2, Save, LogOut, AlertCircle, Check } from "lucide-react";
+import { Loader as Loader2, Save, LogOut, CircleAlert as AlertCircle, Check } from "lucide-react";
 
 interface Props {
   locale: Locale;

@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { Mail, Lock, User, Loader2, AlertCircle } from "lucide-react";
+import { Mail, Lock, User, Loader as Loader2, CircleAlert as AlertCircle } from "lucide-react";
 
 interface AuthFormProps {
   mode: "login" | "signup";
