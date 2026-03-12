@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Users, Wrench, ChartBar as BarChart3, Settings } from "lucide-react";
 import type { Locale } from "@/lib/types";
 import UserManagement from "./UserManagement";
