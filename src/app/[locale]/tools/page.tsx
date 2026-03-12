@@ -1,14 +1,7 @@
 import { getActiveTools, localizeToolMeta } from "@/lib/tools";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import {
-  Calculator,
-  TrendingUp,
-  Receipt,
-  BarChart3,
-  Lock,
-  ArrowRight,
-} from "lucide-react";
+import { Calculator, TrendingUp, Receipt, ChartBar as BarChart3, Lock, ArrowRight } from "lucide-react";
 import type { Tool, Locale } from "@/lib/types";
 
 // Icon resolver

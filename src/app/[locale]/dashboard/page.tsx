@@ -2,13 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { getActiveTools, localizeToolMeta } from "@/lib/tools";
 import Link from "next/link";
-import {
-  ArrowRight,
-  Calculator,
-  TrendingUp,
-  Receipt,
-  BarChart3,
-} from "lucide-react";
+import { ArrowRight, Calculator, TrendingUp, Receipt, ChartBar as BarChart3 } from "lucide-react";
 import type { Locale } from "@/lib/types";
 
 const ICONS: Record<string, React.ElementType> = {
