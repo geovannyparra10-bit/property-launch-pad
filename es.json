@@ -1,0 +1,27 @@
+{
+  "gates": {
+    "premium": {
+      "loginRequired": { "title": "Inicio de Sesión Requerido", "message": "Por favor inicia sesión para acceder a esta herramienta.", "cta": "Iniciar Sesión" },
+      "upgradeRequired": { "title": "Herramienta Premium", "message": "Mejora tu plan para desbloquear esta herramienta y guardar escenarios ilimitados.", "cta": "Ver Planes" }
+    }
+  },
+  "nav": { "tools": "Herramientas", "pricing": "Precios", "signIn": "Iniciar Sesión", "dashboard": "Panel" },
+  "landing": {
+    "badge": "Plataforma de Inversión Inmobiliaria",
+    "headline": "Toma decisiones inmobiliarias más inteligentes",
+    "subheadline": "Calculadoras y herramientas de análisis profesionales para evaluar operaciones, comparar escenarios e invertir con confianza.",
+    "ctaPrimary": "Comenzar Gratis",
+    "ctaSecondary": "Ver Herramientas"
+  },
+  "auth": {
+    "login": { "title": "Bienvenido de Nuevo", "subtitle": "Inicia sesión en tu cuenta de Property Launch Pad", "callbackError": "La autenticación falló. Por favor intenta de nuevo." },
+    "signup": { "title": "Crear Cuenta", "subtitle": "Comienza con Property Launch Pad — es gratis" },
+    "form": { "email": "Correo electrónico", "password": "Contraseña", "fullName": "Nombre completo", "signIn": "Iniciar Sesión", "createAccount": "Crear Cuenta", "noAccount": "¿No tienes cuenta?", "hasAccount": "¿Ya tienes cuenta?", "signUpLink": "Regístrate", "signInLink": "Inicia sesión", "checkEmail": "Revisa tu correo para el enlace de confirmación." }
+  },
+  "onboarding": { "brand": "Property Launch Pad", "heading": "Configuremos tu cuenta", "subtitle": "Responde unas preguntas rápidas para personalizar tu experiencia.", "continue": "Continuar", "complete": "Completar Configuración", "back": "Atrás", "selectionRequired": "Por favor haz una selección para continuar." },
+  "dashboard": { "welcomeBack": "Bienvenido de nuevo, {firstName}", "subtitle": "Aquí está tu panel de Property Launch Pad.", "freePlan": "Plan Gratuito", "premiumPlan": "Plan Premium", "yourTools": "Tus Herramientas", "viewAllTools": "Ver todas las herramientas" },
+  "tools": { "library": { "title": "Herramientas de Propiedad", "subtitle": "Calculadoras, analizadores y utilidades para tomar mejores decisiones de inversión inmobiliaria." }, "backToAll": "Todas las Herramientas" },
+  "scenarios": { "title": "Escenarios Guardados", "placeholder": "Nombre del escenario (máx 60 chars)", "save": "Guardar", "empty": "Aún no hay escenarios guardados. Ajusta los valores y guarda para comparar después.", "freeLimit": "Las cuentas gratuitas pueden guardar 1 escenario por herramienta. Mejora a Premium para escenarios ilimitados." },
+  "settings": { "title": "Configuración", "subtitle": "Administra las preferencias de tu cuenta.", "profile": "Perfil", "email": "Correo", "fullName": "Nombre Completo", "language": "Idioma", "subscription": "Suscripción", "currentPlan": "Plan Actual", "saveChanges": "Guardar Cambios", "signOut": "Cerrar Sesión", "saved": "Configuración guardada exitosamente." },
+  "pricing": { "title": "Precios Simples", "subtitle": "Comienza gratis. Mejora cuando necesites más." }
+}
