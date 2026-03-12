@@ -15,7 +15,8 @@
     "next": "^15.1.0",
     "next-intl": "^3.25.3",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "stripe": "^17.3.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.0",

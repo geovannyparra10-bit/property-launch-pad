@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useTransition } from "react";
 import { Calculator, DollarSign, Info } from "lucide-react";
 import ScenarioPanel from "@/components/tools/ScenarioPanel";
-import { loadScenarios, type ScenarioDTO } from "@/actions/scenarios";
+import { loadScenarios, type ScenarioDTO } from "@/scenarios";
 import type { Locale } from "@/lib/types";
 
 // ---------------------------------------------------------------------------

@@ -44,11 +44,11 @@ export async function middleware(request: NextRequest) {
         getAll() {
           return request.cookies.getAll();
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: Array<{ name: string; value: string; options: Record<string, unknown> }>) {
           // Write cookies ONLY to the response, never mutate request.cookies
           // Do NOT recreate NextResponse.next() — reuse supabaseResponse
           cookiesToSet.forEach(({ name, value, options }) => {
-            supabaseResponse.cookies.set(name, value, options);
+            supabaseResponse.cookies.set(name, value, options as Parameters<typeof supabaseResponse.cookies.set>[2]);
           });
         },
       },

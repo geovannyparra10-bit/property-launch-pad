@@ -4,7 +4,9 @@ import { createClient } from "@/lib/supabase/server";
 import Stripe from "stripe";
 import type { Locale } from "@/lib/types";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY || "");
+function getStripe() {
+  return new Stripe(process.env.STRIPE_SECRET_KEY || "");
+}
 
 const APP_URL = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
 const PREMIUM_PRICE_ID = process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PRICE_ID || "";
@@ -12,6 +14,7 @@ const PREMIUM_PRICE_ID = process.env.NEXT_PUBLIC_STRIPE_PREMIUM_PRICE_ID || "";
 export async function createCheckoutSession(
   locale: Locale
 ): Promise<{ url?: string; error?: string }> {
+  const stripe = getStripe();
   const supabase = await createClient();
 
   const {
@@ -80,6 +83,7 @@ export async function createCheckoutSession(
 export async function createCustomerPortalSession(
   locale: Locale
 ): Promise<{ url?: string; error?: string }> {
+  const stripe = getStripe();
   const supabase = await createClient();
 
   const {

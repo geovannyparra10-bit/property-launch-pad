@@ -6,7 +6,7 @@ import {
   togglePin,
   deleteScenario,
   type ScenarioDTO,
-} from "@/actions/scenarios";
+} from "@/scenarios";
 import type { Locale } from "@/lib/types";
 import {
   Pin,

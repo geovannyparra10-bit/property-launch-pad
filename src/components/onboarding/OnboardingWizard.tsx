@@ -9,7 +9,7 @@ import {
   ONBOARDING_STEPS,
   type StepKey,
   type StepResponse,
-} from "@/actions/onboarding";
+} from "@/onboarding";
 import type { Locale } from "@/lib/types";
 import {
   ChevronRight,

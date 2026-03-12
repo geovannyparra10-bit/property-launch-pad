@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
-import { updateProfile } from "@/actions/profile";
+import { updateProfile } from "@/profile";
 import type { Locale } from "@/lib/types";
 import { Loader2, Save, LogOut, AlertCircle, Check } from "lucide-react";
 
