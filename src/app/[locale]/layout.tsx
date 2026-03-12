@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
+import { ToastProvider } from "@/components/ui/Toast";
 import type { Locale } from "@/lib/types";
 
 interface Props {
@@ -24,9 +25,11 @@ export default async function LocaleLayout({ children, params }: Props) {
     <html lang={locale}>
       <body>
         <NextIntlClientProvider messages={messages}>
-          <Navbar locale={locale as Locale} />
-          <main>{children}</main>
-          <Footer />
+          <ToastProvider>
+            <Navbar locale={locale as Locale} />
+            <main>{children}</main>
+            <Footer />
+          </ToastProvider>
         </NextIntlClientProvider>
       </body>
     </html>

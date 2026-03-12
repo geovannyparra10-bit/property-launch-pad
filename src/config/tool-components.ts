@@ -1,6 +1,9 @@
 import type { ComponentType } from "react";
 import type { Locale } from "@/lib/types";
 import MortgageCalculator from "@/components/tools/MortgageCalculator";
+import RentalYieldCalculator from "@/components/tools/RentalYieldCalculator";
+import StampDutyCalculator from "@/components/tools/StampDutyCalculator";
+import DealAnalyzer from "@/components/tools/DealAnalyzer";
 
 /**
  * Maps tool slug (from DB) → React component.
@@ -18,6 +21,7 @@ export const TOOL_COMPONENTS: Record<
   ComponentType<{ locale: Locale }>
 > = {
   mortgage_calculator: MortgageCalculator,
-  // rental_yield: RentalYieldCalculator,   // Phase 4
-  // stamp_duty: StampDutyCalculator,       // Phase 4
+  rental_yield: RentalYieldCalculator,
+  stamp_duty: StampDutyCalculator,
+  deal_analyzer: DealAnalyzer,
 };
