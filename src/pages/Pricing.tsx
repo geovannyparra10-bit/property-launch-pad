@@ -1,83 +1,117 @@
+import { Link } from 'react-router-dom'
 import { Check } from 'lucide-react'
 
 export function Pricing() {
   return (
     <div className="min-h-screen bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+        <div className="text-center mb-16">
           <h1 className="text-4xl font-bold text-white mb-4">Simple, Transparent Pricing</h1>
-          <p className="text-xl text-gray-400">Choose the plan that's right for you</p>
+          <p className="text-xl text-gray-400">Choose the plan that's right for your real estate journey</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-          <div className="bg-gray-800 rounded-lg p-8">
-            <h3 className="text-2xl font-bold text-white mb-4">Free</h3>
-            <p className="text-4xl font-bold text-white mb-6">$0<span className="text-lg text-gray-400">/mo</span></p>
-            <ul className="space-y-3 mb-8">
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">Basic calculators</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">Limited calculations</span>
-              </li>
-            </ul>
-            <button className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg">
-              Get Started
-            </button>
-          </div>
-
-          <div className="bg-gradient-to-b from-indigo-600 to-indigo-700 rounded-lg p-8 relative">
-            <div className="absolute top-0 right-0 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-bl-lg rounded-tr-lg">
-              POPULAR
+        <div className="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+          <div className="bg-gray-800 rounded-2xl p-8 border border-gray-700">
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-white mb-2">Free</h3>
+              <div className="flex items-baseline gap-2 mb-3">
+                <span className="text-5xl font-bold text-white">$0</span>
+                <span className="text-gray-400 text-lg">/forever</span>
+              </div>
+              <p className="text-gray-400">Perfect for getting started with property analysis</p>
             </div>
-            <h3 className="text-2xl font-bold text-white mb-4">Pro</h3>
-            <p className="text-4xl font-bold text-white mb-6">$29<span className="text-lg text-indigo-200">/mo</span></p>
-            <ul className="space-y-3 mb-8">
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
-                <span className="text-white">All calculators</span>
+
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-green-400" />
+                </div>
+                <span className="text-gray-300">Mortgage calculator access</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
-                <span className="text-white">Unlimited calculations</span>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-green-400" />
+                </div>
+                <span className="text-gray-300">1 saved scenario per tool</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
-                <span className="text-white">Property tracking</span>
-              </li>
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-white flex-shrink-0 mt-0.5" />
-                <span className="text-white">Advanced reports</span>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-green-400" />
+                </div>
+                <span className="text-gray-300">Basic support</span>
               </li>
             </ul>
-            <button className="w-full bg-white hover:bg-gray-100 text-indigo-600 font-medium py-2 px-4 rounded-lg">
-              Subscribe
-            </button>
+
+            <Link
+              to="/signup"
+              className="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
+            >
+              Get Started
+            </Link>
           </div>
 
-          <div className="bg-gray-800 rounded-lg p-8">
-            <h3 className="text-2xl font-bold text-white mb-4">Enterprise</h3>
-            <p className="text-4xl font-bold text-white mb-6">Custom</p>
-            <ul className="space-y-3 mb-8">
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">Everything in Pro</span>
+          <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-2xl p-8 border-2 border-indigo-400 relative shadow-xl shadow-indigo-500/20">
+            <div className="absolute -top-4 left-1/2 -translate-x-1/2">
+              <span className="bg-yellow-400 text-gray-900 text-xs font-bold px-4 py-1.5 rounded-full shadow-lg">
+                MOST POPULAR
+              </span>
+            </div>
+
+            <div className="mb-6">
+              <h3 className="text-2xl font-bold text-white mb-2">Premium</h3>
+              <div className="flex items-baseline gap-2 mb-3">
+                <span className="text-5xl font-bold text-white">$9</span>
+                <span className="text-indigo-200 text-lg">/month</span>
+              </div>
+              <p className="text-indigo-100">Everything you need for serious property investing</p>
+            </div>
+
+            <ul className="space-y-4 mb-8">
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-white/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-white font-medium">All tools included</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">Priority support</span>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-white/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-white font-medium">Unlimited saved scenarios</span>
               </li>
-              <li className="flex items-start gap-2">
-                <Check className="h-5 w-5 text-indigo-400 flex-shrink-0 mt-0.5" />
-                <span className="text-gray-300">Custom integrations</span>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-white/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-white font-medium">Priority support</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-white/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-white font-medium">Advanced analytics</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-white/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-white" />
+                </div>
+                <span className="text-white font-medium">Export to PDF</span>
               </li>
             </ul>
-            <button className="w-full bg-gray-700 hover:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg">
-              Contact Sales
-            </button>
+
+            <Link
+              to="/signup"
+              className="block w-full text-center bg-white hover:bg-gray-100 text-indigo-600 font-semibold py-3 px-6 rounded-lg transition-colors shadow-lg"
+            >
+              Start Premium Trial
+            </Link>
           </div>
+        </div>
+
+        <div className="mt-16 text-center">
+          <p className="text-gray-400 text-sm">
+            All plans include secure data storage and regular feature updates
+          </p>
         </div>
       </div>
     </div>
