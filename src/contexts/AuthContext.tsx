@@ -1,9 +1,7 @@
-"use client";
-
-import { createContext, useContext, useEffect, useState } from "react";
-import { User } from "@supabase/supabase-js";
-import { createClient } from "@/lib/supabase/client";
-import type { Profile } from "@/lib/types";
+import { createContext, useContext, useEffect, useState, ReactNode } from 'react';
+import { User } from '@supabase/supabase-js';
+import { supabase } from '@/lib/supabase';
+import { Profile } from '@/types';
 
 interface AuthContextType {
   user: User | null;
@@ -15,17 +13,16 @@ interface AuthContextType {
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export function AuthProvider({ children }: { children: React.ReactNode }) {
+export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
-  const supabase = createClient();
 
   const loadProfile = async (userId: string) => {
     const { data } = await supabase
-      .from("profiles")
-      .select("*")
-      .eq("user_id", userId)
+      .from('profiles')
+      .select('*')
+      .eq('user_id', userId)
       .maybeSingle();
 
     setProfile(data as Profile | null);
@@ -38,35 +35,27 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   };
 
   useEffect(() => {
-    const initAuth = async () => {
-      const {
-        data: { user: currentUser },
-      } = await supabase.auth.getUser();
-
-      setUser(currentUser);
-      if (currentUser) {
-        await loadProfile(currentUser.id);
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setUser(session?.user ?? null);
+      if (session?.user) {
+        loadProfile(session.user.id);
       }
       setLoading(false);
-    };
-
-    initAuth();
+    });
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, session) => {
+    } = supabase.auth.onAuthStateChange((_event, session) => {
       setUser(session?.user ?? null);
       if (session?.user) {
-        await loadProfile(session.user.id);
+        loadProfile(session.user.id);
       } else {
         setProfile(null);
       }
       setLoading(false);
     });
 
-    return () => {
-      subscription.unsubscribe();
-    };
+    return () => subscription.unsubscribe();
   }, []);
 
   const signOut = async () => {
@@ -85,7 +74,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (!context) {
-    throw new Error("useAuth must be used within AuthProvider");
+    throw new Error('useAuth must be used within AuthProvider');
   }
   return context;
 }
