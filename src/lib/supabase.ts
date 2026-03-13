@@ -14,6 +14,11 @@ export interface Profile {
   user_id: string
   email: string
   full_name: string | null
+  language: string | null
+  subscription_status: string | null
+  stripe_customer_id: string | null
+  stripe_subscription_id: string | null
+  is_admin: boolean
   onboarding_completed: boolean
   created_at: string
   updated_at: string
