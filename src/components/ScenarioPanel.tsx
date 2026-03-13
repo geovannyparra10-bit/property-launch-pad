@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import { ChevronDown, ChevronUp, Save, Pin, Trash2, CircleAlert as AlertCircle } from 'lucide-react'
 
 interface Scenario {
@@ -27,6 +28,7 @@ export function ScenarioPanel({
   onLoadScenario,
 }: ScenarioPanelProps) {
   const { user, profile } = useAuth()
+  const { showToast } = useToast()
   const [isOpen, setIsOpen] = useState(false)
   const [scenarios, setScenarios] = useState<Scenario[]>([])
   const [scenarioName, setScenarioName] = useState('')
@@ -106,6 +108,7 @@ export function ScenarioPanel({
 
       if (count !== null && count >= 1 && profile?.subscription_status !== 'premium') {
         setError('Free accounts can save 1 scenario per tool. Upgrade to Premium for unlimited.')
+        showToast('Free tier limit reached', 'error')
         setLoading(false)
         return
       }
@@ -123,11 +126,13 @@ export function ScenarioPanel({
 
       if (insertError) throw insertError
 
+      showToast('Scenario saved', 'success')
       setScenarioName('')
       await fetchScenarios()
     } catch (err) {
       console.error('Error saving scenario:', err)
       setError('Failed to save scenario. Please try again.')
+      showToast('Failed to save scenario', 'error')
     } finally {
       setLoading(false)
     }
@@ -165,9 +170,11 @@ export function ScenarioPanel({
         .eq('user_id', user.id)
 
       if (error) throw error
+      showToast('Scenario deleted', 'success')
       await fetchScenarios()
     } catch (err) {
       console.error('Error deleting scenario:', err)
+      showToast('Failed to delete scenario', 'error')
     }
   }
 

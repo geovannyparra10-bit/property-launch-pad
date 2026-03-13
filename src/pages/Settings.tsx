@@ -1,15 +1,17 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import { supabase } from '../lib/supabase'
+import { LoadingSpinner } from '../components/LoadingSpinner'
 import { LogOut, Save } from 'lucide-react'
 
 export function Settings() {
   const { user, profile } = useAuth()
   const navigate = useNavigate()
+  const { showToast } = useToast()
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
-  const [message, setMessage] = useState('')
   const [fullName, setFullName] = useState('')
   const [language, setLanguage] = useState('en')
 
@@ -28,7 +30,6 @@ export function Settings() {
     if (!user) return
 
     setSaving(true)
-    setMessage('')
 
     try {
       const { error } = await supabase
@@ -41,11 +42,10 @@ export function Settings() {
 
       if (error) throw error
 
-      setMessage('Settings saved successfully!')
-      setTimeout(() => setMessage(''), 3000)
+      showToast('Profile updated', 'success')
     } catch (err) {
       console.error('Error saving settings:', err)
-      setMessage('Failed to save settings. Please try again.')
+      showToast('Failed to save settings', 'error')
     } finally {
       setSaving(false)
     }
@@ -82,11 +82,11 @@ export function Settings() {
 
   return (
     <div className="min-h-screen bg-gray-900">
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <h1 className="text-3xl font-bold text-white mb-8">Settings</h1>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-8">Settings</h1>
 
-        <div className="bg-gray-800 rounded-lg p-6 mb-6 border border-gray-700">
-          <h2 className="text-xl font-bold text-white mb-6">Account Information</h2>
+        <div className="bg-gray-800 rounded-lg p-4 sm:p-6 mb-6 border border-gray-700 card-hover">
+          <h2 className="text-lg sm:text-xl font-bold text-white mb-6">Account Information</h2>
           <div className="space-y-5">
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-2">Email</label>
@@ -127,34 +127,24 @@ export function Settings() {
             </div>
           </div>
 
-          {message && (
-            <div className={`mt-4 p-3 rounded-lg ${
-              message.includes('success')
-                ? 'bg-green-500/20 text-green-400 border border-green-500/30'
-                : 'bg-red-500/20 text-red-400 border border-red-500/30'
-            }`}>
-              {message}
-            </div>
-          )}
-
           <button
             onClick={handleSave}
             disabled={saving}
             className="mt-6 w-full sm:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
           >
-            <Save className="w-4 h-4" />
+            {saving ? <LoadingSpinner size="small" /> : <Save className="w-4 h-4" />}
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
 
-        <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-          <h2 className="text-xl font-bold text-white mb-4">Account Actions</h2>
+        <div className="bg-gray-800 rounded-lg p-4 sm:p-6 border border-gray-700 card-hover">
+          <h2 className="text-lg sm:text-xl font-bold text-white mb-4">Account Actions</h2>
           <button
             onClick={handleSignOut}
             disabled={loading}
-            className="px-6 py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center gap-2"
+            className="w-full sm:w-auto px-6 py-3 bg-red-600 hover:bg-red-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
           >
-            <LogOut className="w-4 h-4" />
+            {loading ? <LoadingSpinner size="small" /> : <LogOut className="w-4 h-4" />}
             {loading ? 'Signing out...' : 'Sign Out'}
           </button>
         </div>

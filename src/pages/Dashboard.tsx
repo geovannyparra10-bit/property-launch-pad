@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
+import { LoadingPage } from '../components/LoadingSpinner'
 import { ArrowRight } from 'lucide-react'
 
 interface Tool {
@@ -73,18 +74,14 @@ export function Dashboard() {
   const isPremium = subscriptionStatus === 'active' || subscriptionStatus === 'premium'
 
   if (loading) {
-    return (
-      <div className="min-h-screen bg-gray-900 flex items-center justify-center">
-        <div className="text-white">Loading...</div>
-      </div>
-    )
+    return <LoadingPage />
   }
 
   return (
     <div className="min-h-screen bg-gray-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white">
             Welcome back{getFirstName() ? `, ${getFirstName()}` : ''}
           </h1>
           <div className="flex items-center gap-2">
@@ -102,8 +99,8 @@ export function Dashboard() {
         </div>
 
         <div className="mb-10">
-          <div className="flex items-center justify-between mb-6">
-            <h2 className="text-2xl font-bold text-white">Your Tools</h2>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+            <h2 className="text-xl sm:text-2xl font-bold text-white">Your Tools</h2>
             <Link
               to="/tools"
               className="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-2 transition-colors"
@@ -114,16 +111,16 @@ export function Dashboard() {
           </div>
 
           {tools.length === 0 ? (
-            <div className="bg-gray-800 rounded-lg p-8 text-center">
+            <div className="bg-gray-800 rounded-lg p-8 text-center card-hover">
               <p className="text-gray-400">No active tools available at the moment.</p>
             </div>
           ) : (
-            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {tools.map((tool) => (
                 <Link
                   key={tool.id}
                   to={`/tools/${tool.slug}`}
-                  className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-indigo-500 transition-all group"
+                  className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-indigo-500 transition-all group card-hover"
                 >
                   <div className="flex items-start justify-between mb-4">
                     <h3 className="text-lg font-semibold text-white group-hover:text-indigo-400 transition-colors">
@@ -140,20 +137,20 @@ export function Dashboard() {
           )}
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
             <h3 className="text-lg font-semibold text-white mb-2">My Properties</h3>
             <p className="text-3xl font-bold text-indigo-400">0</p>
             <p className="text-gray-400 text-sm mt-2">Properties tracked</p>
           </div>
 
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
             <h3 className="text-lg font-semibold text-white mb-2">Saved Calculations</h3>
             <p className="text-3xl font-bold text-indigo-400">0</p>
             <p className="text-gray-400 text-sm mt-2">Total calculations</p>
           </div>
 
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
+          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
             <h3 className="text-lg font-semibold text-white mb-2">Reports Generated</h3>
             <p className="text-3xl font-bold text-indigo-400">0</p>
             <p className="text-gray-400 text-sm mt-2">Financial reports</p>
