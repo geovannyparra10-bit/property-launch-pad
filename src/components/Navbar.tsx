@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { Home, LogOut, Settings } from 'lucide-react'
+import { Hop as Home, LogOut, Settings } from 'lucide-react'
 
 export function Navbar() {
   const { user, signOut } = useAuth()
