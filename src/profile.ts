@@ -1,7 +1,4 @@
-"use server";
-
-import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
+import { createClient } from "@/lib/supabase/client";
 import type { Locale } from "@/lib/types";
 
 interface UpdateProfileData {
@@ -13,7 +10,7 @@ export async function updateProfile(
   data: UpdateProfileData,
   locale: Locale
 ): Promise<void> {
-  const supabase = await createClient();
+  const supabase = createClient();
   const {
     data: { user },
     error: authErr,
@@ -31,7 +28,4 @@ export async function updateProfile(
     .eq("user_id", user.id);
 
   if (error) throw new Error(error.message);
-
-  revalidatePath(`/${locale}/settings`);
-  revalidatePath(`/${data.language}/settings`);
 }

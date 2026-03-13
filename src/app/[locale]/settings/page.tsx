@@ -1,28 +1,31 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+"use client";
+
+import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 import SettingsForm from "@/components/settings/SettingsForm";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import type { Locale } from "@/lib/types";
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
+export default function SettingsPage() {
+  const params = useParams();
+  const router = useRouter();
+  const { user, profile, loading } = useAuth();
+  const locale = (params?.locale as Locale) || "en";
 
-export default async function SettingsPage({ params }: Props) {
-  const { locale } = await params;
-  const supabase = await createClient();
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push(`/${locale}/login`);
+    }
+  }, [user, loading, locale, router]);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-  if (!user) redirect(`/${locale}/login`);
-
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("full_name, email, language, subscription_status")
-    .eq("user_id", user.id)
-    .single();
-
-  if (!profile) redirect(`/${locale}/login`);
+  if (loading || !user || !profile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
 
   return (
     <div className="settings-page">
@@ -41,11 +44,11 @@ export default async function SettingsPage({ params }: Props) {
       <p className="sub">Manage your account preferences.</p>
 
       <SettingsForm
-        locale={locale as Locale}
+        locale={locale}
         profile={{
           fullName: profile.full_name ?? "",
           email: profile.email,
-          language: profile.language as Locale,
+          language: profile.language,
           subscriptionStatus: profile.subscription_status,
         }}
       />

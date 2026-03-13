@@ -1,13 +1,14 @@
+"use client";
+
+import { useParams, useSearchParams } from "next/navigation";
 import AuthForm from "@/components/auth/AuthForm";
 
-interface Props {
-  params: Promise<{ locale: string }>;
-  searchParams: Promise<{ redirect?: string; error?: string }>;
-}
-
-export default async function LoginPage({ params, searchParams }: Props) {
-  const { locale } = await params;
-  const { redirect, error } = await searchParams;
+export default function LoginPage() {
+  const params = useParams();
+  const searchParams = useSearchParams();
+  const locale = params?.locale as string;
+  const redirect = searchParams?.get("redirect") || undefined;
+  const error = searchParams?.get("error") || undefined;
 
   return (
     <div className="auth-page">

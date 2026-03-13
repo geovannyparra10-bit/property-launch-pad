@@ -1,9 +1,13 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
-import { getActiveTools, localizeToolMeta } from "@/lib/tools";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
 import { ArrowRight, Calculator, TrendingUp, Receipt, ChartBar as BarChart3 } from "lucide-react";
-import type { Locale } from "@/lib/types";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import type { Locale, Tool } from "@/lib/types";
 
 const ICONS: Record<string, React.ElementType> = {
   Calculator,
@@ -12,36 +16,44 @@ const ICONS: Record<string, React.ElementType> = {
   BarChart3,
 };
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
+export default function DashboardPage() {
+  const params = useParams();
+  const router = useRouter();
+  const { user, profile, loading } = useAuth();
+  const locale = (params?.locale as Locale) || "en";
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [loadingTools, setLoadingTools] = useState(true);
 
-export default async function DashboardPage({ params }: Props) {
-  const { locale } = await params;
-  const supabase = await createClient();
+  useEffect(() => {
+    if (!loading && !user) {
+      router.push(`/${locale}/login`);
+    } else if (!loading && profile && !profile.onboarding_completed) {
+      router.push(`/${locale}/onboarding`);
+    }
+  }, [user, profile, loading, locale, router]);
 
-  // Auth check
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  useEffect(() => {
+    const loadTools = async () => {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from("tools")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order");
+      setTools((data as Tool[]) || []);
+      setLoadingTools(false);
+    };
+    loadTools();
+  }, []);
 
-  if (!user) {
-    redirect(`/${locale}/login`);
+  if (loading || loadingTools || !user || !profile) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
-  // Profile + onboarding check
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("full_name, subscription_status, onboarding_completed")
-    .eq("user_id", user.id)
-    .single();
-
-  if (!profile?.onboarding_completed) {
-    redirect(`/${locale}/onboarding`);
-  }
-
-  // Load active tools for quick-access cards
-  const tools = await getActiveTools();
   const firstName = profile.full_name?.split(" ")[0] || "there";
 
   return (
@@ -169,7 +181,8 @@ export default async function DashboardPage({ params }: Props) {
       <h2 className="dash-section-title">Your Tools</h2>
       <div className="dash-tools-grid">
         {tools.map((tool) => {
-          const meta = localizeToolMeta(tool, locale as Locale);
+          const title = locale === "es" ? tool.title_es : tool.title_en;
+          const description = locale === "es" ? tool.description_es : tool.description_en;
           const Icon = ICONS[tool.icon] ?? Calculator;
           return (
             <Link
@@ -181,8 +194,8 @@ export default async function DashboardPage({ params }: Props) {
                 <Icon size={20} />
               </div>
               <div className="dash-tool-info">
-                <h3>{meta.title}</h3>
-                <p>{meta.description}</p>
+                <h3>{title}</h3>
+                <p>{description}</p>
               </div>
             </Link>
           );

@@ -1,7 +1,4 @@
-"use server";
-
-import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
+import { createClient } from "@/lib/supabase/client";
 import type { CalculatorScenario, Locale } from "@/lib/types";
 
 // ---------------------------------------------------------------------------
@@ -23,7 +20,7 @@ export interface ScenarioDTO {
 
 /** Get the authenticated user's id or throw. */
 async function requireUserId() {
-  const supabase = await createClient();
+  const supabase = createClient();
   const {
     data: { user },
     error,
@@ -34,7 +31,7 @@ async function requireUserId() {
 
 /** Resolve tools.id from slug (must be active). */
 async function resolveToolId(
-  supabase: Awaited<ReturnType<typeof createClient>>,
+  supabase: ReturnType<typeof createClient>,
   toolSlug: string
 ): Promise<string> {
   const { data, error } = await supabase
@@ -50,7 +47,7 @@ async function resolveToolId(
 
 /** Check if user is on free tier. */
 async function isFreeUser(
-  supabase: Awaited<ReturnType<typeof createClient>>,
+  supabase: ReturnType<typeof createClient>,
   userId: string
 ): Promise<boolean> {
   const { data } = await supabase
@@ -130,7 +127,6 @@ export async function saveScenario(
 
     if (error) throw new Error(error.message);
 
-    revalidatePath(`/${locale}/tools/${toolSlug}`);
     return toDTO(data as CalculatorScenario);
   }
 
@@ -165,7 +161,6 @@ export async function saveScenario(
 
   if (error) throw new Error(error.message);
 
-  revalidatePath(`/${locale}/tools/${toolSlug}`);
   return toDTO(data as CalculatorScenario);
 }
 
@@ -196,7 +191,6 @@ export async function togglePin(
 
   if (error) throw new Error(error.message);
 
-  revalidatePath(`/${locale}/tools/${toolSlug}`);
 }
 
 // ---------------------------------------------------------------------------
@@ -217,5 +211,4 @@ export async function deleteScenario(
 
   if (error) throw new Error(error.message);
 
-  revalidatePath(`/${locale}/tools/${toolSlug}`);
 }

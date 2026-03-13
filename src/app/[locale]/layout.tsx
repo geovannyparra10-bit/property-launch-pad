@@ -1,35 +1,46 @@
+"use client";
+
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
-import { notFound } from "next/navigation";
-import { routing } from "@/i18n/routing";
+import { useParams } from "next/navigation";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import { ToastProvider } from "@/components/ui/Toast";
+import { AuthProvider } from "@/contexts/AuthContext";
 import type { Locale } from "@/lib/types";
+import enMessages from "@/i18n/messages/en.json";
+import esMessages from "@/i18n/messages/es.json";
 
 interface Props {
   children: React.ReactNode;
-  params: Promise<{ locale: string }>;
 }
 
-export default async function LocaleLayout({ children, params }: Props) {
-  const { locale } = await params;
+const messages = {
+  en: enMessages,
+  es: esMessages,
+};
 
-  if (!routing.locales.includes(locale as Locale)) {
-    notFound();
-  }
-
-  const messages = await getMessages();
+export default function LocaleLayout({ children }: Props) {
+  const params = useParams();
+  const locale = (params?.locale as Locale) || "en";
 
   return (
     <html lang={locale}>
+      <head>
+        <title>Property Launch Pad - Real Estate Investment Tools</title>
+        <meta
+          name="description"
+          content="Professional calculators and analysis tools for real estate investors. Mortgage calculations, rental yield analysis, stamp duty, and comprehensive deal evaluation."
+        />
+      </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <ToastProvider>
-            <Navbar locale={locale as Locale} />
-            <main>{children}</main>
-            <Footer />
-          </ToastProvider>
+        <NextIntlClientProvider messages={messages[locale]} locale={locale}>
+          <AuthProvider>
+            <ToastProvider>
+              <Navbar locale={locale} />
+              <main>{children}</main>
+              <Footer />
+            </ToastProvider>
+          </AuthProvider>
         </NextIntlClientProvider>
       </body>
     </html>

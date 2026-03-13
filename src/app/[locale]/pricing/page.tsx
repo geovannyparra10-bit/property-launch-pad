@@ -1,12 +1,12 @@
+"use client";
+
+import { useParams } from "next/navigation";
 import Link from "next/link";
 import { Check } from "lucide-react";
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
-
-export default async function PricingPage({ params }: Props) {
-  const { locale } = await params;
+export default function PricingPage() {
+  const params = useParams();
+  const locale = params?.locale as string;
 
   const plans = [
     {

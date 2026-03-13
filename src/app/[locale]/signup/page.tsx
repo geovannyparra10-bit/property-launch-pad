@@ -1,11 +1,11 @@
+"use client";
+
+import { useParams } from "next/navigation";
 import AuthForm from "@/components/auth/AuthForm";
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
-
-export default async function SignupPage({ params }: Props) {
-  const { locale } = await params;
+export default function SignupPage() {
+  const params = useParams();
+  const locale = params?.locale as string;
 
   return (
     <div className="auth-page">

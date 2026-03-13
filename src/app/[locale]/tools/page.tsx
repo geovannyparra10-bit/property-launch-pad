@@ -1,10 +1,14 @@
-import { getActiveTools, localizeToolMeta } from "@/lib/tools";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
+import { createClient } from "@/lib/supabase/client";
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
-import { Calculator, TrendingUp, Receipt, ChartBar as BarChart3, Lock, ArrowRight } from "lucide-react";
+import { Calculator, TrendingUp, Receipt, ChartBar as BarChart3, ArrowRight } from "lucide-react";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import type { Tool, Locale } from "@/lib/types";
 
-// Icon resolver
 const ICONS: Record<string, React.ElementType> = {
   Calculator,
   TrendingUp,
@@ -12,17 +16,35 @@ const ICONS: Record<string, React.ElementType> = {
   BarChart3,
 };
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
+export default function ToolsLibraryPage() {
+  const params = useParams();
+  const locale = (params?.locale as Locale) || "en";
+  const t = useTranslations("tools");
+  const [tools, setTools] = useState<Tool[]>([]);
+  const [loading, setLoading] = useState(true);
 
-export default async function ToolsLibraryPage({ params }: Props) {
-  const { locale } = await params;
-  const t = await getTranslations({ locale, namespace: "tools" });
+  useEffect(() => {
+    const loadTools = async () => {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from("tools")
+        .select("*")
+        .eq("is_active", true)
+        .order("sort_order");
+      setTools((data as Tool[]) || []);
+      setLoading(false);
+    };
+    loadTools();
+  }, []);
 
-  const tools = await getActiveTools();
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
 
-  // Group by category
   const categories = Array.from(new Set(tools.map((t) => t.category)));
 
   return (
@@ -72,7 +94,8 @@ export default async function ToolsLibraryPage({ params }: Props) {
             </div>
             <div className="tl-grid">
               {catTools.map((tool) => {
-                const meta = localizeToolMeta(tool, locale as Locale);
+                const title = locale === "es" ? tool.title_es : tool.title_en;
+                const description = locale === "es" ? tool.description_es : tool.description_en;
                 const Icon = ICONS[tool.icon] ?? Calculator;
 
                 return (
@@ -84,8 +107,8 @@ export default async function ToolsLibraryPage({ params }: Props) {
                     <div className="tl-card-icon">
                       <Icon size={22} />
                     </div>
-                    <h3>{meta.title}</h3>
-                    <p>{meta.description}</p>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
                     <div className="tl-card-foot">
                       {tool.access_level === "premium" ? (
                         <span className="badge-premium">Premium</span>

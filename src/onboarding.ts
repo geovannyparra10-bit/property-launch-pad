@@ -1,7 +1,4 @@
-"use server";
-
-import { createClient } from "@/lib/supabase/server";
-import { revalidatePath } from "next/cache";
+import { createClient } from "@/lib/supabase/client";
 import type { Locale } from "@/lib/types";
 
 // ---------------------------------------------------------------------------
@@ -24,7 +21,7 @@ export interface StepResponse {
 // Load all existing onboarding responses for the current user
 // ---------------------------------------------------------------------------
 export async function loadOnboardingProgress(): Promise<StepResponse[]> {
-  const supabase = await createClient();
+  const supabase = createClient();
   const {
     data: { user },
     error: authErr,
@@ -50,7 +47,7 @@ export async function saveStepResponse(
   response: Record<string, unknown>,
   locale: Locale
 ): Promise<void> {
-  const supabase = await createClient();
+  const supabase = createClient();
   const {
     data: { user },
     error: authErr,
@@ -69,15 +66,13 @@ export async function saveStepResponse(
   );
 
   if (error) throw new Error(error.message);
-
-  revalidatePath(`/${locale}/onboarding`);
 }
 
 // ---------------------------------------------------------------------------
 // Complete onboarding — marks profiles.onboarding_completed = true
 // ---------------------------------------------------------------------------
 export async function completeOnboarding(locale: Locale): Promise<void> {
-  const supabase = await createClient();
+  const supabase = createClient();
   const {
     data: { user },
     error: authErr,
@@ -105,7 +100,4 @@ export async function completeOnboarding(locale: Locale): Promise<void> {
     .eq("user_id", user.id);
 
   if (error) throw new Error(error.message);
-
-  revalidatePath(`/${locale}/onboarding`);
-  revalidatePath(`/${locale}/dashboard`);
 }

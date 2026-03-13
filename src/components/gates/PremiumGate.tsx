@@ -1,8 +1,11 @@
-import { createClient } from "@/lib/supabase/server";
-import { getToolBySlug } from "@/lib/tools";
-import { getTranslations } from "next-intl/server";
-import { redirect } from "next/navigation";
-import type { Locale } from "@/lib/types";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useTranslations } from "next-intl";
+import { useAuth } from "@/contexts/AuthContext";
+import { createClient } from "@/lib/supabase/client";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import type { Locale, Tool } from "@/lib/types";
 
 interface PremiumGateProps {
   locale: Locale;
@@ -10,45 +13,44 @@ interface PremiumGateProps {
   children: React.ReactNode;
 }
 
-/**
- * Server component that conditionally gates content based on tool access_level
- * and user subscription_status.
- *
- * Logic:
- * 1. If toolSlug provided → look up tools.access_level
- *    - tool not found or access_level="free" → render children (no gate)
- *    - access_level="premium" → continue to subscription check
- * 2. If no toolSlug → always perform subscription check
- * 3. Subscription check:
- *    - Not logged in → show upgrade prompt (not redirect, so free tools still work)
- *    - profiles.subscription_status === "premium" → render children
- *    - Otherwise → show upgrade prompt
- *
- * Schema: profiles.user_id = auth.users.id, profiles.subscription_status
- */
-export default async function PremiumGate({
+export default function PremiumGate({
   locale,
   toolSlug,
   children,
 }: PremiumGateProps) {
-  const t = await getTranslations({ locale, namespace: "gates.premium" });
+  const t = useTranslations("gates.premium");
+  const { user, profile } = useAuth();
+  const [tool, setTool] = useState<Tool | null>(null);
+  const [loading, setLoading] = useState(!!toolSlug);
 
-  // Step 1: If toolSlug provided, check tool access_level from DB
-  if (toolSlug) {
-    const tool = await getToolBySlug(toolSlug);
-
-    // Tool not found or is free → no gate needed
-    if (!tool || tool.access_level === "free") {
-      return <>{children}</>;
+  useEffect(() => {
+    if (toolSlug) {
+      const loadTool = async () => {
+        const supabase = createClient();
+        const { data } = await supabase
+          .from("tools")
+          .select("*")
+          .eq("slug", toolSlug)
+          .eq("is_active", true)
+          .maybeSingle();
+        setTool((data as Tool) || null);
+        setLoading(false);
+      };
+      loadTool();
     }
-    // If we reach here, tool exists and access_level === "premium"
+  }, [toolSlug]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
-  // Step 2: Check auth
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+  if (toolSlug && (!tool || tool.access_level === "free")) {
+    return <>{children}</>;
+  }
 
   if (!user) {
     return (
@@ -61,13 +63,6 @@ export default async function PremiumGate({
       />
     );
   }
-
-  // Step 3: Check subscription via profiles.user_id
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("subscription_status")
-    .eq("user_id", user.id)
-    .single();
 
   const isPremium = profile?.subscription_status === "premium";
 

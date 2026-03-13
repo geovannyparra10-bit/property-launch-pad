@@ -1,4 +1,4 @@
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/server-admin";
 import Stripe from "stripe";
 import { headers } from "next/headers";
 
@@ -7,7 +7,8 @@ export async function POST(request: Request) {
   const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET || "";
 
   const body = await request.text();
-  const signature = (await headers()).get("stripe-signature");
+  const headersList = await headers();
+  const signature = headersList.get("stripe-signature");
 
   if (!signature) {
     return new Response("Missing signature", { status: 400 });
@@ -23,7 +24,7 @@ export async function POST(request: Request) {
   }
 
   try {
-    const supabase = await createClient();
+    const supabase = createAdminClient();
 
     switch (event.type) {
       case "customer.subscription.updated":

@@ -1,16 +1,15 @@
+"use client";
+
 import Link from "next/link";
-import { createClient } from "@/lib/supabase/server";
+import { useAuth } from "@/contexts/AuthContext";
 import type { Locale } from "@/lib/types";
 
 interface Props {
   locale: Locale;
 }
 
-export default async function Navbar({ locale }: Props) {
-  const supabase = await createClient();
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
+export default function Navbar({ locale }: Props) {
+  const { user } = useAuth();
 
   return (
     <nav className="plp-nav">

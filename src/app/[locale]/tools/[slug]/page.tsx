@@ -1,27 +1,62 @@
-import { notFound } from "next/navigation";
-import { getToolBySlug, localizeToolMeta } from "@/lib/tools";
+"use client";
+
+import { useState, useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
 import { TOOL_COMPONENTS } from "@/config/tool-components";
 import PremiumGate from "@/components/gates/PremiumGate";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
-import type { Locale } from "@/lib/types";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
+import type { Locale, Tool } from "@/lib/types";
 
-interface Props {
-  params: Promise<{ locale: string; slug: string }>;
-}
+export default function ToolPage() {
+  const params = useParams();
+  const router = useRouter();
+  const locale = (params?.locale as Locale) || "en";
+  const slug = params?.slug as string;
+  const [tool, setTool] = useState<Tool | null>(null);
+  const [loading, setLoading] = useState(true);
 
-export default async function ToolPage({ params }: Props) {
-  const { locale, slug } = await params;
+  useEffect(() => {
+    const loadTool = async () => {
+      const supabase = createClient();
+      const { data } = await supabase
+        .from("tools")
+        .select("*")
+        .eq("slug", slug)
+        .eq("is_active", true)
+        .maybeSingle();
 
-  // 1. Fetch tool from DB (must be active)
-  const tool = await getToolBySlug(slug);
-  if (!tool) notFound();
+      if (!data) {
+        router.push("/404");
+        return;
+      }
 
-  // 2. Resolve the React component for this tool
+      setTool(data as Tool);
+      setLoading(false);
+    };
+    loadTool();
+  }, [slug, router]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
+  }
+
+  if (!tool) return null;
+
   const ToolComponent = TOOL_COMPONENTS[tool.slug];
-  if (!ToolComponent) notFound(); // Tool exists in DB but no component built yet
+  if (!ToolComponent) {
+    router.push("/404");
+    return null;
+  }
 
-  const meta = localizeToolMeta(tool, locale as Locale);
+  const title = locale === "es" ? tool.title_es : tool.title_en;
+  const description = locale === "es" ? tool.description_es : tool.description_en;
 
   // 3. Render — PremiumGate handles access_level check + subscription gating
   return (
@@ -46,11 +81,11 @@ export default async function ToolPage({ params }: Props) {
         </Link>
 
         <div className="tp-header">
-          <h1>{meta.title}</h1>
-          <p>{meta.description}</p>
+          <h1>{title}</h1>
+          <p>{description}</p>
         </div>
 
-        <ToolComponent locale={locale as Locale} />
+        <ToolComponent locale={locale} />
       </div>
     </PremiumGate>
   );

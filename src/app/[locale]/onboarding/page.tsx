@@ -1,33 +1,34 @@
-import { createClient } from "@/lib/supabase/server";
-import { redirect } from "next/navigation";
+"use client";
+
+import { useEffect } from "react";
+import { useParams, useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 import OnboardingWizard from "@/components/onboarding/OnboardingWizard";
+import LoadingSpinner from "@/components/ui/LoadingSpinner";
 import type { Locale } from "@/lib/types";
 
-interface Props {
-  params: Promise<{ locale: string }>;
-}
+export default function OnboardingPage() {
+  const params = useParams();
+  const router = useRouter();
+  const { user, profile, loading } = useAuth();
+  const locale = (params?.locale as Locale) || "en";
 
-export default async function OnboardingPage({ params }: Props) {
-  const { locale } = await params;
-  const supabase = await createClient();
+  useEffect(() => {
+    if (!loading) {
+      if (!user) {
+        router.push(`/${locale}/login`);
+      } else if (profile?.onboarding_completed) {
+        router.push(`/${locale}/dashboard`);
+      }
+    }
+  }, [user, profile, loading, locale, router]);
 
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  if (!user) {
-    redirect(`/${locale}/login`);
-  }
-
-  // Check if onboarding is already done
-  const { data: profile } = await supabase
-    .from("profiles")
-    .select("onboarding_completed")
-    .eq("user_id", user.id)
-    .single();
-
-  if (profile?.onboarding_completed) {
-    redirect(`/${locale}/dashboard`);
+  if (loading || !user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <LoadingSpinner size="lg" />
+      </div>
+    );
   }
 
   return (
