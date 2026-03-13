@@ -119,7 +119,7 @@ export function Onboarding() {
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4 py-8">
       <div className="max-w-2xl w-full">
         <div className="bg-gray-800 rounded-xl shadow-xl p-8 border border-gray-700">
-          <h2 className="text-3xl font-bold text-white mb-2 text-center">Welcome to HomeSage</h2>
+          <h2 className="text-3xl font-bold text-white mb-2 text-center">Welcome to Property Launch Pad</h2>
           <p className="text-gray-400 text-center mb-8">
             Let's personalize your experience in just a few steps
           </p>

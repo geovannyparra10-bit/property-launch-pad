@@ -6,9 +6,9 @@ export function Footer() {
       <div className="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
-            <h3 className="text-white text-lg font-bold mb-4">HomeSage</h3>
+            <h3 className="text-white text-lg font-bold mb-4">Property Launch Pad</h3>
             <p className="text-gray-400 text-sm">
-              Your intelligent home financing assistant. Make smarter decisions with powerful tools and insights.
+              Your intelligent property investment assistant. Make smarter decisions with powerful tools and insights.
             </p>
           </div>
 
@@ -47,7 +47,7 @@ export function Footer() {
 
         <div className="mt-8 border-t border-gray-700 pt-8">
           <p className="text-gray-400 text-sm text-center">
-            &copy; {new Date().getFullYear()} HomeSage. All rights reserved.
+            &copy; {new Date().getFullYear()} Property Launch Pad. All rights reserved.
           </p>
         </div>
       </div>

@@ -15,7 +15,7 @@ export function Navbar() {
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
               <Home className="h-6 w-6 text-indigo-400" />
-              <span className="text-xl font-bold text-white">HomeSage</span>
+              <span className="text-xl font-bold text-white">Property Launch Pad</span>
             </Link>
 
             {user && (
