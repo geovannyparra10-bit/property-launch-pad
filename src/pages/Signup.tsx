@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 
 export function Signup() {
+  const [fullName, setFullName] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState('')
@@ -18,10 +19,15 @@ export function Signup() {
       const { error } = await supabase.auth.signUp({
         email,
         password,
+        options: {
+          data: {
+            full_name: fullName,
+          },
+        },
       })
 
       if (error) throw error
-      navigate('/onboarding')
+      navigate('/dashboard')
     } catch (err: any) {
       setError(err.message || 'Failed to sign up')
     } finally {
@@ -32,16 +38,32 @@ export function Signup() {
   return (
     <div className="min-h-screen bg-gray-900 flex items-center justify-center px-4">
       <div className="max-w-md w-full">
-        <div className="bg-gray-800 rounded-lg shadow-lg p-8">
-          <h2 className="text-3xl font-bold text-white mb-6 text-center">Create your account</h2>
+        <div className="bg-gray-800 rounded-xl shadow-xl p-8 border border-gray-700">
+          <h2 className="text-3xl font-bold text-white mb-2 text-center">Create your account</h2>
+          <p className="text-gray-400 text-center mb-8">Start making smarter property decisions</p>
 
           {error && (
-            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded mb-4">
+            <div className="bg-red-500/10 border border-red-500 text-red-500 px-4 py-3 rounded-lg mb-6">
               {error}
             </div>
           )}
 
-          <form onSubmit={handleSubmit} className="space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-5">
+            <div>
+              <label htmlFor="fullName" className="block text-sm font-medium text-gray-300 mb-2">
+                Full Name
+              </label>
+              <input
+                id="fullName"
+                type="text"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                required
+                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
+                placeholder="John Doe"
+              />
+            </div>
+
             <div>
               <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                 Email
@@ -52,7 +74,7 @@ export function Signup() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="you@example.com"
               />
             </div>
@@ -68,15 +90,16 @@ export function Signup() {
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 minLength={6}
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500"
+                className="w-full px-4 py-3 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-transparent"
                 placeholder="••••••••"
               />
+              <p className="text-sm text-gray-400 mt-1">Minimum 6 characters</p>
             </div>
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 text-white font-medium py-2 px-4 rounded-lg transition"
+              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold py-3 px-4 rounded-lg transition-colors"
             >
               {loading ? 'Creating account...' : 'Sign up'}
             </button>
@@ -84,7 +107,7 @@ export function Signup() {
 
           <p className="mt-6 text-center text-gray-400">
             Already have an account?{' '}
-            <Link to="/login" className="text-indigo-400 hover:text-indigo-300">
+            <Link to="/login" className="text-indigo-400 hover:text-indigo-300 font-medium">
               Log in
             </Link>
           </p>
