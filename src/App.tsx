@@ -10,6 +10,7 @@ import { Onboarding } from './pages/Onboarding'
 import { Dashboard } from './pages/Dashboard'
 import { Tools } from './pages/Tools'
 import { MortgageCalculator } from './pages/MortgageCalculator'
+import { RentalYieldCalculator } from './pages/RentalYieldCalculator'
 import { Pricing } from './pages/Pricing'
 import { Settings } from './pages/Settings'
 
@@ -28,6 +29,7 @@ function App() {
               <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
               <Route path="/tools" element={<Tools />} />
               <Route path="/tools/mortgage_calculator" element={<MortgageCalculator />} />
+              <Route path="/tools/rental_yield" element={<RentalYieldCalculator />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             </Routes>
