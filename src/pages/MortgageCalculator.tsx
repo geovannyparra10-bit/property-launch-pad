@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { DollarSign, Percent, Calendar } from 'lucide-react'
+import { ScenarioPanel } from '../components/ScenarioPanel'
 
 export function MortgageCalculator() {
   const { user } = useAuth()
@@ -64,12 +65,45 @@ export function MortgageCalculator() {
     }).format(value)
   }
 
+  const handleLoadScenario = (inputs: Record<string, any>) => {
+    if (inputs.homePrice !== undefined) setHomePrice(inputs.homePrice)
+    if (inputs.downPayment !== undefined) setDownPayment(inputs.downPayment)
+    if (inputs.interestRate !== undefined) setInterestRate(inputs.interestRate)
+    if (inputs.loanTerm !== undefined) setLoanTerm(inputs.loanTerm)
+    if (inputs.propertyTaxRate !== undefined) setPropertyTaxRate(inputs.propertyTaxRate)
+    if (inputs.annualInsurance !== undefined) setAnnualInsurance(inputs.annualInsurance)
+  }
+
+  const currentInputs = {
+    homePrice,
+    downPayment,
+    interestRate,
+    loanTerm,
+    propertyTaxRate,
+    annualInsurance,
+  }
+
+  const currentOutputs = {
+    monthlyPITI,
+    totalPaid,
+    loanAmount,
+  }
+
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-white mb-2">Mortgage Calculator</h1>
           <p className="text-gray-400">Calculate your monthly mortgage payment and total costs</p>
+        </div>
+
+        <div className="mb-6">
+          <ScenarioPanel
+            toolSlug="mortgage_calculator"
+            currentInputs={currentInputs}
+            currentOutputs={currentOutputs}
+            onLoadScenario={handleLoadScenario}
+          />
         </div>
 
         <div className="grid lg:grid-cols-2 gap-6">
