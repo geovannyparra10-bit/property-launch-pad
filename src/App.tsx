@@ -12,6 +12,7 @@ import { Tools } from './pages/Tools'
 import { MortgageCalculator } from './pages/MortgageCalculator'
 import { RentalYieldCalculator } from './pages/RentalYieldCalculator'
 import { StampDutyCalculator } from './pages/StampDutyCalculator'
+import { DealAnalyzer } from './pages/DealAnalyzer'
 import { Pricing } from './pages/Pricing'
 import { Settings } from './pages/Settings'
 
@@ -32,6 +33,7 @@ function App() {
               <Route path="/tools/mortgage_calculator" element={<MortgageCalculator />} />
               <Route path="/tools/rental_yield" element={<RentalYieldCalculator />} />
               <Route path="/tools/stamp_duty" element={<StampDutyCalculator />} />
+              <Route path="/tools/deal_analyzer" element={<DealAnalyzer />} />
               <Route path="/pricing" element={<Pricing />} />
               <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
             </Routes>
