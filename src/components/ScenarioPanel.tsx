@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import { supabase } from '../lib/supabase'
 import { useAuth } from '../contexts/AuthContext'
-import { ChevronDown, ChevronUp, Save, Pin, Trash2, AlertCircle } from 'lucide-react'
+import { ChevronDown, ChevronUp, Save, Pin, Trash2, CircleAlert as AlertCircle } from 'lucide-react'
 
 interface Scenario {
   id: string
