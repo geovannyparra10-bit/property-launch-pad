@@ -3,6 +3,8 @@ import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { DollarSign, Percent, Calendar, FileDown } from 'lucide-react'
 import { ScenarioPanel } from '../components/ScenarioPanel'
+import { AmortizationSchedule } from '../components/AmortizationSchedule'
+import { AmortizationSchedule } from '../components/AmortizationSchedule'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
 import { generateProFormaPDF } from '../utils/pdfGenerator'
 
@@ -318,6 +320,24 @@ export function MortgageCalculator() {
               </div>
             </div>
           </div>
+
+        <div className="mt-6">
+          <AmortizationSchedule
+            loanAmount={loanAmount}
+            interestRate={interestRate}
+            loanTerm={loanTerm}
+            monthlyPayment={principalAndInterest}
+          />
+        </div>
+        </div>
+
+        <div className="mt-6">
+          <AmortizationSchedule
+            loanAmount={loanAmount}
+            interestRate={interestRate}
+            loanTerm={loanTerm}
+            monthlyPayment={principalAndInterest}
+          />
         </div>
       </div>
 
