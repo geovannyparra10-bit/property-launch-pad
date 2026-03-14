@@ -75,6 +75,30 @@ const articles = [
     categoryEs: 'Análisis',
     image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
+  {
+    slug: 'estimating-repairs',
+    titleEn: 'How to Estimate Repair Costs Like a Pro',
+    titleEs: 'Cómo Estimar los Costos de Reparación Como un Profesional',
+    summaryEn: 'Inspection walk-through tips, the 8 major cost categories, DIY vs. contractor guidance, the most common budget-busters, and contingency planning for any rehab.',
+    summaryEs: 'Consejos para el recorrido de inspección, las 8 categorías principales de costos, guía de hazlo tú mismo vs. contratista, los errores de presupuesto más comunes y planificación de contingencias.',
+    readTimeEn: '12 min read',
+    readTimeEs: '12 min de lectura',
+    categoryEn: 'Renovation',
+    categoryEs: 'Renovación',
+    image: 'https://images.pexels.com/photos/1396132/pexels-photo-1396132.jpeg?auto=compress&cs=tinysrgb&w=800',
+  },
+  {
+    slug: 'building-a-portfolio',
+    titleEn: 'From 1 to 15 Properties: How to Build a Real Estate Portfolio',
+    titleEs: 'De 1 a 15 Propiedades: Cómo Construir una Cartera Inmobiliaria',
+    summaryEn: 'Scaling strategies, leveraging equity, 1031 exchanges, portfolio analysis, and how to manage multiple properties like a business — not a hobby.',
+    summaryEs: 'Estrategias de escalado, apalancamiento de capital, intercambios 1031, análisis de cartera y cómo gestionar múltiples propiedades como un negocio, no como un pasatiempo.',
+    readTimeEn: '13 min read',
+    readTimeEs: '13 min de lectura',
+    categoryEn: 'Portfolio',
+    categoryEs: 'Cartera',
+    image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800',
+  },
 ]
 
 export function Learn() {

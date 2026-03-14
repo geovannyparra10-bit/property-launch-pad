@@ -36,6 +36,8 @@ import { FixAndFlip } from './pages/learn/FixAndFlip'
 import { RentalPropertyInvesting } from './pages/learn/RentalPropertyInvesting'
 import { UnderstandingMortgages } from './pages/learn/UnderstandingMortgages'
 import { AnalyzingDeals } from './pages/learn/AnalyzingDeals'
+import { EstimatingRepairs } from './pages/learn/EstimatingRepairs'
+import { BuildingAPortfolio } from './pages/learn/BuildingAPortfolio'
 
 function AppRoutes() {
   const location = useLocation()
@@ -73,6 +75,8 @@ function AppRoutes() {
         <Route path="/learn/rental-property-investing" element={<RentalPropertyInvesting />} />
         <Route path="/learn/understanding-mortgages" element={<UnderstandingMortgages />} />
         <Route path="/learn/analyzing-deals" element={<AnalyzingDeals />} />
+        <Route path="/learn/estimating-repairs" element={<EstimatingRepairs />} />
+        <Route path="/learn/building-a-portfolio" element={<BuildingAPortfolio />} />
       </Routes>
     </PageTransition>
   )
