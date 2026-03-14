@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Link } from 'react-router-dom'
+import { useNavigate, Link, useSearchParams } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
+import { useToast } from '../contexts/ToastContext'
 import { supabase } from '../lib/supabase'
 import { LoadingPage } from '../components/LoadingSpinner'
 import { ArrowRight, Save, BookOpen, Clock } from 'lucide-react'
@@ -44,6 +45,8 @@ interface Tool {
 export function Dashboard() {
   const { user, profile } = useAuth()
   const navigate = useNavigate()
+  const { showToast } = useToast()
+  const [searchParams, setSearchParams] = useSearchParams()
   const [loading, setLoading] = useState(true)
   const [tools, setTools] = useState<Tool[]>([])
   const [scenarioCount, setScenarioCount] = useState(0)
@@ -51,6 +54,13 @@ export function Dashboard() {
   useEffect(() => {
     checkAccess()
   }, [user, profile])
+
+  useEffect(() => {
+    if (searchParams.get('payment') === 'success') {
+      showToast('Payment successful! Welcome to Premium.', 'success')
+      setSearchParams({})
+    }
+  }, [])
 
   useEffect(() => {
     if (!loading) {

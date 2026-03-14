@@ -4,7 +4,8 @@ import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import { supabase } from '../lib/supabase'
 import { LoadingSpinner } from '../components/LoadingSpinner'
-import { LogOut, Save } from 'lucide-react'
+import { LogOut, Save, CreditCard, Loader as Loader2 } from 'lucide-react'
+import { createPortalSession } from '../api/create-portal'
 
 export function Settings() {
   const { user, profile } = useAuth()
@@ -12,6 +13,7 @@ export function Settings() {
   const { showToast } = useToast()
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
+  const [portalLoading, setPortalLoading] = useState(false)
   const [fullName, setFullName] = useState('')
   const [language, setLanguage] = useState('en')
 
@@ -62,10 +64,24 @@ export function Settings() {
     }
   }
 
-  const getSubscriptionBadge = () => {
-    const subscriptionStatus = profile?.subscription_status || 'free'
+  const handleManageSubscription = async () => {
+    if (!user) return
+    setPortalLoading(true)
+    try {
+      const url = await createPortalSession(user.id)
+      window.location.href = url
+    } catch (err) {
+      console.error('Portal error:', err)
+      showToast('Failed to open subscription portal', 'error')
+      setPortalLoading(false)
+    }
+  }
 
-    if (subscriptionStatus === 'premium' || subscriptionStatus === 'active') {
+  const subscriptionStatus = profile?.subscription_status || 'free'
+  const isPremium = subscriptionStatus === 'premium' || subscriptionStatus === 'active'
+
+  const getSubscriptionBadge = () => {
+    if (isPremium) {
       return (
         <span className="px-3 py-1 rounded-full text-sm font-semibold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
           Premium
@@ -105,7 +121,7 @@ export function Settings() {
                 value={fullName}
                 onChange={(e) => setFullName(e.target.value)}
                 placeholder="Enter your full name"
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-indigo-500 transition-colors"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
               />
             </div>
 
@@ -114,7 +130,7 @@ export function Settings() {
               <select
                 value={language}
                 onChange={(e) => setLanguage(e.target.value)}
-                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-indigo-500 transition-colors"
+                className="w-full px-4 py-2 bg-gray-700 border border-gray-600 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
               >
                 <option value="en">English</option>
                 <option value="es">Spanish</option>
@@ -130,12 +146,38 @@ export function Settings() {
           <button
             onClick={handleSave}
             disabled={saving}
-            className="mt-6 w-full sm:w-auto px-6 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+            className="mt-6 w-full sm:w-auto px-6 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-600 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
           >
             {saving ? <LoadingSpinner size="small" /> : <Save className="w-4 h-4" />}
             {saving ? 'Saving...' : 'Save Changes'}
           </button>
         </div>
+
+        {isPremium && (
+          <div className="bg-gray-800 rounded-lg p-4 sm:p-6 mb-6 border border-gray-700 card-hover">
+            <h2 className="text-lg sm:text-xl font-bold text-white mb-2">Subscription</h2>
+            <p className="text-gray-400 text-sm mb-4">
+              Manage your billing, update your payment method, or cancel your subscription.
+            </p>
+            <button
+              onClick={handleManageSubscription}
+              disabled={portalLoading}
+              className="w-full sm:w-auto px-6 py-3 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-700 disabled:cursor-not-allowed text-white font-semibold rounded-lg transition-colors flex items-center justify-center gap-2"
+            >
+              {portalLoading ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Opening...
+                </>
+              ) : (
+                <>
+                  <CreditCard className="w-4 h-4" />
+                  Manage Subscription
+                </>
+              )}
+            </button>
+          </div>
+        )}
 
         <div className="bg-gray-800 rounded-lg p-4 sm:p-6 border border-gray-700 card-hover">
           <h2 className="text-lg sm:text-xl font-bold text-white mb-4">Account Actions</h2>
