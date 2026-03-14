@@ -72,7 +72,7 @@ export function PortfolioAnalyzer() {
   }
 
   const addProperty = () => {
-    if (properties.length < 10) {
+    if (properties.length < 15) {
       setProperties([...properties, createEmptyProperty()])
     }
   }
@@ -265,11 +265,11 @@ export function PortfolioAnalyzer() {
           <div className="flex items-center justify-between">
             <h2 className="text-xl font-bold text-white flex items-center gap-2">
               <Building2 className="h-6 w-6" />
-              Properties ({properties.length}/10)
+              Properties ({properties.length}/15)
             </h2>
             <button
               onClick={addProperty}
-              disabled={properties.length >= 10}
+              disabled={properties.length >= 15}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors disabled:bg-gray-700 disabled:cursor-not-allowed"
             >
               <Plus className="h-5 w-5" />
