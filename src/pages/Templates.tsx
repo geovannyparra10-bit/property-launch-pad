@@ -42,7 +42,7 @@ export function Templates() {
     if (!user) navigate('/login')
   }, [user, navigate])
 
-  const isPremium = profile?.subscription_status === 'active'
+  const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
 
   const handleTemplateClick = (_path: string, e: React.MouseEvent) => {
     if (!isPremium) {

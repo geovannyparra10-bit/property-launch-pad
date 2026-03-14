@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { Upload, FileText, ChevronDown, ChevronUp, Send, Loader as Loader2 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
@@ -55,13 +55,6 @@ export function DocumentAnalyzer() {
     debtService: '',
     cashFlow: ''
   })
-
-  useEffect(() => {
-    if (!user) return
-    if (!profile?.subscription_status || profile?.subscription_status === 'free') {
-      setShowPremiumModal(true)
-    }
-  }, [user, profile])
 
   const extractTextFromFile = async (file: File): Promise<string> => {
     return new Promise((resolve, reject) => {
