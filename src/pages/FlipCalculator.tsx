@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { TrendingUp, DollarSign, Clock, Calculator, CircleAlert as AlertCircle } from 'lucide-react';
+import { TrendingUp, DollarSign, Clock, Calculator, CircleAlert as AlertCircle, FileDown } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { ScenarioPanel } from '../components/ScenarioPanel';
+import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
+import { generateProFormaPDF } from '../utils/pdfGenerator';
 
 interface FlipInputs {
   purchasePrice: string;
@@ -23,7 +25,7 @@ interface FlipResults {
 }
 
 export default function FlipCalculator() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [inputs, setInputs] = useState<FlipInputs>({
     purchasePrice: '180000',
     rehabBudget: '40000',
@@ -34,6 +36,7 @@ export default function FlipCalculator() {
   });
   const [results, setResults] = useState<FlipResults | null>(null);
   const [currentOutputs, setCurrentOutputs] = useState<Record<string, any>>({});
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const calculateResults = (): FlipResults => {
     const purchasePrice = parseFloat(inputs.purchasePrice) || 0;
@@ -94,17 +97,58 @@ export default function FlipCalculator() {
     return value.toFixed(2) + '%';
   };
 
+  const handleDownloadPDF = () => {
+    const isPremium = profile?.subscription_status === 'active'
+
+    if (!isPremium) {
+      setShowPremiumModal(true)
+      return
+    }
+
+    if (!results) return
+
+    generateProFormaPDF({
+      toolName: 'Flip Calculator',
+      inputs: {
+        'Purchase Price': formatCurrency(parseFloat(inputs.purchasePrice) || 0),
+        'Rehab Budget': formatCurrency(parseFloat(inputs.rehabBudget) || 0),
+        'After Repair Value (ARV)': formatCurrency(parseFloat(inputs.afterRepairValue) || 0),
+        'Holding Period': `${inputs.holdingPeriod} months`,
+        'Monthly Holding Costs': formatCurrency(parseFloat(inputs.monthlyHoldingCosts) || 0),
+        'Selling Cost Percentage': `${inputs.sellingCostPercentage}%`,
+      },
+      outputs: {
+        'Total Cost': formatCurrency(results.totalCost),
+        'Selling Costs': formatCurrency(results.sellingCosts),
+        'Total Investment': formatCurrency(results.totalInvestment),
+        'Net Profit': formatCurrency(results.netProfit),
+        'Return on Investment (ROI)': formatPercent(results.roi),
+        'Profit Per Month': formatCurrency(results.profitPerMonth),
+        'Deal Status': results.isProfitable ? 'Profitable Flip' : 'Not Profitable',
+      },
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-20 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20">
-            <TrendingUp className="h-8 w-8 text-orange-400" />
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-orange-500/10 rounded-xl border border-orange-500/20">
+              <TrendingUp className="h-8 w-8 text-orange-400" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-white">Flip Calculator</h1>
+              <p className="text-slate-400 mt-1">Analyze fix-and-flip property investments</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-4xl font-bold text-white">Flip Calculator</h1>
-            <p className="text-slate-400 mt-1">Analyze fix-and-flip property investments</p>
-          </div>
+          <button
+            onClick={handleDownloadPDF}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+          >
+            <FileDown className="h-5 w-5" />
+            Download Pro Forma PDF
+          </button>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -324,6 +368,11 @@ export default function FlipCalculator() {
           </div>
         </div>
       </div>
+
+      <PremiumFeatureModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   );
 }

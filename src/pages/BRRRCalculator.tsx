@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { RefreshCw, DollarSign, TrendingUp, Calculator } from 'lucide-react';
+import { RefreshCw, DollarSign, TrendingUp, Calculator, FileDown } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { ScenarioPanel } from '../components/ScenarioPanel';
+import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
+import { generateProFormaPDF } from '../utils/pdfGenerator';
 
 interface BRRRInputs {
   purchasePrice: string;
@@ -30,7 +32,7 @@ interface BRRRResults {
 }
 
 export default function BRRRCalculator() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [inputs, setInputs] = useState<BRRRInputs>({
     purchasePrice: '150000',
     rehabBudget: '30000',
@@ -46,6 +48,7 @@ export default function BRRRCalculator() {
   });
   const [results, setResults] = useState<BRRRResults | null>(null);
   const [currentOutputs, setCurrentOutputs] = useState<Record<string, any>>({});
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const calculateResults = (): BRRRResults => {
     const purchasePrice = parseFloat(inputs.purchasePrice) || 0;
@@ -138,17 +141,65 @@ export default function BRRRCalculator() {
     return value.toFixed(2) + '%';
   };
 
+  const handleDownloadPDF = () => {
+    const isPremium = profile?.subscription_status === 'active'
+
+    if (!isPremium) {
+      setShowPremiumModal(true)
+      return
+    }
+
+    if (!results) return
+
+    generateProFormaPDF({
+      toolName: 'BRRR Calculator',
+      inputs: {
+        'Purchase Price': formatCurrency(parseFloat(inputs.purchasePrice) || 0),
+        'Rehab Budget': formatCurrency(parseFloat(inputs.rehabBudget) || 0),
+        'After Repair Value (ARV)': formatCurrency(parseFloat(inputs.afterRepairValue) || 0),
+        'Monthly Rental Income': formatCurrency(parseFloat(inputs.monthlyRentalIncome) || 0),
+        'Vacancy Rate': `${inputs.vacancyRate}%`,
+        'Annual Property Tax': formatCurrency(parseFloat(inputs.annualPropertyTax) || 0),
+        'Annual Insurance': formatCurrency(parseFloat(inputs.annualInsurance) || 0),
+        'Annual Maintenance': formatCurrency(parseFloat(inputs.annualMaintenance) || 0),
+        'Refinance LTV': `${inputs.refinanceLTV}%`,
+        'Refinance Interest Rate': `${inputs.refinanceInterestRate}%`,
+        'Refinance Loan Term': `${inputs.refinanceLoanTerm} years`,
+      },
+      outputs: {
+        'Total Cash Invested': formatCurrency(results.totalCashInvested),
+        'Refinance Loan Amount': formatCurrency(results.refinanceLoanAmount),
+        'Cash Recouped at Refinance': formatCurrency(results.cashRecouped),
+        'Cash Left in Deal': formatCurrency(results.cashLeftInDeal),
+        'Monthly Refinance Mortgage': formatCurrency(results.monthlyRefinanceMortgage),
+        'Total Monthly Expenses': formatCurrency(results.totalMonthlyExpenses),
+        'Monthly Cash Flow': formatCurrency(results.monthlyCashFlow),
+        'Annual Cash Flow': formatCurrency(results.annualCashFlow),
+        'Cash-on-Cash Return': results.cashOnCashReturn === 'infinite' ? 'Infinite' : formatPercent(results.cashOnCashReturn),
+      },
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-20 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20">
-            <RefreshCw className="h-8 w-8 text-blue-400" />
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20">
+              <RefreshCw className="h-8 w-8 text-blue-400" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-white">BRRR Calculator</h1>
+              <p className="text-slate-400 mt-1">Buy, Rehab, Rent, Refinance, Repeat</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-4xl font-bold text-white">BRRR Calculator</h1>
-            <p className="text-slate-400 mt-1">Buy, Rehab, Rent, Refinance, Repeat</p>
-          </div>
+          <button
+            onClick={handleDownloadPDF}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+          >
+            <FileDown className="h-5 w-5" />
+            Download Pro Forma PDF
+          </button>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -465,6 +516,11 @@ export default function BRRRCalculator() {
           </div>
         </div>
       </div>
+
+      <PremiumFeatureModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   );
 }

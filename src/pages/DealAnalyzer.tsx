@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { DollarSign, TrendingUp, TrendingDown, Calculator, Percent, Hop as Home, Clock } from 'lucide-react'
+import { DollarSign, TrendingUp, TrendingDown, Calculator, Percent, Hop as Home, Clock, FileDown } from 'lucide-react'
 import { ScenarioPanel } from '../components/ScenarioPanel'
+import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
+import { generateProFormaPDF } from '../utils/pdfGenerator'
 
 type LoanTerm = 15 | 20 | 25 | 30
 
 export function DealAnalyzer() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const navigate = useNavigate()
 
   const [purchasePrice, setPurchasePrice] = useState(300000)
@@ -20,6 +22,7 @@ export function DealAnalyzer() {
   const [annualInsurance, setAnnualInsurance] = useState(1200)
   const [annualMaintenance, setAnnualMaintenance] = useState(3000)
   const [annualPropertyManagementFee, setAnnualPropertyManagementFee] = useState(10)
+  const [showPremiumModal, setShowPremiumModal] = useState(false)
 
   useEffect(() => {
     if (!user) {
@@ -158,12 +161,58 @@ export function DealAnalyzer() {
 
   const isPositiveCashFlow = monthlyCashFlow > 0
 
+  const handleDownloadPDF = () => {
+    const isPremium = profile?.subscription_status === 'active'
+
+    if (!isPremium) {
+      setShowPremiumModal(true)
+      return
+    }
+
+    generateProFormaPDF({
+      toolName: 'Investment Deal Analyzer',
+      inputs: {
+        'Purchase Price': formatCurrency(purchasePrice),
+        'Down Payment': formatCurrency(downPayment),
+        'Interest Rate': `${interestRate}%`,
+        'Loan Term': `${loanTerm} years`,
+        'Monthly Rental Income': formatCurrencyDecimal(monthlyRentalIncome),
+        'Vacancy Rate': `${vacancyRate}%`,
+        'Annual Property Tax': formatCurrency(annualPropertyTax),
+        'Annual Insurance': formatCurrency(annualInsurance),
+        'Annual Maintenance': formatCurrency(annualMaintenance),
+        'Property Management Fee': `${annualPropertyManagementFee}%`,
+      },
+      outputs: {
+        'Monthly Cash Flow': formatCurrencyDecimal(monthlyCashFlow),
+        'Annual Cash Flow': formatCurrency(annualCashFlow),
+        'Cap Rate': formatPercent(capRate),
+        'Cash on Cash Return': formatPercent(cashOnCashReturn),
+        'Total Cash Invested': formatCurrency(totalCashInvested),
+        'Monthly Mortgage (P&I)': formatCurrencyDecimal(monthlyMortgage),
+        'Total Monthly Expenses': formatCurrencyDecimal(totalMonthlyExpenses),
+        'Loan Amount': formatCurrency(loanAmount),
+      },
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Investment Deal Analyzer</h1>
-          <p className="text-gray-400">Analyze real estate investment opportunities and cash flow</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-2">Investment Deal Analyzer</h1>
+              <p className="text-gray-400">Analyze real estate investment opportunities and cash flow</p>
+            </div>
+            <button
+              onClick={handleDownloadPDF}
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+            >
+              <FileDown className="h-5 w-5" />
+              Download Pro Forma PDF
+            </button>
+          </div>
         </div>
 
         <div className="mb-6">
@@ -479,6 +528,11 @@ export function DealAnalyzer() {
           </div>
         </div>
       </div>
+
+      <PremiumFeatureModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   )
 }

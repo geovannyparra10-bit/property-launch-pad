@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Hop as Home, DollarSign, Users, TrendingUp } from 'lucide-react';
+import { Hop as Home, DollarSign, Users, TrendingUp, FileDown } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { ScenarioPanel } from '../components/ScenarioPanel';
+import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
+import { generateProFormaPDF } from '../utils/pdfGenerator';
 
 interface HouseHackInputs {
   purchasePrice: string;
@@ -27,7 +29,7 @@ interface HouseHackResults {
 }
 
 export default function HouseHackCalculator() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [inputs, setInputs] = useState<HouseHackInputs>({
     purchasePrice: '400000',
     downPayment: '20',
@@ -43,6 +45,7 @@ export default function HouseHackCalculator() {
   });
   const [results, setResults] = useState<HouseHackResults | null>(null);
   const [currentOutputs, setCurrentOutputs] = useState<Record<string, any>>({});
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const calculateResults = (): HouseHackResults => {
     const price = parseFloat(inputs.purchasePrice) || 0;
@@ -139,17 +142,62 @@ export default function HouseHackCalculator() {
     }
   };
 
+  const handleDownloadPDF = () => {
+    const isPremium = profile?.subscription_status === 'active'
+
+    if (!isPremium) {
+      setShowPremiumModal(true)
+      return
+    }
+
+    if (!results) return
+
+    generateProFormaPDF({
+      toolName: 'House Hack Calculator',
+      inputs: {
+        'Purchase Price': formatCurrency(parseFloat(inputs.purchasePrice) || 0),
+        'Down Payment': `${inputs.downPayment}%`,
+        'Interest Rate': `${inputs.interestRate}%`,
+        'Loan Term': `${inputs.loanTerm} years`,
+        'Total Units': inputs.totalUnits,
+        'Units Rented Out': inputs.rentedUnits,
+        'Monthly Rent per Unit': formatCurrency(parseFloat(inputs.monthlyRentPerUnit) || 0),
+        'Monthly Property Tax': formatCurrency(parseFloat(inputs.monthlyPropertyTax) || 0),
+        'Monthly Insurance': formatCurrency(parseFloat(inputs.monthlyInsurance) || 0),
+        'Monthly Maintenance': formatCurrency(parseFloat(inputs.monthlyMaintenance) || 0),
+        'Monthly Utilities': formatCurrency(parseFloat(inputs.monthlyUtilities) || 0),
+      },
+      outputs: {
+        'Total Rental Income': formatCurrency(results.totalRentalIncome),
+        'Mortgage Payment': formatCurrency(results.mortgagePayment),
+        'Total Monthly Expenses': formatCurrency(results.totalMonthlyExpenses),
+        'Effective Housing Cost': formatCurrency(Math.max(0, results.effectiveHousingCost)),
+        'Monthly Cash Flow (All Units Rented)': formatCurrency(results.monthlyCashFlow),
+        'Living Status': getLivingStatusText(results.livingStatus),
+      },
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-20 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20">
-            <Home className="h-8 w-8 text-blue-400" />
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-blue-500/10 rounded-xl border border-blue-500/20">
+              <Home className="h-8 w-8 text-blue-400" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-white">House Hack Calculator</h1>
+              <p className="text-slate-400 mt-1">Calculate your effective housing cost with rental income</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-4xl font-bold text-white">House Hack Calculator</h1>
-            <p className="text-slate-400 mt-1">Calculate your effective housing cost with rental income</p>
-          </div>
+          <button
+            onClick={handleDownloadPDF}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+          >
+            <FileDown className="h-5 w-5" />
+            Download Pro Forma PDF
+          </button>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -419,6 +467,11 @@ export default function HouseHackCalculator() {
           </div>
         </div>
       </div>
+
+      <PremiumFeatureModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   );
 }

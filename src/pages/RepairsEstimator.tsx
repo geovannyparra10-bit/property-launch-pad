@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
-import { Wrench, Hop as Home, DollarSign, TrendingUp } from 'lucide-react';
+import { Wrench, Hop as Home, DollarSign, TrendingUp, FileDown } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import { ScenarioPanel } from '../components/ScenarioPanel';
+import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
+import { generateProFormaPDF } from '../utils/pdfGenerator';
 
 interface RepairCategory {
   id: string;
@@ -13,13 +15,14 @@ interface RepairCategory {
 }
 
 export default function RepairsEstimator() {
-  const { user } = useAuth();
+  const { user, profile } = useAuth();
   const [squareFootage, setSquareFootage] = useState('1500');
   const [propertyAge, setPropertyAge] = useState('20');
   const [condition, setCondition] = useState<'Good' | 'Fair' | 'Poor'>('Fair');
   const [bathrooms, setBathrooms] = useState('2');
   const [viewMode, setViewMode] = useState<'DIY' | 'Pro'>('Pro');
   const [currentOutputs, setCurrentOutputs] = useState<Record<string, any>>({});
+  const [showPremiumModal, setShowPremiumModal] = useState(false);
 
   const [categories, setCategories] = useState<RepairCategory[]>([
     { id: 'roof', name: 'Roof', diyRate: 3.50, proRate: 7.00, type: 'sqft', checked: true },
@@ -149,17 +152,63 @@ export default function RepairsEstimator() {
     }).format(value);
   };
 
+  const handleDownloadPDF = () => {
+    const isPremium = profile?.subscription_status === 'active'
+
+    if (!isPremium) {
+      setShowPremiumModal(true)
+      return
+    }
+
+    const selectedCategories: Record<string, string> = {}
+    categories.forEach(cat => {
+      if (cat.checked) {
+        selectedCategories[cat.name] = formatCurrency(calculateCategoryCost(cat, viewMode === 'DIY'))
+      }
+    })
+
+    generateProFormaPDF({
+      toolName: 'Repairs Estimator',
+      inputs: {
+        'Square Footage': `${squareFootage} sq ft`,
+        'Property Age': `${propertyAge} years`,
+        'Condition': condition,
+        'Number of Bathrooms': bathrooms,
+        'View Mode': viewMode,
+      },
+      outputs: {
+        ...selectedCategories,
+        'Subtotal (Before Multipliers)': formatCurrency(viewMode === 'DIY' ? totals.diySubtotal : totals.proSubtotal),
+        'Condition Multiplier': `${totals.conditionMultiplier.toFixed(1)}x`,
+        'Age Multiplier': `${totals.ageMultiplier.toFixed(1)}x`,
+        [`${viewMode} Total`]: formatCurrency(viewMode === 'DIY' ? totals.diyTotal : totals.proTotal),
+        'DIY Total': formatCurrency(totals.diyTotal),
+        'Pro Total': formatCurrency(totals.proTotal),
+        'Savings with DIY': formatCurrency(totals.proTotal - totals.diyTotal),
+      },
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 pt-20 pb-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center gap-3 mb-8">
-          <div className="p-3 bg-cyan-500/10 rounded-xl border border-cyan-500/20">
-            <Wrench className="h-8 w-8 text-cyan-400" />
+        <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center gap-3">
+            <div className="p-3 bg-cyan-500/10 rounded-xl border border-cyan-500/20">
+              <Wrench className="h-8 w-8 text-cyan-400" />
+            </div>
+            <div>
+              <h1 className="text-4xl font-bold text-white">Repairs Estimator</h1>
+              <p className="text-slate-400 mt-1">Estimate property repair costs with DIY vs Pro pricing</p>
+            </div>
           </div>
-          <div>
-            <h1 className="text-4xl font-bold text-white">Repairs Estimator</h1>
-            <p className="text-slate-400 mt-1">Estimate property repair costs with DIY vs Pro pricing</p>
-          </div>
+          <button
+            onClick={handleDownloadPDF}
+            className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+          >
+            <FileDown className="h-5 w-5" />
+            Download Pro Forma PDF
+          </button>
         </div>
 
         <div className="grid lg:grid-cols-3 gap-8">
@@ -398,6 +447,11 @@ export default function RepairsEstimator() {
           </div>
         </div>
       </div>
+
+      <PremiumFeatureModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   );
 }

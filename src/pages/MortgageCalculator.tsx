@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { DollarSign, Percent, Calendar } from 'lucide-react'
+import { DollarSign, Percent, Calendar, FileDown } from 'lucide-react'
 import { ScenarioPanel } from '../components/ScenarioPanel'
+import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
+import { generateProFormaPDF } from '../utils/pdfGenerator'
 
 export function MortgageCalculator() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const navigate = useNavigate()
 
   const [homePrice, setHomePrice] = useState(300000)
@@ -14,6 +16,7 @@ export function MortgageCalculator() {
   const [loanTerm, setLoanTerm] = useState(30)
   const [propertyTaxRate, setPropertyTaxRate] = useState(1.2)
   const [annualInsurance, setAnnualInsurance] = useState(1200)
+  const [showPremiumModal, setShowPremiumModal] = useState(false)
 
   useEffect(() => {
     if (!user) {
@@ -87,14 +90,58 @@ export function MortgageCalculator() {
     monthlyPITI,
     totalPaid,
     loanAmount,
+    principalAndInterest,
+    monthlyPropertyTax,
+    monthlyInsurance,
+  }
+
+  const handleDownloadPDF = () => {
+    const isPremium = profile?.subscription_status === 'active'
+
+    if (!isPremium) {
+      setShowPremiumModal(true)
+      return
+    }
+
+    generateProFormaPDF({
+      toolName: 'Mortgage Calculator',
+      inputs: {
+        'Home Price': formatCurrency(homePrice),
+        'Down Payment': formatCurrency(downPayment),
+        'Interest Rate': `${interestRate}%`,
+        'Loan Term': `${loanTerm} years`,
+        'Property Tax Rate': `${propertyTaxRate}%`,
+        'Annual Insurance': formatCurrency(annualInsurance),
+      },
+      outputs: {
+        'Monthly Payment (PITI)': formatCurrencyDecimal(monthlyPITI),
+        'Principal & Interest': formatCurrencyDecimal(principalAndInterest),
+        'Property Tax (Monthly)': formatCurrencyDecimal(monthlyPropertyTax),
+        'Insurance (Monthly)': formatCurrencyDecimal(monthlyInsurance),
+        'Loan Amount': formatCurrency(loanAmount),
+        'Down Payment': formatCurrency(clampedDownPayment),
+        'Total Paid Over Loan Term': formatCurrency(totalPaid),
+      },
+    })
   }
 
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Mortgage Calculator</h1>
-          <p className="text-gray-400">Calculate your monthly mortgage payment and total costs</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-2">Mortgage Calculator</h1>
+              <p className="text-gray-400">Calculate your monthly mortgage payment and total costs</p>
+            </div>
+            <button
+              onClick={handleDownloadPDF}
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+            >
+              <FileDown className="h-5 w-5" />
+              Download Pro Forma PDF
+            </button>
+          </div>
         </div>
 
         <div className="mb-6">
@@ -273,6 +320,11 @@ export function MortgageCalculator() {
           </div>
         </div>
       </div>
+
+      <PremiumFeatureModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   )
 }

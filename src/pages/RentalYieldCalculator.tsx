@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { DollarSign, Percent, TrendingUp, TrendingDown } from 'lucide-react'
+import { DollarSign, Percent, TrendingUp, TrendingDown, FileDown } from 'lucide-react'
 import { ScenarioPanel } from '../components/ScenarioPanel'
+import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
+import { generateProFormaPDF } from '../utils/pdfGenerator'
 
 export function RentalYieldCalculator() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const navigate = useNavigate()
 
   const [propertyPrice, setPropertyPrice] = useState(300000)
@@ -14,6 +16,7 @@ export function RentalYieldCalculator() {
   const [annualInsurance, setAnnualInsurance] = useState(1200)
   const [propertyTaxRate, setPropertyTaxRate] = useState(1.2)
   const [vacancyRate, setVacancyRate] = useState(5)
+  const [showPremiumModal, setShowPremiumModal] = useState(false)
 
   useEffect(() => {
     if (!user) {
@@ -80,12 +83,53 @@ export function RentalYieldCalculator() {
     annualCashFlow,
   }
 
+  const handleDownloadPDF = () => {
+    const isPremium = profile?.subscription_status === 'active'
+
+    if (!isPremium) {
+      setShowPremiumModal(true)
+      return
+    }
+
+    generateProFormaPDF({
+      toolName: 'Rental Yield Calculator',
+      inputs: {
+        'Property Price': formatCurrency(propertyPrice),
+        'Monthly Rental Income': formatCurrencyDecimal(monthlyRentalIncome),
+        'Annual Maintenance Costs': formatCurrency(annualMaintenanceCosts),
+        'Annual Insurance': formatCurrency(annualInsurance),
+        'Property Tax Rate': `${propertyTaxRate}%`,
+        'Vacancy Rate': `${vacancyRate}%`,
+      },
+      outputs: {
+        'Gross Yield': formatPercent(grossYield),
+        'Net Yield': formatPercent(netYield),
+        'Monthly Cash Flow': formatCurrencyDecimal(monthlyCashFlow),
+        'Annual Cash Flow': formatCurrency(annualCashFlow),
+        'Gross Annual Rent': formatCurrency(annualRent),
+        'Effective Annual Rent': formatCurrency(effectiveAnnualRent),
+        'Total Annual Costs': formatCurrency(totalAnnualCosts),
+      },
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Rental Yield Calculator</h1>
-          <p className="text-gray-400">Calculate your rental property returns and cash flow</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-2">Rental Yield Calculator</h1>
+              <p className="text-gray-400">Calculate your rental property returns and cash flow</p>
+            </div>
+            <button
+              onClick={handleDownloadPDF}
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+            >
+              <FileDown className="h-5 w-5" />
+              Download Pro Forma PDF
+            </button>
+          </div>
         </div>
 
         <div className="mb-6">
@@ -302,6 +346,11 @@ export function RentalYieldCalculator() {
           </div>
         </div>
       </div>
+
+      <PremiumFeatureModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   )
 }

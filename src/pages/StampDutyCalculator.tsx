@@ -1,19 +1,22 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { DollarSign, FileText, Hop as Home, Percent } from 'lucide-react'
+import { DollarSign, FileText, Hop as Home, Percent, FileDown } from 'lucide-react'
 import { ScenarioPanel } from '../components/ScenarioPanel'
+import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
+import { generateProFormaPDF } from '../utils/pdfGenerator'
 
 type PropertyType = 'primary' | 'investment' | 'second_home'
 
 export function StampDutyCalculator() {
-  const { user } = useAuth()
+  const { user, profile } = useAuth()
   const navigate = useNavigate()
 
   const [propertyPrice, setPropertyPrice] = useState(350000)
   const [stateRegion, setStateRegion] = useState('California')
   const [propertyType, setPropertyType] = useState<PropertyType>('primary')
   const [isFirstTimeBuyer, setIsFirstTimeBuyer] = useState(false)
+  const [showPremiumModal, setShowPremiumModal] = useState(false)
 
   useEffect(() => {
     if (!user) {
@@ -107,12 +110,48 @@ export function StampDutyCalculator() {
     effectiveRate,
   }
 
+  const handleDownloadPDF = () => {
+    const isPremium = profile?.subscription_status === 'active'
+
+    if (!isPremium) {
+      setShowPremiumModal(true)
+      return
+    }
+
+    generateProFormaPDF({
+      toolName: 'Stamp Duty Calculator',
+      inputs: {
+        'Property Price': formatCurrency(propertyPrice),
+        'State/Region': stateRegion,
+        'Property Type': propertyType === 'primary' ? 'Primary Residence' : propertyType === 'investment' ? 'Investment Property' : 'Second Home',
+        'First-Time Buyer': isFirstTimeBuyer ? 'Yes' : 'No',
+      },
+      outputs: {
+        'Total Stamp Duty': formatCurrencyDecimal(duty),
+        'Effective Rate': formatPercent(effectiveRate),
+        'Property Price': formatCurrency(propertyPrice),
+        'Total Purchase Cost': formatCurrency(propertyPrice + duty),
+      },
+    })
+  }
+
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
-          <h1 className="text-3xl font-bold text-white mb-2">Stamp Duty Calculator</h1>
-          <p className="text-gray-400">Calculate property transfer taxes and stamp duty costs</p>
+          <div className="flex items-center justify-between">
+            <div>
+              <h1 className="text-3xl font-bold text-white mb-2">Stamp Duty Calculator</h1>
+              <p className="text-gray-400">Calculate property transfer taxes and stamp duty costs</p>
+            </div>
+            <button
+              onClick={handleDownloadPDF}
+              className="flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-xl font-semibold hover:from-blue-700 hover:to-blue-800 transition-all shadow-lg"
+            >
+              <FileDown className="h-5 w-5" />
+              Download Pro Forma PDF
+            </button>
+          </div>
         </div>
 
         <div className="mb-6">
@@ -315,6 +354,11 @@ export function StampDutyCalculator() {
           </div>
         </div>
       </div>
+
+      <PremiumFeatureModal
+        isOpen={showPremiumModal}
+        onClose={() => setShowPremiumModal(false)}
+      />
     </div>
   )
 }
