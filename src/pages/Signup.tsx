@@ -17,6 +17,9 @@ export function Signup() {
     setLoading(true)
 
     try {
+      console.log('[Signup] Supabase URL:', import.meta.env.VITE_SUPABASE_URL)
+      console.log('[Signup] Attempting signup for email:', email)
+
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -26,6 +29,8 @@ export function Signup() {
           },
         },
       })
+
+      console.log('[Signup] Full response:', { data, error })
 
       if (error) throw error
 
