@@ -27,6 +27,7 @@ import { Settings } from './pages/Settings'
 import { Glossary } from './pages/Glossary'
 import { DocumentAnalyzer } from './pages/DocumentAnalyzer'
 import { ARVCompsAnalyzer } from './pages/ARVCompsAnalyzer'
+import { OwnerFinanceCalculator } from './pages/OwnerFinanceCalculator'
 import AdminDashboard from './pages/AdminDashboard'
 import Disclaimer from './pages/Disclaimer'
 import { Learn } from './pages/Learn'
@@ -64,6 +65,7 @@ function AppRoutes() {
         <Route path="/tools/compare" element={<ProtectedRoute><DealComparison /></ProtectedRoute>} />
         <Route path="/tools/document_analyzer" element={<DocumentAnalyzer />} />
         <Route path="/tools/arv_comps" element={<ARVCompsAnalyzer />} />
+        <Route path="/tools/owner_finance" element={<OwnerFinanceCalculator />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/glossary" element={<Glossary />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
