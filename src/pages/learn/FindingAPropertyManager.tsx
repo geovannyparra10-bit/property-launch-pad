@@ -154,8 +154,8 @@ function ChecklistSection() {
               <Crown className="h-4 w-4 text-amber-400 flex-shrink-0 mt-0.5" />
               <p className="text-amber-300 text-sm">
                 {language === 'en'
-                  ? <>Upgrade to Premium to download a clean, printable PDF of this checklist with space for notes. <a href={getPaymentLink(profile?.email)} className="underline hover:text-amber-200">Upgrade now.</a></>
-                  : <>Actualice a Premium para descargar un PDF imprimible con espacio para notas. <a href={getPaymentLink(profile?.email)} className="underline hover:text-amber-200">Actualizar ahora.</a></>
+                  ? <>Upgrade to Premium to download a clean, printable PDF of this checklist with space for notes. <a href={getPaymentLink()} className="underline hover:text-amber-200">Upgrade now.</a></>
+                  : <>Actualice a Premium para descargar un PDF imprimible con espacio para notas. <a href={getPaymentLink()} className="underline hover:text-amber-200">Actualizar ahora.</a></>
                 }
               </p>
             </div>

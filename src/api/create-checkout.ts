@@ -25,7 +25,6 @@ export async function createCheckoutSession(userId: string): Promise<string> {
     const data = await response.json()
     return data.url
   } catch {
-    const { data: { session } } = await supabase.auth.getSession()
-    return getPaymentLink(session?.user?.email)
+    return getPaymentLink()
   }
 }

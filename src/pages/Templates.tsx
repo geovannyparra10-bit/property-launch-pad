@@ -77,7 +77,7 @@ export function Templates() {
                 {language === 'en'
                   ? 'Templates are a Premium feature. '
                   : 'Las plantillas son una función Premium. '}
-                <a href={getPaymentLink(user?.email)} className="underline hover:text-amber-200 transition-colors">
+                <a href={getPaymentLink()} className="underline hover:text-amber-200 transition-colors">
                   {language === 'en' ? 'Upgrade to access.' : 'Actualizar para acceder.'}
                 </a>
               </span>

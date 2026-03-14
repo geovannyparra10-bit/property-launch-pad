@@ -1,5 +1,4 @@
 import { X, Crown } from 'lucide-react';
-import { useAuth } from '../contexts/AuthContext';
 import { getPaymentLink } from '../lib/paymentLink';
 
 interface PremiumFeatureModalProps {
@@ -9,13 +8,12 @@ interface PremiumFeatureModalProps {
 }
 
 export function PremiumFeatureModal({ isOpen, onClose, featureName = 'Pro Forma PDFs' }: PremiumFeatureModalProps) {
-  const { user } = useAuth();
 
   if (!isOpen) return null;
 
   const handleUpgrade = () => {
     onClose();
-    window.location.href = getPaymentLink(user?.email);
+    window.location.href = getPaymentLink();
   };
 
   return (

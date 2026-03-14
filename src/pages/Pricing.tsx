@@ -1,26 +1,17 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
-import { Check, Loader as Loader2 } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
-import { createCheckoutSession } from '../api/create-checkout'
+import { STRIPE_PAYMENT_LINK } from '../lib/paymentLink'
 
 export function Pricing() {
   const { user } = useAuth()
-  const [loading, setLoading] = useState(false)
 
-  const handleUpgrade = async () => {
-    setLoading(true)
-    try {
-      if (!user) {
-        window.location.href = '/signup'
-        return
-      }
-      const url = await createCheckoutSession(user.id)
-      window.location.href = url
-    } catch (err) {
-      console.error('Checkout error:', err)
-      setLoading(false)
+  const handleUpgrade = () => {
+    if (!user) {
+      window.location.href = '/signup'
+      return
     }
+    window.location.href = STRIPE_PAYMENT_LINK
   }
 
   return (
@@ -122,17 +113,9 @@ export function Pricing() {
 
             <button
               onClick={handleUpgrade}
-              disabled={loading}
-              className="flex items-center justify-center gap-2 w-full text-center bg-blue-600 hover:bg-blue-700 disabled:bg-blue-800 disabled:cursor-not-allowed text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-lg"
+              className="w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-lg"
             >
-              {loading ? (
-                <>
-                  <Loader2 className="h-4 w-4 animate-spin" />
-                  Redirecting...
-                </>
-              ) : (
-                'Upgrade to Premium'
-              )}
+              Upgrade to Premium
             </button>
           </div>
         </div>

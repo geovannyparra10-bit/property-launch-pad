@@ -94,7 +94,7 @@ export function OfferLetter() {
             <Crown className="h-4 w-4 text-amber-400 flex-shrink-0" />
             <span className="text-amber-300 text-sm">
               {t('This is a Premium template. ', 'Esta es una plantilla Premium. ')}
-              <a href={getPaymentLink(profile?.email)} className="underline hover:text-amber-200 transition-colors">
+              <a href={getPaymentLink()} className="underline hover:text-amber-200 transition-colors">
                 {t('Upgrade to download.', 'Actualiza para descargar.')}
               </a>
             </span>
