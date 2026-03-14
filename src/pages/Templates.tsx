@@ -14,6 +14,14 @@ const templates = [
     descEs: 'Un contrato de compra con financiamiento del vendedor, términos de pago globo, cláusulas de incumplimiento y lenguaje legal completo. Disponible en inglés y español.',
     path: '/templates/owner-carry',
   },
+  {
+    slug: 'lease-agreement',
+    titleEn: 'Residential Lease Agreement',
+    titleEs: 'Contrato de Arrendamiento Residencial',
+    descEn: 'A comprehensive landlord-tenant lease with rent terms, security deposit, pet policy, utilities, maintenance responsibilities, and eviction clauses. Available in English and Spanish.',
+    descEs: 'Un contrato de arrendamiento completo con términos de renta, depósito en garantía, política de mascotas, servicios, responsabilidades de mantenimiento y cláusulas de desalojo. Disponible en inglés y español.',
+    path: '/templates/lease-agreement',
+  },
 ]
 
 export function Templates() {
