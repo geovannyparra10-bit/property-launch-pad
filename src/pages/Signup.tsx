@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
+import { STRIPE_PAYMENT_LINK } from '../lib/paymentLink'
 
 export function Signup() {
   const [fullName, setFullName] = useState('')
@@ -9,6 +10,7 @@ export function Signup() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
+  const [searchParams] = useSearchParams()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -27,7 +29,12 @@ export function Signup() {
       })
 
       if (error) throw error
-      navigate('/dashboard')
+
+      if (searchParams.get('redirect') === 'pricing') {
+        window.location.href = STRIPE_PAYMENT_LINK
+      } else {
+        navigate('/dashboard')
+      }
     } catch (err: any) {
       setError(err.message || 'Failed to sign up')
     } finally {

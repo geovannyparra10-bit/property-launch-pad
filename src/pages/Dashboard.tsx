@@ -80,11 +80,6 @@ export function Dashboard() {
       return
     }
 
-    if (!profile.onboarding_completed) {
-      navigate('/onboarding')
-      return
-    }
-
     setLoading(false)
   }
 

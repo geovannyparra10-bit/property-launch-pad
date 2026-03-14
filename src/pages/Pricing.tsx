@@ -4,15 +4,9 @@ import { useAuth } from '../contexts/AuthContext'
 import { STRIPE_PAYMENT_LINK } from '../lib/paymentLink'
 
 export function Pricing() {
-  const { user } = useAuth()
+  const { user, loading } = useAuth()
 
-  const handleUpgrade = () => {
-    if (!user) {
-      window.location.href = '/signup'
-      return
-    }
-    window.location.href = STRIPE_PAYMENT_LINK
-  }
+  const upgradeHref = !loading && user ? STRIPE_PAYMENT_LINK : '/signup?redirect=pricing'
 
   return (
     <div className="min-h-screen bg-gray-900">
@@ -111,12 +105,12 @@ export function Pricing() {
               </li>
             </ul>
 
-            <button
-              onClick={handleUpgrade}
-              className="w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-lg"
+            <a
+              href={upgradeHref}
+              className="block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-lg"
             >
               Upgrade to Premium
-            </button>
+            </a>
           </div>
         </div>
 
