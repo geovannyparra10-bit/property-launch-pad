@@ -1,12 +1,14 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { Hop as Home, LogOut, Settings, Shield, TrendingUp, BookOpen } from 'lucide-react'
+import { useLanguage } from '../contexts/LanguageContext'
+import { Hop as Home, LogOut, Settings, Shield, TrendingUp, BookOpen, GraduationCap, Globe } from 'lucide-react'
 
 export function Navbar() {
   const { user, profile, signOut } = useAuth()
+  const { language, setLanguage } = useLanguage()
   const location = useLocation()
 
-  const isActive = (path: string) => location.pathname === path
+  const isActive = (path: string) => location.pathname === path || location.pathname.startsWith(path + '/')
 
   return (
     <nav className="bg-gray-800 border-b border-gray-600 shadow-lg">
@@ -14,89 +16,115 @@ export function Navbar() {
         <div className="flex justify-between h-16">
           <div className="flex items-center">
             <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
-              <Home className="h-6 w-6 text-indigo-400" />
+              <Home className="h-6 w-6 text-blue-400" />
               <span className="text-xl font-bold text-white">Property Launch Pad</span>
             </Link>
 
-            {user && (
-              <div className="hidden md:ml-10 md:flex items-baseline space-x-4">
-                <Link
-                  to="/dashboard"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive('/dashboard')
-                      ? 'bg-indigo-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  to="/tools"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive('/tools')
-                      ? 'bg-indigo-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  Tools
-                </Link>
-                <Link
-                  to="/tools/compare"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
-                    isActive('/tools/compare')
-                      ? 'bg-indigo-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  <TrendingUp className="h-4 w-4" />
-                  Compare
-                </Link>
-                <Link
-                  to="/pricing"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
-                    isActive('/pricing')
-                      ? 'bg-indigo-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  Pricing
-                </Link>
-                <Link
-                  to="/glossary"
-                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
-                    isActive('/glossary')
-                      ? 'bg-indigo-600 text-white'
-                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
-                  }`}
-                >
-                  <BookOpen className="h-4 w-4" />
-                  Glossary
-                </Link>
-                {profile?.is_admin && (
+            <div className="hidden md:ml-8 md:flex items-baseline space-x-1">
+              {user && (
+                <>
                   <Link
-                    to="/admin"
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
-                      isActive('/admin')
-                        ? 'bg-indigo-600 text-white'
+                    to="/dashboard"
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      isActive('/dashboard')
+                        ? 'bg-blue-600 text-white'
                         : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                     }`}
                   >
-                    <Shield className="h-4 w-4" />
-                    Admin
+                    {language === 'en' ? 'Dashboard' : 'Panel'}
                   </Link>
-                )}
-              </div>
-            )}
+                  <Link
+                    to="/tools"
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      isActive('/tools')
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    }`}
+                  >
+                    {language === 'en' ? 'Tools' : 'Herramientas'}
+                  </Link>
+                  <Link
+                    to="/tools/compare"
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
+                      isActive('/tools/compare')
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    }`}
+                  >
+                    <TrendingUp className="h-4 w-4" />
+                    {language === 'en' ? 'Compare' : 'Comparar'}
+                  </Link>
+                  <Link
+                    to="/pricing"
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors ${
+                      isActive('/pricing')
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    }`}
+                  >
+                    {language === 'en' ? 'Pricing' : 'Precios'}
+                  </Link>
+                </>
+              )}
+              <Link
+                to="/learn"
+                className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
+                  location.pathname === '/learn' || location.pathname.startsWith('/learn/')
+                    ? 'bg-blue-600 text-white'
+                    : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                }`}
+              >
+                <GraduationCap className="h-4 w-4" />
+                {language === 'en' ? 'Learn' : 'Aprender'}
+              </Link>
+              {user && (
+                <>
+                  <Link
+                    to="/glossary"
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
+                      isActive('/glossary')
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    }`}
+                  >
+                    <BookOpen className="h-4 w-4" />
+                    {language === 'en' ? 'Glossary' : 'Glosario'}
+                  </Link>
+                  {profile?.is_admin && (
+                    <Link
+                      to="/admin"
+                      className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
+                        isActive('/admin')
+                          ? 'bg-blue-600 text-white'
+                          : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                      }`}
+                    >
+                      <Shield className="h-4 w-4" />
+                      Admin
+                    </Link>
+                  )}
+                </>
+              )}
+            </div>
           </div>
 
-          <div className="flex items-center space-x-2 sm:space-x-4">
+          <div className="flex items-center space-x-2 sm:space-x-3">
+            <button
+              onClick={() => setLanguage(language === 'en' ? 'es' : 'en')}
+              className="flex items-center gap-1.5 text-gray-300 hover:text-white hover:bg-gray-700 px-2.5 py-1.5 rounded-md text-sm font-medium transition-colors"
+              title={language === 'en' ? 'Switch to Spanish' : 'Cambiar a Inglés'}
+            >
+              <Globe className="h-4 w-4" />
+              <span className="text-xs font-semibold">{language === 'en' ? 'ES' : 'EN'}</span>
+            </button>
+
             {user ? (
               <>
                 <Link
                   to="/settings"
                   className={`p-2 rounded-md transition-colors ${
                     isActive('/settings')
-                      ? 'bg-indigo-600 text-white'
+                      ? 'bg-blue-600 text-white'
                       : 'text-gray-300 hover:bg-gray-700 hover:text-white'
                   }`}
                 >
@@ -115,13 +143,13 @@ export function Navbar() {
                   to="/login"
                   className="text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-colors"
                 >
-                  Log in
+                  {language === 'en' ? 'Log in' : 'Iniciar sesión'}
                 </Link>
                 <Link
                   to="/signup"
-                  className="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
                 >
-                  Sign up
+                  {language === 'en' ? 'Sign up' : 'Registrarse'}
                 </Link>
               </>
             )}

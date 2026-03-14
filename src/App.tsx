@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import { ToastProvider } from './contexts/ToastContext'
+import { LanguageProvider } from './contexts/LanguageContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
 import { PageTransition } from './components/PageTransition'
 import { Navbar } from './components/Navbar'
@@ -28,6 +29,10 @@ import { DocumentAnalyzer } from './pages/DocumentAnalyzer'
 import { ARVCompsAnalyzer } from './pages/ARVCompsAnalyzer'
 import AdminDashboard from './pages/AdminDashboard'
 import Disclaimer from './pages/Disclaimer'
+import { Learn } from './pages/Learn'
+import { HouseHacking101 } from './pages/learn/HouseHacking101'
+import { BRRRStrategy } from './pages/learn/BRRRStrategy'
+import { FixAndFlip } from './pages/learn/FixAndFlip'
 
 function AppRoutes() {
   const location = useLocation()
@@ -58,6 +63,10 @@ function AppRoutes() {
         <Route path="/glossary" element={<Glossary />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
+        <Route path="/learn" element={<Learn />} />
+        <Route path="/learn/house-hacking-101" element={<HouseHacking101 />} />
+        <Route path="/learn/brrr-strategy" element={<BRRRStrategy />} />
+        <Route path="/learn/fix-and-flip" element={<FixAndFlip />} />
       </Routes>
     </PageTransition>
   )
@@ -67,15 +76,17 @@ function App() {
   return (
     <AuthProvider>
       <ToastProvider>
-        <BrowserRouter>
-          <div className="flex flex-col min-h-screen">
-            <Navbar />
-            <main className="flex-1">
-              <AppRoutes />
-            </main>
-            <Footer />
-          </div>
-        </BrowserRouter>
+        <LanguageProvider>
+          <BrowserRouter>
+            <div className="flex flex-col min-h-screen">
+              <Navbar />
+              <main className="flex-1">
+                <AppRoutes />
+              </main>
+              <Footer />
+            </div>
+          </BrowserRouter>
+        </LanguageProvider>
       </ToastProvider>
     </AuthProvider>
   )
