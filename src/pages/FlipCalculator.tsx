@@ -3,6 +3,7 @@ import { TrendingUp, DollarSign, Clock, Calculator, CircleAlert as AlertCircle, 
 import { useAuth } from '../contexts/AuthContext';
 import { ScenarioPanel } from '../components/ScenarioPanel';
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
+import { Tooltip } from '../components/Tooltip';
 import { generateProFormaPDF } from '../utils/pdfGenerator';
 
 interface FlipInputs {
@@ -188,8 +189,12 @@ export default function FlipCalculator() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-300 mb-2 inline-flex items-center">
                     After Repair Value (ARV)
+                    <Tooltip
+                      term="ARV (After Repair Value)"
+                      definition="The estimated value of a property after renovations and repairs are completed. Used in fix-and-flip and BRRR strategies."
+                    />
                   </label>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>

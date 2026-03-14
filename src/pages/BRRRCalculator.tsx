@@ -3,6 +3,7 @@ import { RefreshCw, DollarSign, TrendingUp, Calculator, FileDown } from 'lucide-
 import { useAuth } from '../contexts/AuthContext';
 import { ScenarioPanel } from '../components/ScenarioPanel';
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
+import { Tooltip } from '../components/Tooltip';
 import { generateProFormaPDF } from '../utils/pdfGenerator';
 
 interface BRRRInputs {
@@ -239,8 +240,12 @@ export default function BRRRCalculator() {
                 </div>
 
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-300 mb-2">
+                  <label className="block text-sm font-medium text-slate-300 mb-2 inline-flex items-center">
                     After Repair Value (ARV)
+                    <Tooltip
+                      term="ARV (After Repair Value)"
+                      definition="The estimated value of a property after renovations and repairs are completed. Used in fix-and-flip and BRRR strategies."
+                    />
                   </label>
                   <div className="relative">
                     <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
@@ -485,7 +490,13 @@ export default function BRRRCalculator() {
 
                     <div className={`p-6 rounded-xl border-2 ${results.cashOnCashReturn === 'infinite' ? 'bg-green-500/20 border-green-500/50' : 'bg-blue-500/10 border-blue-500/30'}`}>
                       <div className="text-center">
-                        <p className="text-sm font-medium mb-2 text-slate-300">Cash-on-Cash Return</p>
+                        <p className="text-sm font-medium mb-2 text-slate-300 inline-flex items-center justify-center">
+                          Cash-on-Cash Return
+                          <Tooltip
+                            term="Cash-on-Cash Return"
+                            definition="The ratio of annual pre-tax cash flow to the total cash invested, expressed as a percentage. Measures the return on actual cash invested."
+                          />
+                        </p>
                         {results.cashOnCashReturn === 'infinite' ? (
                           <>
                             <p className="text-3xl font-bold text-green-400 mb-2">Infinite</p>

@@ -5,6 +5,7 @@ import { DollarSign, Percent, Calendar, FileDown } from 'lucide-react'
 import { ScenarioPanel } from '../components/ScenarioPanel'
 import { AmortizationSchedule } from '../components/AmortizationSchedule'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
+import { Tooltip } from '../components/Tooltip'
 import { generateProFormaPDF } from '../utils/pdfGenerator'
 
 export function MortgageCalculator() {
@@ -267,7 +268,13 @@ export function MortgageCalculator() {
             <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg p-8 border border-blue-400 shadow-xl">
               <div className="flex items-center gap-2 mb-3">
                 <Calendar className="w-6 h-6 text-blue-200" />
-                <h3 className="text-base font-medium text-blue-200">Monthly Payment (PITI)</h3>
+                <h3 className="text-base font-medium text-blue-200 inline-flex items-center">
+                  Monthly Payment (PITI)
+                  <Tooltip
+                    term="PITI"
+                    definition="Principal, Interest, Taxes, and Insurance. The four components that make up a typical monthly mortgage payment."
+                  />
+                </h3>
               </div>
               <p className="text-5xl md:text-6xl font-bold text-white mb-2 tracking-tight">
                 {formatCurrencyDecimal(monthlyPITI)}

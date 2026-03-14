@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { Hop as Home, LogOut, Settings, Shield, TrendingUp } from 'lucide-react'
+import { Hop as Home, LogOut, Settings, Shield, TrendingUp, BookOpen } from 'lucide-react'
 
 export function Navbar() {
   const { user, profile, signOut } = useAuth()
@@ -60,6 +60,17 @@ export function Navbar() {
                   }`}
                 >
                   Pricing
+                </Link>
+                <Link
+                  to="/glossary"
+                  className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
+                    isActive('/glossary')
+                      ? 'bg-indigo-600 text-white'
+                      : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                  }`}
+                >
+                  <BookOpen className="h-4 w-4" />
+                  Glossary
                 </Link>
                 {profile?.is_admin && (
                   <Link

@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { DollarSign, Percent, TrendingUp, TrendingDown, FileDown } from 'lucide-react'
 import { ScenarioPanel } from '../components/ScenarioPanel'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
+import { Tooltip } from '../components/Tooltip'
 import { generateProFormaPDF } from '../utils/pdfGenerator'
 
 export function RentalYieldCalculator() {
@@ -253,7 +254,13 @@ export function RentalYieldCalculator() {
             <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg p-6 border border-blue-400">
               <div className="flex items-center gap-2 mb-2">
                 <TrendingUp className="w-5 h-5 text-blue-200" />
-                <h3 className="text-sm font-medium text-blue-200">Gross Yield</h3>
+                <h3 className="text-sm font-medium text-blue-200 inline-flex items-center">
+                  Gross Yield
+                  <Tooltip
+                    term="Gross Yield"
+                    definition="Annual rental income divided by property value, expressed as a percentage. Does not account for expenses."
+                  />
+                </h3>
               </div>
               <p className="text-4xl font-bold text-white mb-1">
                 {formatPercent(grossYield)}
@@ -272,8 +279,12 @@ export function RentalYieldCalculator() {
                 ) : (
                   <TrendingDown className="w-5 h-5 text-red-200" />
                 )}
-                <h3 className={`text-sm font-medium ${netYield >= 0 ? 'text-green-200' : 'text-red-200'}`}>
+                <h3 className={`text-sm font-medium inline-flex items-center ${netYield >= 0 ? 'text-green-200' : 'text-red-200'}`}>
                   Net Yield
+                  <Tooltip
+                    term="Net Yield"
+                    definition="Annual rental income minus expenses divided by property value, expressed as a percentage. Provides a more accurate measure of return."
+                  />
                 </h3>
               </div>
               <p className="text-4xl font-bold text-white mb-1">
@@ -285,7 +296,13 @@ export function RentalYieldCalculator() {
             </div>
 
             <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
-              <h3 className="text-lg font-bold text-white mb-4">Cash Flow Analysis</h3>
+              <h3 className="text-lg font-bold text-white mb-4 inline-flex items-center">
+                Cash Flow Analysis
+                <Tooltip
+                  term="Cash Flow"
+                  definition="The amount of money remaining after all expenses (including mortgage, taxes, insurance, and operating costs) are paid from rental income."
+                />
+              </h3>
               <div className="space-y-3">
                 <div className="flex justify-between items-center py-2 border-b border-gray-700">
                   <span className="text-gray-400">Monthly Rental Income</span>

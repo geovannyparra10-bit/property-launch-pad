@@ -3,6 +3,7 @@ import { Hop as Home, DollarSign, Users, TrendingUp, FileDown } from 'lucide-rea
 import { useAuth } from '../contexts/AuthContext';
 import { ScenarioPanel } from '../components/ScenarioPanel';
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
+import { Tooltip } from '../components/Tooltip';
 import { generateProFormaPDF } from '../utils/pdfGenerator';
 
 interface HouseHackInputs {
@@ -444,7 +445,13 @@ export default function HouseHackCalculator() {
                           <Users className="h-5 w-5 text-green-400" />
                         </div>
                         <div className="flex-1">
-                          <p className="text-sm text-slate-400">Monthly Cash Flow (All Units Rented)</p>
+                          <p className="text-sm text-slate-400 inline-flex items-center">
+                            Monthly Cash Flow (All Units Rented)
+                            <Tooltip
+                              term="Cash Flow"
+                              definition="The amount of money remaining after all expenses (including mortgage, taxes, insurance, and operating costs) are paid from rental income."
+                            />
+                          </p>
                           <p className={`text-xl font-bold ${results.monthlyCashFlow >= 0 ? 'text-green-400' : 'text-red-400'}`}>
                             {formatCurrency(results.monthlyCashFlow)}
                           </p>
