@@ -31,6 +31,7 @@ import { OwnerFinanceCalculator } from './pages/OwnerFinanceCalculator'
 import { Templates } from './pages/Templates'
 import { OwnerCarryAgreement } from './pages/templates/OwnerCarryAgreement'
 import { LeaseAgreement } from './pages/templates/LeaseAgreement'
+import { OfferLetter } from './pages/templates/OfferLetter'
 import AdminDashboard from './pages/AdminDashboard'
 import Disclaimer from './pages/Disclaimer'
 import { Learn } from './pages/Learn'
@@ -80,6 +81,7 @@ function AppRoutes() {
         <Route path="/templates" element={<Templates />} />
         <Route path="/templates/owner-carry" element={<OwnerCarryAgreement />} />
         <Route path="/templates/lease-agreement" element={<LeaseAgreement />} />
+        <Route path="/templates/offer-letter" element={<ProtectedRoute><OfferLetter /></ProtectedRoute>} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/glossary" element={<Glossary />} />
         <Route path="/disclaimer" element={<Disclaimer />} />

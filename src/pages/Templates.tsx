@@ -22,6 +22,14 @@ const templates = [
     descEs: 'Un contrato de arrendamiento completo con términos de renta, depósito en garantía, política de mascotas, servicios, responsabilidades de mantenimiento y cláusulas de desalojo. Disponible en inglés y español.',
     path: '/templates/lease-agreement',
   },
+  {
+    slug: 'offer-letter',
+    titleEn: 'Offer Letter Generator',
+    titleEs: 'Generador de Carta de Oferta',
+    descEn: 'A professional Letter of Intent for real estate purchases. Includes offer price, contingencies, earnest money, financing type, included/excluded items, and a personal note. Available in English and Spanish.',
+    descEs: 'Una Carta de Intención profesional para compras de bienes raíces. Incluye precio de oferta, contingencias, depósito de arras, tipo de financiamiento, artículos incluidos/excluidos y nota personal. Disponible en inglés y español.',
+    path: '/templates/offer-letter',
+  },
 ]
 
 export function Templates() {
