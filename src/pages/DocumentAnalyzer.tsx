@@ -1,13 +1,10 @@
 import { useState, useRef, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { Upload, FileText, ChevronDown, ChevronUp, Send, Loader2 } from 'lucide-react'
+import { Upload, FileText, ChevronDown, ChevronUp, Send, Loader as Loader2 } from 'lucide-react'
 import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import { ScenarioPanel } from '../components/ScenarioPanel'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
-import * as pdfjsLib from 'pdfjs-dist'
-
-pdfjsLib.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.js`
 
 interface ExtractedData {
   monthlyRentalIncome: string
@@ -65,21 +62,33 @@ export function DocumentAnalyzer() {
     }
   }, [user, profile])
 
-  const extractTextFromPDF = async (file: File): Promise<string> => {
-    const arrayBuffer = await file.arrayBuffer()
-    const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise
-    let fullText = ''
+  const extractTextFromFile = async (file: File): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader()
 
-    for (let i = 1; i <= pdf.numPages; i++) {
-      const page = await pdf.getPage(i)
-      const textContent = await page.getTextContent()
-      const pageText = textContent.items
-        .map((item: any) => item.str)
-        .join(' ')
-      fullText += pageText + '\n'
+      reader.onload = (e) => {
+        const text = e.target?.result as string
+        resolve(text)
+      }
+
+      reader.onerror = () => {
+        reject(new Error('Failed to read file'))
+      }
+
+      reader.readAsText(file)
+    })
+  }
+
+  const parseCSV = (text: string): string => {
+    const lines = text.split('\n')
+    let formatted = ''
+
+    for (const line of lines) {
+      const cells = line.split(',').map(cell => cell.trim())
+      formatted += cells.join(' ') + '\n'
     }
 
-    return fullText
+    return formatted
   }
 
   const extractFinancialData = (text: string): ExtractedData => {
@@ -162,11 +171,10 @@ export function DocumentAnalyzer() {
       return
     }
 
-    const fileType = file.type
     const fileName = file.name.toLowerCase()
 
-    if (!fileType.includes('pdf') && !fileType.includes('image')) {
-      showToast('Please upload a PDF or image file', 'error')
+    if (!fileName.endsWith('.csv') && !fileName.endsWith('.txt')) {
+      showToast('Please upload a CSV or TXT file', 'error')
       return
     }
 
@@ -191,15 +199,13 @@ export function DocumentAnalyzer() {
     })
 
     try {
-      if (fileType.includes('pdf') || fileName.endsWith('.pdf')) {
-        const text = await extractTextFromPDF(file)
-        setRawText(text)
-        const extracted = extractFinancialData(text)
-        setExtractedData(extracted)
-        showToast('Document processed successfully', 'success')
-      } else {
-        showToast('Image OCR coming soon — please upload a PDF for now', 'info')
-      }
+      const rawFileText = await extractTextFromFile(file)
+      const text = fileName.endsWith('.csv') ? parseCSV(rawFileText) : rawFileText
+
+      setRawText(text)
+      const extracted = extractFinancialData(text)
+      setExtractedData(extracted)
+      showToast('Document processed successfully', 'success')
     } catch (error) {
       console.error('Error processing file:', error)
       showToast('Error processing document. Please try again.', 'error')
@@ -287,7 +293,7 @@ export function DocumentAnalyzer() {
         <div className="mb-8">
           <h1 className="text-4xl font-bold mb-2">Document Analyzer</h1>
           <p className="text-gray-400">
-            Upload rent rolls, P&L statements, or operating statements to automatically extract financial data
+            Upload financial statements in CSV or TXT format to automatically extract financial data
           </p>
         </div>
 
@@ -329,7 +335,7 @@ export function DocumentAnalyzer() {
                     </p>
                     <p className="text-sm text-gray-500">or click to browse</p>
                     <p className="text-xs text-gray-600 mt-4">
-                      Supports PDF files. Image OCR coming soon.
+                      Supports CSV and TXT files
                     </p>
                   </>
                 )}
@@ -338,7 +344,7 @@ export function DocumentAnalyzer() {
               <input
                 ref={fileInputRef}
                 type="file"
-                accept=".pdf,image/*"
+                accept=".csv,.txt"
                 onChange={handleFileInputChange}
                 className="hidden"
               />
