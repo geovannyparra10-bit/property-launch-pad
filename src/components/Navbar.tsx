@@ -1,9 +1,9 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
-import { Hop as Home, LogOut, Settings } from 'lucide-react'
+import { Hop as Home, LogOut, Settings, Shield } from 'lucide-react'
 
 export function Navbar() {
-  const { user, signOut } = useAuth()
+  const { user, profile, signOut } = useAuth()
   const location = useLocation()
 
   const isActive = (path: string) => location.pathname === path
@@ -50,6 +50,19 @@ export function Navbar() {
                 >
                   Pricing
                 </Link>
+                {profile?.is_admin && (
+                  <Link
+                    to="/admin"
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
+                      isActive('/admin')
+                        ? 'bg-indigo-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    }`}
+                  >
+                    <Shield className="h-4 w-4" />
+                    Admin
+                  </Link>
+                )}
               </div>
             )}
           </div>

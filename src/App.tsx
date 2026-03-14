@@ -17,6 +17,7 @@ import { StampDutyCalculator } from './pages/StampDutyCalculator'
 import { DealAnalyzer } from './pages/DealAnalyzer'
 import { Pricing } from './pages/Pricing'
 import { Settings } from './pages/Settings'
+import AdminDashboard from './pages/AdminDashboard'
 
 function AppRoutes() {
   const location = useLocation()
@@ -29,6 +30,7 @@ function AppRoutes() {
         <Route path="/signup" element={<Signup />} />
         <Route path="/onboarding" element={<ProtectedRoute><Onboarding /></ProtectedRoute>} />
         <Route path="/dashboard" element={<ProtectedRoute><Dashboard /></ProtectedRoute>} />
+        <Route path="/admin" element={<ProtectedRoute><AdminDashboard /></ProtectedRoute>} />
         <Route path="/tools" element={<Tools />} />
         <Route path="/tools/mortgage_calculator" element={<MortgageCalculator />} />
         <Route path="/tools/rental_yield" element={<RentalYieldCalculator />} />
