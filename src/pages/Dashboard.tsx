@@ -3,7 +3,34 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import { LoadingPage } from '../components/LoadingSpinner'
-import { ArrowRight, Save } from 'lucide-react'
+import { ArrowRight, Save, BookOpen, Clock } from 'lucide-react'
+
+const featuredArticles = [
+  {
+    slug: 'rental-property-investing',
+    titleEn: "Beginner's Guide to Rental Property Investing",
+    summaryEn: 'Cash flow basics, cap rates, tenant screening, and the system for building a rental portfolio.',
+    readTime: '11 min read',
+    category: 'Fundamentals',
+    image: 'https://images.pexels.com/photos/280229/pexels-photo-280229.jpeg?auto=compress&cs=tinysrgb&w=600',
+  },
+  {
+    slug: 'understanding-mortgages',
+    titleEn: 'Understanding Mortgages: What Every Investor Needs to Know',
+    summaryEn: 'Fixed vs. adjustable rates, FHA vs. VA vs. conventional, amortization, and when to refinance.',
+    readTime: '10 min read',
+    category: 'Financing',
+    image: 'https://images.pexels.com/photos/164527/pexels-photo-164527.jpeg?auto=compress&cs=tinysrgb&w=600',
+  },
+  {
+    slug: 'analyzing-deals',
+    titleEn: 'How to Analyze a Real Estate Deal in 15 Minutes',
+    summaryEn: 'NOI, cap rate, DSCR, cash-on-cash return, pro forma red flags, and a 15-minute checklist.',
+    readTime: '10 min read',
+    category: 'Analysis',
+    image: 'https://images.pexels.com/photos/3184465/pexels-photo-3184465.jpeg?auto=compress&cs=tinysrgb&w=600',
+  },
+]
 
 interface Tool {
   id: string
@@ -201,6 +228,62 @@ export function Dashboard() {
               ))}
             </div>
           )}
+        </div>
+
+        <div>
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+            <div className="flex items-center gap-3">
+              <BookOpen className="w-5 h-5 text-blue-400" />
+              <h2 className="text-xl sm:text-2xl font-bold text-white">Free Articles</h2>
+            </div>
+            <Link
+              to="/learn"
+              className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-2 transition-colors"
+            >
+              View all articles
+              <ArrowRight className="w-4 h-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            {featuredArticles.map((article) => (
+              <Link
+                key={article.slug}
+                to={`/learn/${article.slug}`}
+                className="group bg-gray-800 border border-gray-700 rounded-xl overflow-hidden hover:border-blue-500/50 transition-all duration-300 hover:-translate-y-1 hover:shadow-xl hover:shadow-blue-900/20 flex flex-col"
+              >
+                <div className="relative h-36 overflow-hidden">
+                  <img
+                    src={article.image}
+                    alt={article.titleEn}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 to-transparent" />
+                  <span className="absolute top-3 left-3 bg-blue-600/90 text-white text-xs font-semibold px-2.5 py-1 rounded-full uppercase tracking-widest">
+                    {article.category}
+                  </span>
+                </div>
+                <div className="p-5 flex flex-col flex-1">
+                  <h3 className="text-sm font-bold text-white mb-2 leading-snug group-hover:text-blue-400 transition-colors">
+                    {article.titleEn}
+                  </h3>
+                  <p className="text-gray-400 text-xs leading-relaxed flex-1 mb-3">
+                    {article.summaryEn}
+                  </p>
+                  <div className="flex items-center justify-between text-xs text-gray-500 pt-3 border-t border-gray-700">
+                    <span className="flex items-center gap-1.5">
+                      <Clock className="h-3 w-3" />
+                      {article.readTime}
+                    </span>
+                    <span className="flex items-center gap-1 text-blue-400 font-medium group-hover:gap-2 transition-all">
+                      Read
+                      <ArrowRight className="h-3 w-3" />
+                    </span>
+                  </div>
+                </div>
+              </Link>
+            ))}
+          </div>
         </div>
       </div>
     </div>

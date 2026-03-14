@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { Calculator, Save, Globe } from 'lucide-react'
+import { Calculator, Save, Globe, BookOpen } from 'lucide-react'
 
 export function Home() {
   return (
@@ -32,7 +32,7 @@ export function Home() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8 max-w-5xl mx-auto">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8 max-w-6xl mx-auto">
             <div className="bg-gray-800 p-6 sm:p-8 rounded-xl border border-gray-700 card-hover animate-slide-up" style={{ animationDelay: '0.1s' }}>
               <div className="bg-blue-600/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
                 <Calculator className="h-8 w-8 text-blue-400" />
@@ -62,6 +62,24 @@ export function Home() {
                 Full bilingual support to serve English and Spanish-speaking users with seamless language switching.
               </p>
             </div>
+
+            <Link
+              to="/learn"
+              className="bg-gray-800 p-6 sm:p-8 rounded-xl border border-gray-700 card-hover animate-slide-up hover:border-blue-500/50 transition-all group flex flex-col"
+              style={{ animationDelay: '0.4s' }}
+            >
+              <div className="bg-blue-600/10 w-16 h-16 rounded-lg flex items-center justify-center mb-6">
+                <BookOpen className="h-8 w-8 text-blue-400" />
+              </div>
+              <h3 className="text-xl font-bold text-white mb-3 group-hover:text-blue-400 transition-colors">Free Learning Resources</h3>
+              <p className="text-gray-400 leading-relaxed flex-1">
+                In-depth guides on house hacking, BRRR, flipping, rental investing, and more — in English and Spanish.
+              </p>
+              <span className="mt-4 text-blue-400 text-sm font-semibold flex items-center gap-1 group-hover:gap-2 transition-all">
+                Browse articles
+                <svg className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" /></svg>
+              </span>
+            </Link>
           </div>
         </div>
       </div>
