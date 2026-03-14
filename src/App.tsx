@@ -49,6 +49,7 @@ import { BRRRBlueprint } from './pages/courses/brrr-blueprint/BRRRBlueprint'
 import { FlipProfits } from './pages/courses/flip-profits/FlipProfits'
 import { RentalWealth } from './pages/courses/rental-wealth/RentalWealth'
 import { OwnerFinanceDeals } from './pages/courses/owner-finance-deals/OwnerFinanceDeals'
+import { Pipeline } from './pages/pipeline/Pipeline'
 
 function AppRoutes() {
   const location = useLocation()
@@ -104,6 +105,7 @@ function AppRoutes() {
         <Route path="/courses/rental-wealth/:lessonSlug" element={<RentalWealth />} />
         <Route path="/courses/owner-finance-deals" element={<OwnerFinanceDeals />} />
         <Route path="/courses/owner-finance-deals/:lessonSlug" element={<OwnerFinanceDeals />} />
+        <Route path="/pipeline" element={<ProtectedRoute><Pipeline /></ProtectedRoute>} />
       </Routes>
     </PageTransition>
   )

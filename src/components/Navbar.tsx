@@ -1,7 +1,7 @@
 import { Link, useLocation } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
-import { Hop as Home, LogOut, Settings, Shield, TrendingUp, BookOpen, GraduationCap, Globe, FileText, CirclePlay as PlayCircle } from 'lucide-react'
+import { Hop as Home, LogOut, Settings, Shield, TrendingUp, BookOpen, GraduationCap, Globe, FileText, CirclePlay as PlayCircle, SquareKanban as KanbanSquare } from 'lucide-react'
 
 export function Navbar() {
   const { user, profile, signOut } = useAuth()
@@ -53,6 +53,17 @@ export function Navbar() {
                   >
                     <TrendingUp className="h-4 w-4" />
                     {language === 'en' ? 'Compare' : 'Comparar'}
+                  </Link>
+                  <Link
+                    to="/pipeline"
+                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center gap-1 ${
+                      isActive('/pipeline')
+                        ? 'bg-blue-600 text-white'
+                        : 'text-gray-300 hover:bg-gray-700 hover:text-white'
+                    }`}
+                  >
+                    <KanbanSquare className="h-4 w-4" />
+                    {language === 'en' ? 'Pipeline' : 'Pipeline'}
                   </Link>
                   <Link
                     to="/pricing"
