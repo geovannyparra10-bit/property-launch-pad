@@ -28,6 +28,8 @@ import { Glossary } from './pages/Glossary'
 import { DocumentAnalyzer } from './pages/DocumentAnalyzer'
 import { ARVCompsAnalyzer } from './pages/ARVCompsAnalyzer'
 import { OwnerFinanceCalculator } from './pages/OwnerFinanceCalculator'
+import { Templates } from './pages/Templates'
+import { OwnerCarryAgreement } from './pages/templates/OwnerCarryAgreement'
 import AdminDashboard from './pages/AdminDashboard'
 import Disclaimer from './pages/Disclaimer'
 import { Learn } from './pages/Learn'
@@ -66,6 +68,8 @@ function AppRoutes() {
         <Route path="/tools/document_analyzer" element={<DocumentAnalyzer />} />
         <Route path="/tools/arv_comps" element={<ARVCompsAnalyzer />} />
         <Route path="/tools/owner_finance" element={<OwnerFinanceCalculator />} />
+        <Route path="/templates" element={<Templates />} />
+        <Route path="/templates/owner-carry" element={<OwnerCarryAgreement />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/glossary" element={<Glossary />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
