@@ -43,6 +43,9 @@ import { AnalyzingDeals } from './pages/learn/AnalyzingDeals'
 import { EstimatingRepairs } from './pages/learn/EstimatingRepairs'
 import { BuildingAPortfolio } from './pages/learn/BuildingAPortfolio'
 import { FindingAPropertyManager } from './pages/learn/FindingAPropertyManager'
+import { Courses } from './pages/courses/Courses'
+import { HouseHackMastery } from './pages/courses/house-hack-mastery/HouseHackMastery'
+import { BRRRBlueprint } from './pages/courses/brrr-blueprint/BRRRBlueprint'
 
 function AppRoutes() {
   const location = useLocation()
@@ -87,6 +90,11 @@ function AppRoutes() {
         <Route path="/learn/estimating-repairs" element={<EstimatingRepairs />} />
         <Route path="/learn/building-a-portfolio" element={<BuildingAPortfolio />} />
         <Route path="/learn/finding-a-property-manager" element={<FindingAPropertyManager />} />
+        <Route path="/courses" element={<Courses />} />
+        <Route path="/courses/house-hack-mastery" element={<HouseHackMastery />} />
+        <Route path="/courses/house-hack-mastery/:lessonSlug" element={<HouseHackMastery />} />
+        <Route path="/courses/brrr-blueprint" element={<BRRRBlueprint />} />
+        <Route path="/courses/brrr-blueprint/:lessonSlug" element={<BRRRBlueprint />} />
       </Routes>
     </PageTransition>
   )
