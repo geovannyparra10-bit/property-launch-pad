@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useLanguage } from '../contexts/LanguageContext'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
 import { Crown, FileText, ArrowRight } from 'lucide-react'
+import { getPaymentLink } from '../lib/paymentLink'
 
 const templates = [
   {
@@ -76,9 +77,9 @@ export function Templates() {
                 {language === 'en'
                   ? 'Templates are a Premium feature. '
                   : 'Las plantillas son una función Premium. '}
-                <Link to="/pricing" className="underline hover:text-amber-200 transition-colors">
+                <a href={getPaymentLink(user?.email)} className="underline hover:text-amber-200 transition-colors">
                   {language === 'en' ? 'Upgrade to access.' : 'Actualizar para acceder.'}
-                </Link>
+                </a>
               </span>
             </div>
           )}

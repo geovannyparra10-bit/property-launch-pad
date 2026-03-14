@@ -1,6 +1,5 @@
 import { supabase } from '../lib/supabase'
-
-const STRIPE_PAYMENT_LINK_PLACEHOLDER = 'https://checkout.stripe.com/pay/placeholder'
+import { getPaymentLink } from '../lib/paymentLink'
 
 export async function createCheckoutSession(userId: string): Promise<string> {
   try {
@@ -26,6 +25,7 @@ export async function createCheckoutSession(userId: string): Promise<string> {
     const data = await response.json()
     return data.url
   } catch {
-    return STRIPE_PAYMENT_LINK_PLACEHOLDER
+    const { data: { session } } = await supabase.auth.getSession()
+    return getPaymentLink(session?.user?.email)
   }
 }

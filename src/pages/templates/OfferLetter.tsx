@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { ArrowLeft, Download, Globe, Crown, FileText } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
+import { getPaymentLink } from '../../lib/paymentLink'
 import { useLanguage } from '../../contexts/LanguageContext'
 import { PremiumFeatureModal } from '../../components/PremiumFeatureModal'
 import { OfferLetterForm } from './OfferLetterForm'
@@ -93,9 +94,9 @@ export function OfferLetter() {
             <Crown className="h-4 w-4 text-amber-400 flex-shrink-0" />
             <span className="text-amber-300 text-sm">
               {t('This is a Premium template. ', 'Esta es una plantilla Premium. ')}
-              <Link to="/pricing" className="underline hover:text-amber-200 transition-colors">
+              <a href={getPaymentLink(profile?.email)} className="underline hover:text-amber-200 transition-colors">
                 {t('Upgrade to download.', 'Actualiza para descargar.')}
-              </Link>
+              </a>
             </span>
           </div>
         )}
