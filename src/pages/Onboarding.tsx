@@ -157,14 +157,14 @@ function ProgressBar({ currentStep }: { currentStep: Step }) {
           <div key={step.number} className="flex items-center flex-1">
             <div className="flex flex-col items-center flex-1">
               <div
-                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-colors ${
+                className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold transition-all duration-300 ${
                   currentStep >= step.number
-                    ? 'bg-indigo-600 text-white'
+                    ? 'bg-blue-600 text-white'
                     : 'bg-gray-700 text-gray-400'
                 }`}
               >
                 {currentStep > step.number ? (
-                  <CheckCircle2 className="w-6 h-6" />
+                  <CheckCircle2 className="w-6 h-6 animate-check-pop" />
                 ) : (
                   step.number
                 )}
@@ -179,8 +179,8 @@ function ProgressBar({ currentStep }: { currentStep: Step }) {
             </div>
             {index < steps.length - 1 && (
               <div
-                className={`h-1 flex-1 mx-2 rounded transition-colors ${
-                  currentStep > step.number ? 'bg-indigo-600' : 'bg-gray-700'
+                className={`h-1 flex-1 mx-2 rounded transition-all duration-500 ${
+                  currentStep > step.number ? 'bg-blue-600' : 'bg-gray-700'
                 }`}
               />
             )}

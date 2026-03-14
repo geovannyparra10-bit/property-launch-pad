@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import { LoadingPage } from '../components/LoadingSpinner'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Search } from 'lucide-react'
 
 interface Tool {
   id: string
@@ -19,6 +19,7 @@ export function Tools() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [tools, setTools] = useState<Tool[]>([])
+  const [searchQuery, setSearchQuery] = useState('')
 
   useEffect(() => {
     if (!user) {
@@ -46,6 +47,11 @@ export function Tools() {
     }
   }
 
+  const filteredTools = tools.filter((tool) =>
+    tool.title_en.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    tool.description_en.toLowerCase().includes(searchQuery.toLowerCase())
+  )
+
   if (loading) {
     return <LoadingPage />
   }
@@ -55,27 +61,40 @@ export function Tools() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
         <div className="mb-10">
           <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3">Financial Tools</h1>
-          <p className="text-gray-400">
+          <p className="text-gray-400 mb-6">
             Powerful calculators and analyzers to help you make informed real estate decisions.
           </p>
+
+          <div className="relative max-w-md">
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+            <input
+              type="text"
+              placeholder="Search tools..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              className="w-full pl-11 pr-4 py-3 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+            />
+          </div>
         </div>
 
-        {tools.length === 0 ? (
+        {filteredTools.length === 0 ? (
           <div className="bg-gray-800 rounded-lg p-8 text-center card-hover">
-            <p className="text-gray-400">No tools available at the moment.</p>
+            <p className="text-gray-400">
+              {searchQuery ? `No tools found matching "${searchQuery}"` : 'No tools available at the moment.'}
+            </p>
           </div>
         ) : (
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {tools.map((tool) => (
+            {filteredTools.map((tool) => (
               <Link
                 key={tool.id}
                 to={`/tools/${tool.slug}`}
-                className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-indigo-500 transition-all group card-hover"
+                className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-all group card-hover"
               >
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
                     <div className="flex flex-wrap items-center gap-3 mb-2">
-                      <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-indigo-400 transition-colors">
+                      <h3 className="text-lg sm:text-xl font-bold text-white group-hover:text-blue-400 transition-colors">
                         {tool.title_en}
                       </h3>
                       <span
@@ -89,7 +108,7 @@ export function Tools() {
                       </span>
                     </div>
                   </div>
-                  <ArrowRight className="w-5 h-5 text-gray-500 group-hover:text-indigo-400 transition-colors flex-shrink-0 mt-1" />
+                  <ArrowRight className="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-colors flex-shrink-0 mt-1" />
                 </div>
                 <p className="text-gray-400 text-sm leading-relaxed">
                   {tool.description_en}

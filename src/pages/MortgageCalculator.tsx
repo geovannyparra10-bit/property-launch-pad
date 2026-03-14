@@ -109,6 +109,7 @@ export function MortgageCalculator() {
         <div className="grid lg:grid-cols-2 gap-6">
           <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
             <h2 className="text-xl font-bold text-white mb-6">Loan Details</h2>
+            <div className="lg:hidden border-b border-gray-700 my-6"></div>
 
             <div className="space-y-5">
               <div>
@@ -215,15 +216,15 @@ export function MortgageCalculator() {
           </div>
 
           <div className="space-y-6">
-            <div className="bg-gradient-to-br from-indigo-600 to-indigo-700 rounded-lg p-6 border border-indigo-400">
-              <div className="flex items-center gap-2 mb-2">
-                <Calendar className="w-5 h-5 text-indigo-200" />
-                <h3 className="text-sm font-medium text-indigo-200">Monthly Payment (PITI)</h3>
+            <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg p-8 border border-blue-400 shadow-xl">
+              <div className="flex items-center gap-2 mb-3">
+                <Calendar className="w-6 h-6 text-blue-200" />
+                <h3 className="text-base font-medium text-blue-200">Monthly Payment (PITI)</h3>
               </div>
-              <p className="text-4xl font-bold text-white mb-1">
+              <p className="text-5xl md:text-6xl font-bold text-white mb-2 tracking-tight">
                 {formatCurrencyDecimal(monthlyPITI)}
               </p>
-              <p className="text-indigo-200 text-sm">Principal, Interest, Taxes, Insurance</p>
+              <p className="text-blue-200 text-sm">Principal, Interest, Taxes, Insurance</p>
             </div>
 
             <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">

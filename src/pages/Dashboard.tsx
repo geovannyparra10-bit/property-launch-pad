@@ -3,7 +3,7 @@ import { useNavigate, Link } from 'react-router-dom'
 import { useAuth } from '../contexts/AuthContext'
 import { supabase } from '../lib/supabase'
 import { LoadingPage } from '../components/LoadingSpinner'
-import { ArrowRight } from 'lucide-react'
+import { ArrowRight, Save } from 'lucide-react'
 
 interface Tool {
   id: string
@@ -19,6 +19,7 @@ export function Dashboard() {
   const navigate = useNavigate()
   const [loading, setLoading] = useState(true)
   const [tools, setTools] = useState<Tool[]>([])
+  const [scenarioCount, setScenarioCount] = useState(0)
 
   useEffect(() => {
     checkAccess()
@@ -27,6 +28,7 @@ export function Dashboard() {
   useEffect(() => {
     if (!loading) {
       fetchActiveTools()
+      fetchScenarioCount()
     }
   }, [loading])
 
@@ -65,6 +67,29 @@ export function Dashboard() {
     }
   }
 
+  const fetchScenarioCount = async () => {
+    if (!user) return
+
+    try {
+      const { count, error } = await supabase
+        .from('saved_scenarios')
+        .select('*', { count: 'exact', head: true })
+        .eq('user_id', user.id)
+
+      if (error) throw error
+      setScenarioCount(count || 0)
+    } catch (err) {
+      console.error('Error fetching scenario count:', err)
+    }
+  }
+
+  const getGreeting = () => {
+    const hour = new Date().getHours()
+    if (hour < 12) return 'Good morning'
+    if (hour < 18) return 'Good afternoon'
+    return 'Good evening'
+  }
+
   const getFirstName = () => {
     if (!profile?.full_name) return ''
     return profile.full_name.split(' ')[0]
@@ -80,10 +105,13 @@ export function Dashboard() {
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-12">
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-8">
-          <h1 className="text-2xl sm:text-3xl font-bold text-white">
-            Welcome back{getFirstName() ? `, ${getFirstName()}` : ''}
-          </h1>
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
+          <div>
+            <p className="text-blue-400 text-sm font-medium mb-1">{getGreeting()}</p>
+            <h1 className="text-2xl sm:text-3xl font-bold text-white">
+              {getFirstName() ? `${getFirstName()}'s Dashboard` : 'Dashboard'}
+            </h1>
+          </div>
           <div className="flex items-center gap-2">
             <span className="text-sm text-gray-400">Status:</span>
             <span
@@ -98,12 +126,50 @@ export function Dashboard() {
           </div>
         </div>
 
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-10">
+          <div className="bg-gray-800 rounded-lg p-5 border border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-400 text-sm mb-1">Saved Scenarios</p>
+                <p className="text-3xl font-bold text-white">{scenarioCount}</p>
+              </div>
+              <div className="bg-blue-600/20 p-3 rounded-lg">
+                <Save className="w-6 h-6 text-blue-400" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-800 rounded-lg p-5 border border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-400 text-sm mb-1">Active Tools</p>
+                <p className="text-3xl font-bold text-white">{tools.length}</p>
+              </div>
+              <div className="bg-teal-600/20 p-3 rounded-lg">
+                <ArrowRight className="w-6 h-6 text-teal-400" />
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-gray-800 rounded-lg p-5 border border-gray-700">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-400 text-sm mb-1">Account Type</p>
+                <p className="text-3xl font-bold text-white">{isPremium ? 'Premium' : 'Free'}</p>
+              </div>
+              <div className={`${isPremium ? 'bg-yellow-600/20' : 'bg-green-600/20'} p-3 rounded-lg`}>
+                <span className={`text-2xl ${isPremium ? 'text-yellow-400' : 'text-green-400'}`}>★</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
         <div className="mb-10">
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
             <h2 className="text-xl sm:text-2xl font-bold text-white">Your Tools</h2>
             <Link
               to="/tools"
-              className="text-indigo-400 hover:text-indigo-300 font-semibold flex items-center gap-2 transition-colors"
+              className="text-blue-400 hover:text-blue-300 font-semibold flex items-center gap-2 transition-colors"
             >
               View all tools
               <ArrowRight className="w-4 h-4" />
@@ -120,13 +186,13 @@ export function Dashboard() {
                 <Link
                   key={tool.id}
                   to={`/tools/${tool.slug}`}
-                  className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-indigo-500 transition-all group card-hover"
+                  className="bg-gray-800 rounded-lg p-6 border border-gray-700 hover:border-blue-500 transition-all group card-hover"
                 >
                   <div className="flex items-start justify-between mb-4">
-                    <h3 className="text-lg font-semibold text-white group-hover:text-indigo-400 transition-colors">
+                    <h3 className="text-lg font-semibold text-white group-hover:text-blue-400 transition-colors">
                       {tool.title_en}
                     </h3>
-                    <ArrowRight className="w-5 h-5 text-gray-500 group-hover:text-indigo-400 transition-colors" />
+                    <ArrowRight className="w-5 h-5 text-gray-500 group-hover:text-blue-400 transition-colors" />
                   </div>
                   <p className="text-gray-400 text-sm leading-relaxed">
                     {tool.description_en}
@@ -135,26 +201,6 @@ export function Dashboard() {
               ))}
             </div>
           )}
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
-            <h3 className="text-lg font-semibold text-white mb-2">My Properties</h3>
-            <p className="text-3xl font-bold text-indigo-400">0</p>
-            <p className="text-gray-400 text-sm mt-2">Properties tracked</p>
-          </div>
-
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
-            <h3 className="text-lg font-semibold text-white mb-2">Saved Calculations</h3>
-            <p className="text-3xl font-bold text-indigo-400">0</p>
-            <p className="text-gray-400 text-sm mt-2">Total calculations</p>
-          </div>
-
-          <div className="bg-gray-800 rounded-lg p-6 border border-gray-700 card-hover">
-            <h3 className="text-lg font-semibold text-white mb-2">Reports Generated</h3>
-            <p className="text-3xl font-bold text-indigo-400">0</p>
-            <p className="text-gray-400 text-sm mt-2">Financial reports</p>
-          </div>
         </div>
       </div>
     </div>
