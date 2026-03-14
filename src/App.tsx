@@ -51,6 +51,9 @@ import { FlipProfits } from './pages/courses/flip-profits/FlipProfits'
 import { RentalWealth } from './pages/courses/rental-wealth/RentalWealth'
 import { OwnerFinanceDeals } from './pages/courses/owner-finance-deals/OwnerFinanceDeals'
 import { Pipeline } from './pages/pipeline/Pipeline'
+import { Community } from './pages/community/Community'
+import { PostDetail } from './pages/community/PostDetail'
+import { NewPost } from './pages/community/NewPost'
 
 function AppRoutes() {
   const location = useLocation()
@@ -108,6 +111,9 @@ function AppRoutes() {
         <Route path="/courses/owner-finance-deals" element={<OwnerFinanceDeals />} />
         <Route path="/courses/owner-finance-deals/:lessonSlug" element={<OwnerFinanceDeals />} />
         <Route path="/pipeline" element={<ProtectedRoute><Pipeline /></ProtectedRoute>} />
+        <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
+        <Route path="/community/new" element={<ProtectedRoute><NewPost /></ProtectedRoute>} />
+        <Route path="/community/:postId" element={<ProtectedRoute><PostDetail /></ProtectedRoute>} />
       </Routes>
     </PageTransition>
   )
