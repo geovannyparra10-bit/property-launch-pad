@@ -99,6 +99,18 @@ const articles = [
     categoryEs: 'Cartera',
     image: 'https://images.pexels.com/photos/323780/pexels-photo-323780.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
+  {
+    slug: 'finding-a-property-manager',
+    titleEn: 'How to Find and Vet a Property Manager: The Complete Guide',
+    titleEs: 'Cómo Encontrar y Evaluar un Administrador de Propiedades: La Guía Completa',
+    summaryEn: 'When you need a PM, where to find them, typical fee structures (8–12% + leasing fees + markups), red flags to avoid, what to look for in a contract, and a 20-question interview checklist.',
+    summaryEs: 'Cuándo necesita un administrador, dónde encontrarlos, estructuras de tarifas típicas (8–12% + tarifas de arrendamiento + recargos), señales de alerta, qué buscar en un contrato y una lista de 20 preguntas para la entrevista.',
+    readTimeEn: '12 min read',
+    readTimeEs: '12 min de lectura',
+    categoryEn: 'Management',
+    categoryEs: 'Administración',
+    image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
+  },
 ]
 
 export function Learn() {

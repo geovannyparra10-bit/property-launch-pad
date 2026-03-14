@@ -42,6 +42,7 @@ import { UnderstandingMortgages } from './pages/learn/UnderstandingMortgages'
 import { AnalyzingDeals } from './pages/learn/AnalyzingDeals'
 import { EstimatingRepairs } from './pages/learn/EstimatingRepairs'
 import { BuildingAPortfolio } from './pages/learn/BuildingAPortfolio'
+import { FindingAPropertyManager } from './pages/learn/FindingAPropertyManager'
 
 function AppRoutes() {
   const location = useLocation()
@@ -85,6 +86,7 @@ function AppRoutes() {
         <Route path="/learn/analyzing-deals" element={<AnalyzingDeals />} />
         <Route path="/learn/estimating-repairs" element={<EstimatingRepairs />} />
         <Route path="/learn/building-a-portfolio" element={<BuildingAPortfolio />} />
+        <Route path="/learn/finding-a-property-manager" element={<FindingAPropertyManager />} />
       </Routes>
     </PageTransition>
   )
