@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
-import { STRIPE_PAYMENT_LINK } from '../lib/paymentLink'
 
 export function Signup() {
   const [fullName, setFullName] = useState('')
@@ -18,7 +17,7 @@ export function Signup() {
     setLoading(true)
 
     try {
-      const { error } = await supabase.auth.signUp({
+      const { data, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
@@ -30,8 +29,15 @@ export function Signup() {
 
       if (error) throw error
 
+      if (!data.session) {
+        setError('Account created but sign-in failed. Please log in manually.')
+        setLoading(false)
+        return
+      }
+
       if (searchParams.get('redirect') === 'pricing') {
-        window.location.href = STRIPE_PAYMENT_LINK
+        window.open('https://buy.stripe.com/test_fZu3cw5Uc7xucqGbk6gw000', '_blank')
+        navigate('/dashboard')
       } else {
         navigate('/dashboard')
       }

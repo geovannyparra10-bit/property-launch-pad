@@ -43,7 +43,7 @@ interface Tool {
 }
 
 export function Dashboard() {
-  const { user, profile } = useAuth()
+  const { user, profile, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const { showToast } = useToast()
   const [searchParams, setSearchParams] = useSearchParams()
@@ -53,7 +53,7 @@ export function Dashboard() {
 
   useEffect(() => {
     checkAccess()
-  }, [user, profile])
+  }, [user, authLoading])
 
   useEffect(() => {
     if (searchParams.get('payment') === 'success') {
@@ -70,13 +70,10 @@ export function Dashboard() {
   }, [loading])
 
   const checkAccess = async () => {
+    if (authLoading) return
+
     if (!user) {
       navigate('/login')
-      return
-    }
-
-    if (!profile) {
-      setLoading(true)
       return
     }
 
