@@ -40,7 +40,7 @@ function EnglishContent() {
         On Zillow, use the keyword search box under "More Filters." On Realtor.com, keywords can be entered in the search bar with quotes. Both platforms also let you save searches and set up email alerts — do this for each keyword combination so you're notified the moment a matching listing hits the market.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools after finding a lead:</strong> Run the <Link to="/tools/deal_analyzer" className="text-blue-400 underline hover:text-blue-300">Deal Analyzer</Link> to assess cash flow and returns, and the <Link to="/tools/arv_comps" className="text-blue-400 underline hover:text-blue-300">ARV Comps Analyzer</Link> to validate the property's after-repair value against nearby sales.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools after finding a lead:</strong> Run the <Link to="/tools/deal_analyzer" className=\"text-blue-400 underline hover:text-blue-300">Deal Analyzer</Link> to assess cash flow and returns, and the <Link to="/tools/arv_comps" className=\"text-blue-400 underline hover:text-blue-300">ARV Comps Analyzer</Link> to validate the property's after-repair value against nearby sales.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">2. FSBO (For Sale By Owner): Dealing Directly With Sellers</h2>
@@ -64,7 +64,7 @@ function EnglishContent() {
         FSBO sellers are often more flexible on terms like seller financing, lease-option agreements, or allowing longer inspection periods. They haven't been coached by an agent to hold firm on price, which creates negotiating room.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> If the FSBO is a potential buy-and-hold, use the <Link to="/tools/rental_yield" className="text-blue-400 underline hover:text-blue-300">Rental Yield Calculator</Link>. If the seller is open to creative financing, model the terms with the <Link to="/tools/owner_finance" className="text-blue-400 underline hover:text-blue-300">Owner Finance Calculator</Link>.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> If the FSBO is a potential buy-and-hold, use the <Link to="/tools/rental_yield" className=\"text-blue-400 underline hover:text-blue-300">Rental Yield Calculator</Link>. If the seller is open to creative financing, model the terms with the <Link to="/tools/owner_finance" className=\"text-blue-400 underline hover:text-blue-300">Owner Finance Calculator</Link>.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">3. Driving for Dollars: Finding Deals Before They Hit the Market</h2>
@@ -94,7 +94,7 @@ function EnglishContent() {
         For occupied properties, door knocking is even more effective. Approach professionally, explain you're looking to buy in the neighborhood, and ask if they'd consider selling. Many sellers say yes to conversations they'd never initiate themselves.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> For distressed properties needing work, the <Link to="/tools/repairs_estimator" className="text-blue-400 underline hover:text-blue-300">Repairs Estimator</Link> helps you quickly scope rehab costs during your initial walkthrough, and the <Link to="/tools/flip" className="text-blue-400 underline hover:text-blue-300">Flip Calculator</Link> or <Link to="/tools/brrr" className="text-blue-400 underline hover:text-blue-300">BRRR Calculator</Link> helps you model the exit strategy.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> For distressed properties needing work, the <Link to="/tools/repairs_estimator" className=\"text-blue-400 underline hover:text-blue-300">Repairs Estimator</Link> helps you quickly scope rehab costs during your initial walkthrough, and the <Link to="/tools/flip" className=\"text-blue-400 underline hover:text-blue-300">Flip Calculator</Link> or <Link to="/tools/brrr" className=\"text-blue-400 underline hover:text-blue-300">BRRR Calculator</Link> helps you model the exit strategy.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">4. Distressed Properties: Foreclosures, Tax Sales, and REOs</h2>
@@ -124,7 +124,7 @@ function EnglishContent() {
         HUD homes are FHA-insured properties that have been foreclosed. They're sold through a competitive bidding process at <strong className="text-white">HUDhomestore.com</strong>. Owner-occupants get a priority bidding window before investors can bid — but if a property doesn't sell in that window, investors can submit offers. HUD homes often need work but can be bought significantly below market.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> Always run the <Link to="/tools/arv_comps" className="text-blue-400 underline hover:text-blue-300">ARV Comps Analyzer</Link> on distressed properties — the asking price is often based on distressed condition, not market value. Then use the <Link to="/tools/repairs_estimator" className="text-blue-400 underline hover:text-blue-300">Repairs Estimator</Link> to scope the rehab before making an offer.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> Always run the <Link to="/tools/arv_comps" className=\"text-blue-400 underline hover:text-blue-300">ARV Comps Analyzer</Link> on distressed properties — the asking price is often based on distressed condition, not market value. Then use the <Link to="/tools/repairs_estimator" className=\"text-blue-400 underline hover:text-blue-300">Repairs Estimator</Link> to scope the rehab before making an offer.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">5. Wholesalers: Buying from Investors Who Find Deals for You</h2>
@@ -146,7 +146,7 @@ function EnglishContent() {
         Run your own comps, walk the property yourself, get a contractor bid, and make sure the math works at your actual numbers — not the wholesaler's. A quick rule of thumb: the Maximum Allowable Offer (MAO) for a flip is typically 70% of ARV minus repairs. For a rental, use your target cash-on-cash return to back into your maximum purchase price.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> Before accepting any wholesale deal, run the numbers through the <Link to="/tools/deal_analyzer" className="text-blue-400 underline hover:text-blue-300">Deal Analyzer</Link> using your own ARV and repair estimates. Never rely solely on the wholesaler's pro forma.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> Before accepting any wholesale deal, run the numbers through the <Link to="/tools/deal_analyzer" className=\"text-blue-400 underline hover:text-blue-300">Deal Analyzer</Link> using your own ARV and repair estimates. Never rely solely on the wholesaler's pro forma.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">6. Off-Market Networking: Building Relationships That Bring Deals to You</h2>
@@ -169,7 +169,7 @@ function EnglishContent() {
         Property managers know which landlords are burned out, which buildings have deferred maintenance, and which owners are thinking about retiring out of their portfolio. A conversation with a property manager about upcoming listing opportunities often surfaces deals months ahead of the market. Offer to pay a referral fee if they connect you with a seller who closes.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> Off-market multi-unit opportunities are great candidates for the <Link to="/tools/house_hack" className="text-blue-400 underline hover:text-blue-300">House Hack Calculator</Link> if you plan to occupy one unit, or the <Link to="/tools/brrr" className="text-blue-400 underline hover:text-blue-300">BRRR Calculator</Link> if you're planning a full rehab and refinance.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> Off-market multi-unit opportunities are great candidates for the <Link to="/tools/house_hack" className=\"text-blue-400 underline hover:text-blue-300">House Hack Calculator</Link> if you plan to occupy one unit, or the <Link to="/tools/brrr" className=\"text-blue-400 underline hover:text-blue-300">BRRR Calculator</Link> if you're planning a full rehab and refinance.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">7. Auction Strategies: Buying at the Courthouse Steps and Online</h2>
@@ -198,7 +198,7 @@ function EnglishContent() {
         <li>Never bid based on the opening bid alone — set your max before the auction starts and don't exceed it</li>
       </ul>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> Before any auction bid, run the <Link to="/tools/arv_comps" className="text-blue-400 underline hover:text-blue-300">ARV Comps Analyzer</Link> to establish your value ceiling, then the <Link to="/tools/repairs_estimator" className="text-blue-400 underline hover:text-blue-300">Repairs Estimator</Link> to establish your cost floor. Your maximum bid is the spread between those two figures minus your desired profit.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Use these tools:</strong> Before any auction bid, run the <Link to="/tools/arv_comps" className=\"text-blue-400 underline hover:text-blue-300">ARV Comps Analyzer</Link> to establish your value ceiling, then the <Link to="/tools/repairs_estimator" className=\"text-blue-400 underline hover:text-blue-300">Repairs Estimator</Link> to establish your cost floor. Your maximum bid is the spread between those two figures minus your desired profit.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">Deal Finding Checklist: Your Weekly Action Plan</h2>
@@ -288,7 +288,7 @@ function SpanishContent() {
         Guarda estas búsquedas y activa alertas por correo en Zillow y Realtor.com para recibir notificaciones inmediatas cuando aparezca una propiedad que coincida.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Ejecuta el <Link to="/tools/deal_analyzer" className="text-blue-400 underline hover:text-blue-300">Analizador de Negocios</Link> para evaluar flujo de caja y retornos, y el <Link to="/tools/arv_comps" className="text-blue-400 underline hover:text-blue-300">Analizador ARV</Link> para validar el valor de la propiedad después de reparaciones.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Ejecuta el <Link to="/tools/deal_analyzer" className=\"text-blue-400 underline hover:text-blue-300">Analizador de Negocios</Link> para evaluar flujo de caja y retornos, y el <Link to="/tools/arv_comps" className=\"text-blue-400 underline hover:text-blue-300">Analizador ARV</Link> para validar el valor de la propiedad después de reparaciones.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">2. FSBO (For Sale By Owner): Tratar Directamente con los Propietarios</h2>
@@ -307,7 +307,7 @@ function SpanishContent() {
         Los vendedores FSBO son frecuentemente más flexibles en términos como financiamiento del vendedor, contratos de opción de arrendamiento, o períodos de inspección más largos. No han sido entrenados por un agente para mantener el precio, lo que crea espacio de negociación.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Si el FSBO es un posible arrendamiento, usa la <Link to="/tools/rental_yield" className="text-blue-400 underline hover:text-blue-300">Calculadora de Rendimiento de Alquiler</Link>. Si el vendedor está abierto a financiamiento creativo, modela los términos con la <Link to="/tools/owner_finance" className="text-blue-400 underline hover:text-blue-300">Calculadora de Financiamiento del Vendedor</Link>.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Si el FSBO es un posible arrendamiento, usa la <Link to="/tools/rental_yield" className=\"text-blue-400 underline hover:text-blue-300">Calculadora de Rendimiento de Alquiler</Link>. Si el vendedor está abierto a financiamiento creativo, modela los términos con la <Link to="/tools/owner_finance" className=\"text-blue-400 underline hover:text-blue-300">Calculadora de Financiamiento del Vendedor</Link>.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">3. Conducir Buscando Oportunidades: Encontrar Negocios Antes de que Salgan al Mercado</h2>
@@ -332,7 +332,7 @@ function SpanishContent() {
         Envía una tarjeta postal manuscrita a la dirección postal del propietario. Mantenlo simple: "Noté su propiedad en [dirección]. Soy un inversor local interesado en comprar. Si considera una oferta, llámeme al [número]." Las tasas de respuesta son del 1–3%, por lo que el volumen importa — envía a 50–100 prospectos para generar 2–5 llamadas.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Para propiedades que necesitan trabajo, el <Link to="/tools/repairs_estimator" className="text-blue-400 underline hover:text-blue-300">Estimador de Reparaciones</Link> te ayuda a calcular costos rápidamente, y la <Link to="/tools/flip" className="text-blue-400 underline hover:text-blue-300">Calculadora de Flip</Link> o <Link to="/tools/brrr" className="text-blue-400 underline hover:text-blue-300">Calculadora BRRR</Link> modela la estrategia de salida.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Para propiedades que necesitan trabajo, el <Link to="/tools/repairs_estimator" className=\"text-blue-400 underline hover:text-blue-300">Estimador de Reparaciones</Link> te ayuda a calcular costos rápidamente, y la <Link to="/tools/flip" className=\"text-blue-400 underline hover:text-blue-300">Calculadora de Flip</Link> o <Link to="/tools/brrr" className=\"text-blue-400 underline hover:text-blue-300">Calculadora BRRR</Link> modela la estrategia de salida.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">4. Propiedades en Dificultades: Ejecuciones Hipotecarias, Ventas de Impuestos y REOs</h2>
@@ -352,7 +352,7 @@ function SpanishContent() {
         REO significa "Real Estate Owned" — propiedades que ya pasaron por ejecución hipotecaria y son propiedad del banco. Encuéntralas en <strong className="text-white">Hubzu.com</strong> o directamente en los portales de bancos. Las casas HUD, propiedades aseguradas por FHA que fueron ejecutadas, se venden en <strong className="text-white">HUDhomestore.com</strong>.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Siempre ejecuta el <Link to="/tools/arv_comps" className="text-blue-400 underline hover:text-blue-300">Analizador ARV</Link> en propiedades en dificultades, luego el <Link to="/tools/repairs_estimator" className="text-blue-400 underline hover:text-blue-300">Estimador de Reparaciones</Link> antes de hacer una oferta.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Siempre ejecuta el <Link to="/tools/arv_comps" className=\"text-blue-400 underline hover:text-blue-300">Analizador ARV</Link> en propiedades en dificultades, luego el <Link to="/tools/repairs_estimator" className=\"text-blue-400 underline hover:text-blue-300">Estimador de Reparaciones</Link> antes de hacer una oferta.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">5. Mayoristas (Wholesalers): Comprando a Inversores que Encuentran Negocios por Ti</h2>
@@ -368,7 +368,7 @@ function SpanishContent() {
         La clave para no pagar de más en un negocio al por mayor es verificar los números del mayorista de forma independiente. Ejecuta tus propios comparables, visita la propiedad y obtén una cotización de contratista propia.
       </p>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Antes de aceptar cualquier negocio al por mayor, ejecuta los números en el <Link to="/tools/deal_analyzer" className="text-blue-400 underline hover:text-blue-300">Analizador de Negocios</Link> usando tus propias estimaciones de ARV y reparaciones.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Antes de aceptar cualquier negocio al por mayor, ejecuta los números en el <Link to="/tools/deal_analyzer" className=\"text-blue-400 underline hover:text-blue-300">Analizador de Negocios</Link> usando tus propias estimaciones de ARV y reparaciones.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">6. Redes Fuera del Mercado: Construir Relaciones que Traigan Negocios a Ti</h2>
@@ -381,7 +381,7 @@ function SpanishContent() {
         <li><strong className="text-white">Administradores de propiedades:</strong> Saben qué propietarios están agotados y cuáles edificios tienen mantenimiento diferido.</li>
       </ul>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Las oportunidades multifamiliares fuera del mercado son excelentes candidatas para la <Link to="/tools/house_hack" className="text-blue-400 underline hover:text-blue-300">Calculadora de House Hack</Link> o la <Link to="/tools/brrr" className="text-blue-400 underline hover:text-blue-300">Calculadora BRRR</Link>.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Las oportunidades multifamiliares fuera del mercado son excelentes candidatas para la <Link to="/tools/house_hack" className=\"text-blue-400 underline hover:text-blue-300">Calculadora de House Hack</Link> o la <Link to="/tools/brrr" className=\"text-blue-400 underline hover:text-blue-300">Calculadora BRRR</Link>.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">7. Estrategias de Subastas: Comprando en las Escaleras del Tribunal y en Línea</h2>
@@ -397,7 +397,7 @@ function SpanishContent() {
         <li>Establece tu oferta máxima antes de que comience la subasta y no la superes</li>
       </ul>
       <div className="bg-blue-900/20 border border-blue-700/30 rounded-xl p-5 mb-6">
-        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Antes de cualquier oferta en subasta, ejecuta el <Link to="/tools/arv_comps" className="text-blue-400 underline hover:text-blue-300">Analizador ARV</Link> para establecer el techo de valor, luego el <Link to="/tools/repairs_estimator" className="text-blue-400 underline hover:text-blue-300">Estimador de Reparaciones</Link> para el piso de costos.</p>
+        <p className="text-sm text-gray-300"><strong className="text-blue-400">Usa estas herramientas:</strong> Antes de cualquier oferta en subasta, ejecuta el <Link to="/tools/arv_comps" className=\"text-blue-400 underline hover:text-blue-300">Analizador ARV</Link> para establecer el techo de valor, luego el <Link to="/tools/repairs_estimator" className=\"text-blue-400 underline hover:text-blue-300">Estimador de Reparaciones</Link> para el piso de costos.</p>
       </div>
 
       <h2 className="text-2xl font-bold text-white mt-10 mb-4">Lista de Verificación para Encontrar Negocios: Tu Plan de Acción Semanal</h2>
