@@ -25,6 +25,7 @@ import { Pricing } from './pages/Pricing'
 import { Settings } from './pages/Settings'
 import { Glossary } from './pages/Glossary'
 import { DocumentAnalyzer } from './pages/DocumentAnalyzer'
+import { ARVCompsAnalyzer } from './pages/ARVCompsAnalyzer'
 import AdminDashboard from './pages/AdminDashboard'
 
 function AppRoutes() {
@@ -51,6 +52,7 @@ function AppRoutes() {
         <Route path="/tools/portfolio_analyzer" element={<PortfolioAnalyzer />} />
         <Route path="/tools/compare" element={<ProtectedRoute><DealComparison /></ProtectedRoute>} />
         <Route path="/tools/document_analyzer" element={<DocumentAnalyzer />} />
+        <Route path="/tools/arv_comps" element={<ARVCompsAnalyzer />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/glossary" element={<Glossary />} />
         <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
