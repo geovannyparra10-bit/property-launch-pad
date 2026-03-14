@@ -48,6 +48,7 @@ import { HouseHackMastery } from './pages/courses/house-hack-mastery/HouseHackMa
 import { BRRRBlueprint } from './pages/courses/brrr-blueprint/BRRRBlueprint'
 import { FlipProfits } from './pages/courses/flip-profits/FlipProfits'
 import { RentalWealth } from './pages/courses/rental-wealth/RentalWealth'
+import { OwnerFinanceDeals } from './pages/courses/owner-finance-deals/OwnerFinanceDeals'
 
 function AppRoutes() {
   const location = useLocation()
@@ -101,6 +102,8 @@ function AppRoutes() {
         <Route path="/courses/flip-profits/:lessonSlug" element={<FlipProfits />} />
         <Route path="/courses/rental-wealth" element={<RentalWealth />} />
         <Route path="/courses/rental-wealth/:lessonSlug" element={<RentalWealth />} />
+        <Route path="/courses/owner-finance-deals" element={<OwnerFinanceDeals />} />
+        <Route path="/courses/owner-finance-deals/:lessonSlug" element={<OwnerFinanceDeals />} />
       </Routes>
     </PageTransition>
   )
