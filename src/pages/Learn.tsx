@@ -111,6 +111,18 @@ const articles = [
     categoryEs: 'Administración',
     image: 'https://images.pexels.com/photos/3184360/pexels-photo-3184360.jpeg?auto=compress&cs=tinysrgb&w=800',
   },
+  {
+    slug: 'finding-deals',
+    titleEn: 'How to Find Hidden Real Estate Deals: The Complete Sourcing Guide',
+    titleEs: 'Cómo Encontrar Oportunidades Inmobiliarias Ocultas: La Guía Completa de Búsqueda',
+    summaryEn: 'MLS keyword tricks, FSBO outreach, driving for dollars, foreclosures, wholesalers, off-market networking, and auction strategies — every major deal sourcing channel explained in detail.',
+    summaryEs: 'Trucos de palabras clave en el MLS, contacto con FSBOs, conducir buscando oportunidades, ejecuciones hipotecarias, mayoristas, redes fuera del mercado y subastas — todos los canales principales explicados en detalle.',
+    readTimeEn: '14 min read',
+    readTimeEs: '14 min de lectura',
+    categoryEn: 'Strategy',
+    categoryEs: 'Estrategia',
+    image: 'https://images.pexels.com/photos/1370704/pexels-photo-1370704.jpeg?auto=compress&cs=tinysrgb&w=800',
+  },
 ]
 
 export function Learn() {

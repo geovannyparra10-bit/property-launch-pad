@@ -44,6 +44,7 @@ import { AnalyzingDeals } from './pages/learn/AnalyzingDeals'
 import { EstimatingRepairs } from './pages/learn/EstimatingRepairs'
 import { BuildingAPortfolio } from './pages/learn/BuildingAPortfolio'
 import { FindingAPropertyManager } from './pages/learn/FindingAPropertyManager'
+import { FindingDeals } from './pages/learn/FindingDeals'
 import { Courses } from './pages/courses/Courses'
 import { HouseHackMastery } from './pages/courses/house-hack-mastery/HouseHackMastery'
 import { BRRRBlueprint } from './pages/courses/brrr-blueprint/BRRRBlueprint'
@@ -99,6 +100,7 @@ function AppRoutes() {
         <Route path="/learn/estimating-repairs" element={<EstimatingRepairs />} />
         <Route path="/learn/building-a-portfolio" element={<BuildingAPortfolio />} />
         <Route path="/learn/finding-a-property-manager" element={<FindingAPropertyManager />} />
+        <Route path="/learn/finding-deals" element={<FindingDeals />} />
         <Route path="/courses" element={<Courses />} />
         <Route path="/courses/house-hack-mastery" element={<HouseHackMastery />} />
         <Route path="/courses/house-hack-mastery/:lessonSlug" element={<HouseHackMastery />} />
