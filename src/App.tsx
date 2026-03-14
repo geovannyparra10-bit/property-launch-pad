@@ -17,6 +17,7 @@ import { StampDutyCalculator } from './pages/StampDutyCalculator'
 import { DealAnalyzer } from './pages/DealAnalyzer'
 import HouseHackCalculator from './pages/HouseHackCalculator'
 import BRRRCalculator from './pages/BRRRCalculator'
+import FlipCalculator from './pages/FlipCalculator'
 import { Pricing } from './pages/Pricing'
 import { Settings } from './pages/Settings'
 import AdminDashboard from './pages/AdminDashboard'
@@ -40,6 +41,7 @@ function AppRoutes() {
         <Route path="/tools/deal_analyzer" element={<DealAnalyzer />} />
         <Route path="/tools/house_hack" element={<HouseHackCalculator />} />
         <Route path="/tools/brrr" element={<BRRRCalculator />} />
+        <Route path="/tools/flip" element={<FlipCalculator />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       </Routes>
