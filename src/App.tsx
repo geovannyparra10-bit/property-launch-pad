@@ -33,6 +33,9 @@ import { Learn } from './pages/Learn'
 import { HouseHacking101 } from './pages/learn/HouseHacking101'
 import { BRRRStrategy } from './pages/learn/BRRRStrategy'
 import { FixAndFlip } from './pages/learn/FixAndFlip'
+import { RentalPropertyInvesting } from './pages/learn/RentalPropertyInvesting'
+import { UnderstandingMortgages } from './pages/learn/UnderstandingMortgages'
+import { AnalyzingDeals } from './pages/learn/AnalyzingDeals'
 
 function AppRoutes() {
   const location = useLocation()
@@ -67,6 +70,9 @@ function AppRoutes() {
         <Route path="/learn/house-hacking-101" element={<HouseHacking101 />} />
         <Route path="/learn/brrr-strategy" element={<BRRRStrategy />} />
         <Route path="/learn/fix-and-flip" element={<FixAndFlip />} />
+        <Route path="/learn/rental-property-investing" element={<RentalPropertyInvesting />} />
+        <Route path="/learn/understanding-mortgages" element={<UnderstandingMortgages />} />
+        <Route path="/learn/analyzing-deals" element={<AnalyzingDeals />} />
       </Routes>
     </PageTransition>
   )
