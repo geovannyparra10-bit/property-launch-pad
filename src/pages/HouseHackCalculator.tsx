@@ -5,6 +5,7 @@ import { ScenarioPanel } from '../components/ScenarioPanel';
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
 import { Tooltip } from '../components/Tooltip';
 import { generateProFormaPDF } from '../utils/pdfGenerator';
+import DisclaimerBanner from '../components/DisclaimerBanner';
 
 interface HouseHackInputs {
   purchasePrice: string;
@@ -473,6 +474,8 @@ export default function HouseHackCalculator() {
             )}
           </div>
         </div>
+
+        <DisclaimerBanner />
       </div>
 
       <PremiumFeatureModal

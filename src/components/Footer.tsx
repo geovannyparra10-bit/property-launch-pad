@@ -48,6 +48,10 @@ export function Footer() {
         <div className="mt-8 border-t border-gray-700 pt-8">
           <p className="text-gray-400 text-sm text-center">
             &copy; {new Date().getFullYear()} Property Launch Pad. All rights reserved.
+            {' • '}
+            <Link to="/disclaimer" className="text-gray-400 hover:text-white underline">
+              Disclaimer
+            </Link>
           </p>
         </div>
       </div>

@@ -5,6 +5,7 @@ import { DollarSign, FileText, Hop as Home, Percent, FileDown } from 'lucide-rea
 import { ScenarioPanel } from '../components/ScenarioPanel'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
 import { generateProFormaPDF } from '../utils/pdfGenerator'
+import DisclaimerBanner from '../components/DisclaimerBanner'
 
 type PropertyType = 'primary' | 'investment' | 'second_home'
 
@@ -353,6 +354,8 @@ export function StampDutyCalculator() {
             </div>
           </div>
         </div>
+
+        <DisclaimerBanner />
       </div>
 
       <PremiumFeatureModal

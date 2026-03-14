@@ -4,6 +4,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { ScenarioPanel } from '../components/ScenarioPanel';
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
 import { generateProFormaPDF } from '../utils/pdfGenerator';
+import DisclaimerBanner from '../components/DisclaimerBanner';
 
 interface RepairCategory {
   id: string;
@@ -446,6 +447,8 @@ export default function RepairsEstimator() {
             )}
           </div>
         </div>
+
+        <DisclaimerBanner />
       </div>
 
       <PremiumFeatureModal

@@ -5,6 +5,7 @@ import { ScenarioPanel } from '../components/ScenarioPanel';
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal';
 import { Tooltip } from '../components/Tooltip';
 import { generateProFormaPDF } from '../utils/pdfGenerator';
+import DisclaimerBanner from '../components/DisclaimerBanner';
 
 interface BRRRInputs {
   purchasePrice: string;
@@ -526,6 +527,8 @@ export default function BRRRCalculator() {
             )}
           </div>
         </div>
+
+        <DisclaimerBanner />
       </div>
 
       <PremiumFeatureModal

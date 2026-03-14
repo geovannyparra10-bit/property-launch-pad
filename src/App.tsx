@@ -27,6 +27,7 @@ import { Glossary } from './pages/Glossary'
 import { DocumentAnalyzer } from './pages/DocumentAnalyzer'
 import { ARVCompsAnalyzer } from './pages/ARVCompsAnalyzer'
 import AdminDashboard from './pages/AdminDashboard'
+import Disclaimer from './pages/Disclaimer'
 
 function AppRoutes() {
   const location = useLocation()
@@ -55,6 +56,7 @@ function AppRoutes() {
         <Route path="/tools/arv_comps" element={<ARVCompsAnalyzer />} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/glossary" element={<Glossary />} />
+        <Route path="/disclaimer" element={<Disclaimer />} />
         <Route path="/settings" element={<ProtectedRoute><Settings /></ProtectedRoute>} />
       </Routes>
     </PageTransition>

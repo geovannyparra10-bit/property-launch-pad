@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import { ScenarioPanel } from '../components/ScenarioPanel'
 import { generateProFormaPDF } from '../utils/pdfGenerator'
+import DisclaimerBanner from '../components/DisclaimerBanner'
 
 type Condition = 'Poor' | 'Fair' | 'Average' | 'Good' | 'Excellent'
 type RehabScope = 'None' | 'Cosmetic' | 'Moderate' | 'Full Gut'
@@ -745,6 +746,8 @@ export function ARVCompsAnalyzer() {
             </div>
           </div>
         </div>
+
+        <DisclaimerBanner />
       </div>
     </div>
   )

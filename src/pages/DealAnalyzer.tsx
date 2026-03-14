@@ -5,6 +5,7 @@ import { DollarSign, TrendingUp, TrendingDown, Calculator, Percent, Hop as Home,
 import { ScenarioPanel } from '../components/ScenarioPanel'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
 import { generateProFormaPDF } from '../utils/pdfGenerator'
+import DisclaimerBanner from '../components/DisclaimerBanner'
 
 type LoanTerm = 15 | 20 | 25 | 30
 
@@ -527,6 +528,8 @@ export function DealAnalyzer() {
             </div>
           </div>
         </div>
+
+        <DisclaimerBanner />
       </div>
 
       <PremiumFeatureModal

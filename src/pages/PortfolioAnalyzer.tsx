@@ -5,6 +5,7 @@ import { Plus, X, TrendingUp, TrendingDown, FileDown, Building2 } from 'lucide-r
 import { ScenarioPanel } from '../components/ScenarioPanel'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
 import { generateProFormaPDF } from '../utils/pdfGenerator'
+import DisclaimerBanner from '../components/DisclaimerBanner'
 
 interface Property {
   id: string
@@ -560,6 +561,8 @@ export function PortfolioAnalyzer() {
             </div>
           </div>
         </div>
+
+        <DisclaimerBanner />
       </div>
 
       <PremiumFeatureModal

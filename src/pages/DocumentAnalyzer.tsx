@@ -5,6 +5,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import { ScenarioPanel } from '../components/ScenarioPanel'
 import { PremiumFeatureModal } from '../components/PremiumFeatureModal'
+import DisclaimerBanner from '../components/DisclaimerBanner'
 
 interface ExtractedData {
   monthlyRentalIncome: string
@@ -646,6 +647,8 @@ export function DocumentAnalyzer() {
             </div>
           </div>
         </div>
+
+        <DisclaimerBanner />
       </div>
 
       <PremiumFeatureModal
