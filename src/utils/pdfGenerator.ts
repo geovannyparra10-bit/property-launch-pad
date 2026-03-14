@@ -1,10 +1,17 @@
-import jsPDF from 'jspdf';
-import autoTable from 'jspdf-autotable';
+import { jsPDF } from 'jspdf';
+import 'jspdf-autotable';
 
 interface PDFData {
   toolName: string;
   inputs: Record<string, any>;
   outputs: Record<string, any>;
+}
+
+declare module 'jspdf' {
+  interface jsPDF {
+    autoTable: (options: any) => jsPDF;
+    lastAutoTable?: { finalY: number };
+  }
 }
 
 export function generateProFormaPDF(data: PDFData) {
@@ -50,7 +57,7 @@ export function generateProFormaPDF(data: PDFData) {
     formatValue(value),
   ]);
 
-  autoTable(doc, {
+  doc.autoTable({
     startY: yPosition,
     head: [['Parameter', 'Value']],
     body: inputRows,
@@ -71,7 +78,7 @@ export function generateProFormaPDF(data: PDFData) {
     margin: { left: 14, right: 14 },
   });
 
-  yPosition = (doc as any).lastAutoTable.finalY + 15;
+  yPosition = (doc.lastAutoTable?.finalY || yPosition) + 15;
 
   if (yPosition > pageHeight - 60) {
     doc.addPage();
@@ -89,7 +96,7 @@ export function generateProFormaPDF(data: PDFData) {
     formatValue(value),
   ]);
 
-  autoTable(doc, {
+  doc.autoTable({
     startY: yPosition,
     head: [['Metric', 'Result']],
     body: outputRows,
