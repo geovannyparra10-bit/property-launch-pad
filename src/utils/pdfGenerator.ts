@@ -1,137 +1,169 @@
-import { jsPDF } from 'jspdf';
-import 'jspdf-autotable';
-
 interface PDFData {
   toolName: string;
   inputs: Record<string, any>;
   outputs: Record<string, any>;
 }
 
-declare module 'jspdf' {
-  interface jsPDF {
-    autoTable: (options: any) => jsPDF;
-    lastAutoTable?: { finalY: number };
-  }
-}
-
 export function generateProFormaPDF(data: PDFData) {
-  const doc = new jsPDF();
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  let yPosition = 20;
+  const printWindow = document.createElement('div');
+  printWindow.id = 'print-content';
+  printWindow.style.display = 'none';
 
-  doc.setFillColor(30, 41, 59);
-  doc.rect(0, 0, pageWidth, 40, 'F');
-
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(24);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Property Launch Pad', pageWidth / 2, 20, { align: 'center' });
-
-  doc.setFontSize(14);
-  doc.setFont('helvetica', 'normal');
-  doc.text('Pro Forma Report', pageWidth / 2, 30, { align: 'center' });
-
-  yPosition = 55;
-  doc.setTextColor(51, 65, 85);
-  doc.setFontSize(10);
-  doc.setFont('helvetica', 'normal');
   const reportDate = new Date().toLocaleDateString('en-GB', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
   });
-  doc.text(`Report Date: ${reportDate}`, 14, yPosition);
-  doc.text(`Tool: ${data.toolName}`, 14, yPosition + 6);
 
-  yPosition += 20;
+  const inputRows = Object.entries(data.inputs)
+    .map(([key, value]) => `
+      <tr>
+        <td class="px-4 py-2 border border-gray-300 font-medium">${formatLabel(key)}</td>
+        <td class="px-4 py-2 border border-gray-300">${formatValue(value)}</td>
+      </tr>
+    `)
+    .join('');
 
-  doc.setTextColor(15, 23, 42);
-  doc.setFontSize(14);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Property Details', 14, yPosition);
-  yPosition += 8;
+  const outputRows = Object.entries(data.outputs)
+    .map(([key, value]) => `
+      <tr>
+        <td class="px-4 py-2 border border-gray-300 font-medium">${formatLabel(key)}</td>
+        <td class="px-4 py-2 border border-gray-300">${formatValue(value)}</td>
+      </tr>
+    `)
+    .join('');
 
-  const inputRows = Object.entries(data.inputs).map(([key, value]) => [
-    formatLabel(key),
-    formatValue(value),
-  ]);
+  printWindow.innerHTML = `
+    <style>
+      @media print {
+        body * {
+          visibility: hidden;
+        }
+        #print-content, #print-content * {
+          visibility: visible;
+        }
+        #print-content {
+          position: absolute;
+          left: 0;
+          top: 0;
+          width: 100%;
+          display: block !important;
+        }
+        @page {
+          margin: 20mm;
+        }
+      }
+      #print-content {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 20px;
+        color: #1e293b;
+      }
+      .header {
+        background-color: #1e293b;
+        color: white;
+        padding: 30px;
+        text-align: center;
+        margin-bottom: 30px;
+      }
+      .header h1 {
+        font-size: 28px;
+        font-weight: bold;
+        margin: 0 0 10px 0;
+      }
+      .header p {
+        font-size: 16px;
+        margin: 0;
+      }
+      .meta-info {
+        margin-bottom: 30px;
+        color: #475569;
+      }
+      .section-title {
+        font-size: 18px;
+        font-weight: bold;
+        margin: 30px 0 15px 0;
+        color: #0f172a;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 30px;
+      }
+      th {
+        background-color: #1e293b;
+        color: white;
+        padding: 12px;
+        text-align: left;
+        font-weight: bold;
+      }
+      td {
+        padding: 10px 12px;
+        border: 1px solid #cbd5e1;
+      }
+      tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+      .footer {
+        background-color: #1e293b;
+        color: white;
+        padding: 15px;
+        text-align: center;
+        margin-top: 40px;
+        font-size: 12px;
+      }
+    </style>
 
-  doc.autoTable({
-    startY: yPosition,
-    head: [['Parameter', 'Value']],
-    body: inputRows,
-    theme: 'grid',
-    headStyles: {
-      fillColor: [30, 41, 59],
-      textColor: [255, 255, 255],
-      fontStyle: 'bold',
-      fontSize: 11,
-    },
-    bodyStyles: {
-      textColor: [51, 65, 85],
-      fontSize: 10,
-    },
-    alternateRowStyles: {
-      fillColor: [248, 250, 252],
-    },
-    margin: { left: 14, right: 14 },
-  });
+    <div class="header">
+      <h1>Property Launch Pad</h1>
+      <p>Pro Forma Report</p>
+    </div>
 
-  yPosition = (doc.lastAutoTable?.finalY || yPosition) + 15;
+    <div class="meta-info">
+      <p><strong>Report Date:</strong> ${reportDate}</p>
+      <p><strong>Tool:</strong> ${data.toolName}</p>
+    </div>
 
-  if (yPosition > pageHeight - 60) {
-    doc.addPage();
-    yPosition = 20;
-  }
+    <h2 class="section-title">Property Details</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Parameter</th>
+          <th>Value</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${inputRows}
+      </tbody>
+    </table>
 
-  doc.setTextColor(15, 23, 42);
-  doc.setFontSize(14);
-  doc.setFont('helvetica', 'bold');
-  doc.text('Financial Analysis', 14, yPosition);
-  yPosition += 8;
+    <h2 class="section-title">Financial Analysis</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th>Result</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${outputRows}
+      </tbody>
+    </table>
 
-  const outputRows = Object.entries(data.outputs).map(([key, value]) => [
-    formatLabel(key),
-    formatValue(value),
-  ]);
+    <div class="footer">
+      Generated by Property Launch Pad — propertylaunchpad.com
+    </div>
+  `;
 
-  doc.autoTable({
-    startY: yPosition,
-    head: [['Metric', 'Result']],
-    body: outputRows,
-    theme: 'grid',
-    headStyles: {
-      fillColor: [30, 41, 59],
-      textColor: [255, 255, 255],
-      fontStyle: 'bold',
-      fontSize: 11,
-    },
-    bodyStyles: {
-      textColor: [51, 65, 85],
-      fontSize: 10,
-    },
-    alternateRowStyles: {
-      fillColor: [248, 250, 252],
-    },
-    margin: { left: 14, right: 14 },
-  });
+  document.body.appendChild(printWindow);
 
-  doc.setFillColor(30, 41, 59);
-  doc.rect(0, pageHeight - 15, pageWidth, 15, 'F');
-
-  doc.setTextColor(255, 255, 255);
-  doc.setFontSize(9);
-  doc.setFont('helvetica', 'normal');
-  doc.text(
-    'Generated by Property Launch Pad — propertylaunchpad.com',
-    pageWidth / 2,
-    pageHeight - 7,
-    { align: 'center' }
-  );
-
-  const fileName = `${data.toolName.replace(/\s+/g, '_')}_${new Date().toISOString().split('T')[0]}.pdf`;
-  doc.save(fileName);
+  setTimeout(() => {
+    window.print();
+    setTimeout(() => {
+      document.body.removeChild(printWindow);
+    }, 100);
+  }, 100);
 }
 
 function formatLabel(key: string): string {
