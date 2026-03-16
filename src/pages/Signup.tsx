@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Link, useNavigate, useSearchParams } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 
 export function Signup() {
@@ -9,7 +9,6 @@ export function Signup() {
   const [error, setError] = useState('')
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const [searchParams] = useSearchParams()
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -40,12 +39,7 @@ export function Signup() {
         return
       }
 
-      if (searchParams.get('redirect') === 'pricing') {
-        window.open('https://buy.stripe.com/test_fZu3cw5Uc7xucqGbk6gw000', '_blank')
-        navigate('/dashboard')
-      } else {
-        navigate('/dashboard')
-      }
+      navigate('/dashboard')
     } catch (err: any) {
       setError(err.message || 'Failed to sign up')
     } finally {

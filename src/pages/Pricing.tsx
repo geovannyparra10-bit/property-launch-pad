@@ -1,7 +1,21 @@
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { Check } from 'lucide-react'
+import { useAuth } from '../contexts/AuthContext'
+
+const STRIPE_PREMIUM_URL = 'https://buy.stripe.com/test_fZu3cw5Uc7xucqGbk6gw000'
 
 export function Pricing() {
+  const { user } = useAuth()
+  const navigate = useNavigate()
+
+  const handlePremiumClick = () => {
+    if (!user) {
+      navigate('/signup?redirect=pricing')
+    } else {
+      window.open(STRIPE_PREMIUM_URL, '_blank')
+    }
+  }
+
   return (
     <div className="min-h-screen bg-gray-900">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 sm:py-16">
@@ -46,7 +60,7 @@ export function Pricing() {
               to="/signup"
               className="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white font-semibold py-3 px-6 rounded-lg transition-colors"
             >
-              Get Started
+              Sign Up Free
             </Link>
           </div>
 
@@ -100,10 +114,10 @@ export function Pricing() {
             </ul>
 
             <button
-              onClick={() => window.open('https://buy.stripe.com/test_fZu3cw5Uc7xucqGbk6gw000', '_blank')}
+              onClick={handlePremiumClick}
               className="w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors shadow-lg"
             >
-              Upgrade to Premium
+              {user ? 'Upgrade to Premium' : 'Get Premium'}
             </button>
           </div>
         </div>
