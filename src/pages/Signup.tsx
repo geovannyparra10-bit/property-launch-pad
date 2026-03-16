@@ -16,9 +16,6 @@ export function Signup() {
     setLoading(true)
 
     try {
-      console.log('[Signup] Supabase URL:', import.meta.env.VITE_SUPABASE_URL)
-      console.log('[Signup] Attempting signup for email:', email)
-
       const { data, error } = await supabase.auth.signUp({
         email,
         password,
@@ -29,19 +26,19 @@ export function Signup() {
         },
       })
 
-      console.log('[Signup] Full response:', { data, error })
-
       if (error) throw error
 
-      if (!data.session) {
-        setError('Account created but sign-in failed. Please log in manually.')
-        setLoading(false)
-        return
+      if (data.session) {
+        navigate('/dashboard')
+      } else {
+        navigate('/login')
       }
-
-      navigate('/dashboard')
     } catch (err: any) {
-      setError(err.message || 'Failed to sign up')
+      if (err.message?.toLowerCase().includes('already registered') || err.message?.toLowerCase().includes('already been registered')) {
+        setError('An account with this email already exists. Please log in instead.')
+      } else {
+        setError(err.message || 'Failed to create account. Please try again.')
+      }
     } finally {
       setLoading(false)
     }
