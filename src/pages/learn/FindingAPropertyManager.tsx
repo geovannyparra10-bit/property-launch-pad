@@ -77,7 +77,7 @@ function ChecklistSection() {
   const { language } = useLanguage()
   const { profile } = useAuth()
   const [showModal, setShowModal] = useState(false)
-  const isPremium = profile?.subscription_status === 'active'
+  const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
   const list = language === 'en' ? CHECKLIST_EN : CHECKLIST_ES
 
   const handlePrint = () => {

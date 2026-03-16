@@ -17,7 +17,7 @@ export function OfferLetter() {
   const [data, setData] = useState<OfferLetterFormData>(defaultOfferLetterData)
   const [showPremiumModal, setShowPremiumModal] = useState(false)
 
-  const isPremium = profile?.subscription_status === 'active'
+  const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
   const t = (en: string, es: string) => (language === 'en' ? en : es)
 
   useEffect(() => {

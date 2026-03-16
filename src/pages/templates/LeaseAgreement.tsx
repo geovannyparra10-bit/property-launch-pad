@@ -108,7 +108,7 @@ export function LeaseAgreement() {
   const [showPremiumModal, setShowPremiumModal] = useState(false)
   const [formData, setFormData] = useState<LeaseFormData>(defaultLeaseData)
 
-  const isPremium = profile?.subscription_status === 'active'
+  const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
 
   useEffect(() => {
     if (!user) { navigate('/login'); return }

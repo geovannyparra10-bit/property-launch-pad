@@ -145,7 +145,7 @@ export default function HouseHackCalculator() {
   };
 
   const handleDownloadPDF = () => {
-    const isPremium = profile?.subscription_status === 'active'
+    const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
 
     if (!isPremium) {
       setShowPremiumModal(true)

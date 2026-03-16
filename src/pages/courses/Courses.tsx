@@ -11,7 +11,7 @@ function CourseCard({ course }: { course: typeof COURSES[0] }) {
   const { language } = useLanguage()
   const { profile } = useAuth()
   const [showModal, setShowModal] = useState(false)
-  const isPremium = profile?.subscription_status === 'active'
+  const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
   const { completedCount, loading } = useCourseProgress(course.slug)
   const total = course.lessons.length
   const pct = total > 0 ? Math.round((completedCount / total) * 100) : 0
@@ -109,7 +109,7 @@ export function Courses() {
   const { language } = useLanguage()
   const { profile, user } = useAuth()
   const [showModal, setShowModal] = useState(false)
-  const isPremium = profile?.subscription_status === 'active'
+  const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
 
   return (
     <>

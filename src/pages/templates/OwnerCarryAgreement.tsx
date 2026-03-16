@@ -109,7 +109,7 @@ export function OwnerCarryAgreement() {
   const [showPremiumModal, setShowPremiumModal] = useState(false)
   const [formData, setFormData] = useState<OwnerCarryFormData>(defaultFormData)
 
-  const isPremium = profile?.subscription_status === 'active'
+  const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
 
   useEffect(() => {
     if (!user) { navigate('/login'); return }

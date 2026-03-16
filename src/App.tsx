@@ -3,6 +3,7 @@ import { AuthProvider } from './contexts/AuthContext'
 import { ToastProvider } from './contexts/ToastContext'
 import { LanguageProvider } from './contexts/LanguageContext'
 import { ProtectedRoute } from './components/ProtectedRoute'
+import { PremiumRoute } from './components/PremiumRoute'
 import { PageTransition } from './components/PageTransition'
 import { Navbar } from './components/Navbar'
 import { Footer } from './components/Footer'
@@ -72,20 +73,20 @@ function AppRoutes() {
         <Route path="/tools/mortgage_calculator" element={<MortgageCalculator />} />
         <Route path="/tools/rental_yield" element={<RentalYieldCalculator />} />
         <Route path="/tools/stamp_duty" element={<StampDutyCalculator />} />
-        <Route path="/tools/deal_analyzer" element={<DealAnalyzer />} />
+        <Route path="/tools/deal_analyzer" element={<PremiumRoute featureName="Deal Analyzer"><DealAnalyzer /></PremiumRoute>} />
         <Route path="/tools/house_hack" element={<HouseHackCalculator />} />
-        <Route path="/tools/brrr" element={<BRRRCalculator />} />
-        <Route path="/tools/flip" element={<FlipCalculator />} />
+        <Route path="/tools/brrr" element={<PremiumRoute featureName="BRRR Calculator"><BRRRCalculator /></PremiumRoute>} />
+        <Route path="/tools/flip" element={<PremiumRoute featureName="Flip Calculator"><FlipCalculator /></PremiumRoute>} />
         <Route path="/tools/repairs_estimator" element={<RepairsEstimator />} />
-        <Route path="/tools/portfolio_analyzer" element={<PortfolioAnalyzer />} />
+        <Route path="/tools/portfolio_analyzer" element={<PremiumRoute featureName="Portfolio Analyzer"><PortfolioAnalyzer /></PremiumRoute>} />
         <Route path="/tools/compare" element={<ProtectedRoute><DealComparison /></ProtectedRoute>} />
-        <Route path="/tools/document_analyzer" element={<DocumentAnalyzer />} />
+        <Route path="/tools/document_analyzer" element={<PremiumRoute featureName="Document Analyzer"><DocumentAnalyzer /></PremiumRoute>} />
         <Route path="/tools/arv_comps" element={<ARVCompsAnalyzer />} />
         <Route path="/tools/owner_finance" element={<OwnerFinanceCalculator />} />
         <Route path="/templates" element={<Templates />} />
-        <Route path="/templates/owner-carry" element={<OwnerCarryAgreement />} />
-        <Route path="/templates/lease-agreement" element={<LeaseAgreement />} />
-        <Route path="/templates/offer-letter" element={<ProtectedRoute><OfferLetter /></ProtectedRoute>} />
+        <Route path="/templates/owner-carry" element={<PremiumRoute featureName="Document Templates"><OwnerCarryAgreement /></PremiumRoute>} />
+        <Route path="/templates/lease-agreement" element={<PremiumRoute featureName="Document Templates"><LeaseAgreement /></PremiumRoute>} />
+        <Route path="/templates/offer-letter" element={<PremiumRoute featureName="Document Templates"><OfferLetter /></PremiumRoute>} />
         <Route path="/pricing" element={<Pricing />} />
         <Route path="/glossary" element={<Glossary />} />
         <Route path="/disclaimer" element={<Disclaimer />} />
@@ -102,16 +103,16 @@ function AppRoutes() {
         <Route path="/learn/finding-a-property-manager" element={<FindingAPropertyManager />} />
         <Route path="/learn/finding-deals" element={<FindingDeals />} />
         <Route path="/courses" element={<Courses />} />
-        <Route path="/courses/house-hack-mastery" element={<HouseHackMastery />} />
-        <Route path="/courses/house-hack-mastery/:lessonSlug" element={<HouseHackMastery />} />
-        <Route path="/courses/brrr-blueprint" element={<BRRRBlueprint />} />
-        <Route path="/courses/brrr-blueprint/:lessonSlug" element={<BRRRBlueprint />} />
-        <Route path="/courses/flip-profits" element={<FlipProfits />} />
-        <Route path="/courses/flip-profits/:lessonSlug" element={<FlipProfits />} />
-        <Route path="/courses/rental-wealth" element={<RentalWealth />} />
-        <Route path="/courses/rental-wealth/:lessonSlug" element={<RentalWealth />} />
-        <Route path="/courses/owner-finance-deals" element={<OwnerFinanceDeals />} />
-        <Route path="/courses/owner-finance-deals/:lessonSlug" element={<OwnerFinanceDeals />} />
+        <Route path="/courses/house-hack-mastery" element={<PremiumRoute featureName="Crash Courses"><HouseHackMastery /></PremiumRoute>} />
+        <Route path="/courses/house-hack-mastery/:lessonSlug" element={<PremiumRoute featureName="Crash Courses"><HouseHackMastery /></PremiumRoute>} />
+        <Route path="/courses/brrr-blueprint" element={<PremiumRoute featureName="Crash Courses"><BRRRBlueprint /></PremiumRoute>} />
+        <Route path="/courses/brrr-blueprint/:lessonSlug" element={<PremiumRoute featureName="Crash Courses"><BRRRBlueprint /></PremiumRoute>} />
+        <Route path="/courses/flip-profits" element={<PremiumRoute featureName="Crash Courses"><FlipProfits /></PremiumRoute>} />
+        <Route path="/courses/flip-profits/:lessonSlug" element={<PremiumRoute featureName="Crash Courses"><FlipProfits /></PremiumRoute>} />
+        <Route path="/courses/rental-wealth" element={<PremiumRoute featureName="Crash Courses"><RentalWealth /></PremiumRoute>} />
+        <Route path="/courses/rental-wealth/:lessonSlug" element={<PremiumRoute featureName="Crash Courses"><RentalWealth /></PremiumRoute>} />
+        <Route path="/courses/owner-finance-deals" element={<PremiumRoute featureName="Crash Courses"><OwnerFinanceDeals /></PremiumRoute>} />
+        <Route path="/courses/owner-finance-deals/:lessonSlug" element={<PremiumRoute featureName="Crash Courses"><OwnerFinanceDeals /></PremiumRoute>} />
         <Route path="/pipeline" element={<ProtectedRoute><Pipeline /></ProtectedRoute>} />
         <Route path="/community" element={<ProtectedRoute><Community /></ProtectedRoute>} />
         <Route path="/community/new" element={<ProtectedRoute><NewPost /></ProtectedRoute>} />

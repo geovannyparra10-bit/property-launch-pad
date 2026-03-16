@@ -29,7 +29,7 @@ export function CourseLayout({
   const { profile } = useAuth()
   const navigate = useNavigate()
   const [showModal, setShowModal] = useState(false)
-  const isPremium = profile?.subscription_status === 'active'
+  const isPremium = profile?.subscription_status === 'premium' || profile?.subscription_status === 'active'
 
   const currentIndex = course.lessons.findIndex((l) => l.slug === lessonSlug)
   const currentLesson = course.lessons[currentIndex]
