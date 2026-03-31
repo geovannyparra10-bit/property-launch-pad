@@ -74,6 +74,28 @@ Deno.serve(async (req: Request) => {
         break;
       }
 
+      case "invoice.paid": {
+        const invoice = event.data.object as Stripe.Invoice;
+        const customerEmail = invoice.customer_email;
+        const stripeCustomerId = invoice.customer as string;
+
+        if (customerEmail) {
+          const { error } = await supabase
+            .from("profiles")
+            .update({
+              subscription_status: "premium",
+              stripe_customer_id: stripeCustomerId,
+              updated_at: new Date().toISOString(),
+            })
+            .eq("email", customerEmail);
+
+          if (error) {
+            console.error("Error updating profile on invoice.paid:", error);
+          }
+        }
+        break;
+      }
+
       case "customer.subscription.deleted": {
         const subscription = event.data.object as Stripe.Subscription;
         const stripeCustomerId = subscription.customer as string;
