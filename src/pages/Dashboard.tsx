@@ -57,10 +57,26 @@ export function Dashboard() {
 
   useEffect(() => {
     if (searchParams.get('payment') === 'success') {
-      showToast('Payment successful! Welcome to Premium.', 'success')
-      setSearchParams({})
+      activatePremium()
     }
   }, [])
+
+  const activatePremium = async () => {
+    if (!user) return
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ subscription_status: 'premium' })
+        .eq('user_id', user.id)
+      if (error) throw error
+      showToast('Payment successful! Welcome to Premium.', 'success')
+    } catch (err) {
+      console.error('Error activating premium:', err)
+      showToast('Payment received — please use "Restore Purchase" in Settings if Premium is not active.', 'info')
+    } finally {
+      setSearchParams({})
+    }
+  }
 
   useEffect(() => {
     if (!loading) {

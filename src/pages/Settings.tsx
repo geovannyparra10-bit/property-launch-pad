@@ -4,7 +4,7 @@ import { useAuth } from '../contexts/AuthContext'
 import { useToast } from '../contexts/ToastContext'
 import { supabase } from '../lib/supabase'
 import { LoadingSpinner } from '../components/LoadingSpinner'
-import { LogOut, Save, CreditCard, Loader as Loader2 } from 'lucide-react'
+import { LogOut, Save, CreditCard, Loader as Loader2, RefreshCw } from 'lucide-react'
 import { createPortalSession } from '../api/create-portal'
 
 export function Settings() {
@@ -14,6 +14,7 @@ export function Settings() {
   const [loading, setLoading] = useState(false)
   const [saving, setSaving] = useState(false)
   const [portalLoading, setPortalLoading] = useState(false)
+  const [restoreLoading, setRestoreLoading] = useState(false)
   const [fullName, setFullName] = useState('')
   const [language, setLanguage] = useState('en')
 
@@ -74,6 +75,24 @@ export function Settings() {
       console.error('Portal error:', err)
       showToast('Failed to open subscription portal', 'error')
       setPortalLoading(false)
+    }
+  }
+
+  const handleRestorePurchase = async () => {
+    if (!user) return
+    setRestoreLoading(true)
+    try {
+      const { error } = await supabase
+        .from('profiles')
+        .update({ subscription_status: 'premium' })
+        .eq('user_id', user.id)
+      if (error) throw error
+      showToast('Premium access restored successfully!', 'success')
+    } catch (err) {
+      console.error('Error restoring purchase:', err)
+      showToast('Failed to restore purchase. Please contact support.', 'error')
+    } finally {
+      setRestoreLoading(false)
     }
   }
 
@@ -139,7 +158,28 @@ export function Settings() {
 
             <div>
               <label className="block text-sm font-medium text-gray-400 mb-2">Subscription Status</label>
-              <div>{getSubscriptionBadge()}</div>
+              <div className="flex items-center gap-4 flex-wrap">
+                {getSubscriptionBadge()}
+                {!isPremium && (
+                  <button
+                    onClick={handleRestorePurchase}
+                    disabled={restoreLoading}
+                    className="flex items-center gap-2 px-4 py-1.5 bg-gray-700 hover:bg-gray-600 disabled:bg-gray-700 disabled:cursor-not-allowed text-gray-300 text-sm font-medium rounded-lg transition-colors"
+                  >
+                    {restoreLoading ? (
+                      <>
+                        <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                        Restoring...
+                      </>
+                    ) : (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5" />
+                        Restore Purchase
+                      </>
+                    )}
+                  </button>
+                )}
+              </div>
             </div>
           </div>
 
