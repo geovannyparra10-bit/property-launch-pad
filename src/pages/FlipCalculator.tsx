@@ -164,7 +164,7 @@ export default function FlipCalculator() {
                     Purchase Price
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.purchasePrice}
@@ -179,7 +179,7 @@ export default function FlipCalculator() {
                     Rehab Budget
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.rehabBudget}
@@ -198,7 +198,7 @@ export default function FlipCalculator() {
                     />
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.afterRepairValue}
@@ -234,7 +234,7 @@ export default function FlipCalculator() {
                     Monthly Holding Costs
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.monthlyHoldingCosts}

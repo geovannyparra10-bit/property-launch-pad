@@ -213,7 +213,7 @@ export default function HouseHackCalculator() {
                     Purchase Price
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.purchasePrice}
@@ -305,7 +305,7 @@ export default function HouseHackCalculator() {
                     Average Monthly Rent per Unit
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.monthlyRentPerUnit}
@@ -326,7 +326,7 @@ export default function HouseHackCalculator() {
                     Property Tax
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.monthlyPropertyTax}
@@ -341,7 +341,7 @@ export default function HouseHackCalculator() {
                     Insurance
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.monthlyInsurance}
@@ -356,7 +356,7 @@ export default function HouseHackCalculator() {
                     Maintenance
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.monthlyMaintenance}
@@ -371,7 +371,7 @@ export default function HouseHackCalculator() {
                     Utilities
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.monthlyUtilities}

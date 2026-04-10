@@ -215,7 +215,7 @@ export default function BRRRCalculator() {
                     Purchase Price
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.purchasePrice}
@@ -230,7 +230,7 @@ export default function BRRRCalculator() {
                     Rehab/Renovation Budget
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.rehabBudget}
@@ -249,7 +249,7 @@ export default function BRRRCalculator() {
                     />
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.afterRepairValue}
@@ -270,7 +270,7 @@ export default function BRRRCalculator() {
                     Monthly Rental Income
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.monthlyRentalIncome}
@@ -301,7 +301,7 @@ export default function BRRRCalculator() {
                     Annual Property Tax
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.annualPropertyTax}
@@ -316,7 +316,7 @@ export default function BRRRCalculator() {
                     Annual Insurance
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.annualInsurance}
@@ -331,7 +331,7 @@ export default function BRRRCalculator() {
                     Annual Maintenance
                   </label>
                   <div className="relative">
-                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">£</span>
+                    <span className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400">$</span>
                     <input
                       type="number"
                       value={inputs.annualMaintenance}

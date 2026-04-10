@@ -120,7 +120,7 @@ export function StampDutyCalculator() {
     }
 
     generateProFormaPDF({
-      toolName: 'Stamp Duty Calculator',
+      toolName: 'Transfer Tax Calculator',
       inputs: {
         'Property Price': formatCurrency(propertyPrice),
         'State/Region': stateRegion,
@@ -142,8 +142,8 @@ export function StampDutyCalculator() {
         <div className="mb-8">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-white mb-2">Stamp Duty Calculator</h1>
-              <p className="text-gray-400">Calculate property transfer taxes and stamp duty costs</p>
+              <h1 className="text-3xl font-bold text-white mb-2">Transfer Tax Calculator</h1>
+              <p className="text-gray-400">Estimate property transfer taxes at closing</p>
             </div>
             <button
               onClick={handleDownloadPDF}
@@ -264,8 +264,8 @@ export function StampDutyCalculator() {
               </div>
 
               <div className="bg-gray-700/50 rounded-lg p-4 border border-gray-600">
-                <h3 className="text-sm font-semibold text-white mb-2">Rate Structure</h3>
-                <div className="space-y-1 text-xs text-gray-300">
+                <h3 className="text-sm font-semibold text-white mb-2">Estimated Rate Structure</h3>
+                <div className="space-y-1 text-xs text-gray-300 mb-3">
                   <div className="flex justify-between">
                     <span>Up to $200,000:</span>
                     <span className="text-gray-400">1%</span>
@@ -279,6 +279,9 @@ export function StampDutyCalculator() {
                     <span className="text-gray-400">3%</span>
                   </div>
                 </div>
+                <p className="text-xs text-yellow-400/80 border-t border-gray-600 pt-2">
+                  Rates are estimates for illustration only. Actual transfer taxes vary significantly by state and county — always verify with your title company or real estate attorney.
+                </p>
               </div>
             </div>
           </div>
@@ -287,7 +290,7 @@ export function StampDutyCalculator() {
             <div className="bg-gradient-to-br from-blue-600 to-blue-700 rounded-lg p-6 border border-blue-400">
               <div className="flex items-center gap-2 mb-2">
                 <FileText className="w-5 h-5 text-blue-200" />
-                <h3 className="text-sm font-medium text-blue-200">Total Stamp Duty</h3>
+                <h3 className="text-sm font-medium text-blue-200">Estimated Transfer Tax</h3>
               </div>
               <p className="text-4xl font-bold text-white mb-1">
                 {formatCurrencyDecimal(duty)}
@@ -298,7 +301,7 @@ export function StampDutyCalculator() {
             <div className="bg-gray-800 rounded-lg p-6 border border-gray-700">
               <div className="flex items-center gap-2 mb-4">
                 <Percent className="w-5 h-5 text-gray-400" />
-                <h3 className="text-lg font-bold text-white">Breakdown by Bracket</h3>
+                <h3 className="text-lg font-bold text-white">Tax Breakdown by Bracket</h3>
               </div>
               <div className="space-y-3">
                 {breakdown.map((item, index) => (
@@ -341,7 +344,7 @@ export function StampDutyCalculator() {
                   <span className="text-white font-semibold">{formatCurrency(propertyPrice)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-b border-gray-700">
-                  <span className="text-gray-400">Stamp Duty</span>
+                  <span className="text-gray-400">Transfer Tax (Est.)</span>
                   <span className="text-white font-semibold">{formatCurrency(duty)}</span>
                 </div>
                 <div className="flex justify-between items-center py-2 border-t-2 border-gray-600 mt-2">

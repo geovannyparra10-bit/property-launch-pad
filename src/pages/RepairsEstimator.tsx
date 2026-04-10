@@ -329,7 +329,7 @@ export default function RepairsEstimator() {
                         <div className="flex-1">
                           <p className="font-medium text-white">{category.name}</p>
                           <p className="text-xs text-slate-500">
-                            {category.type === 'sqft' && `${viewMode === 'DIY' ? `£${category.diyRate.toFixed(2)}` : `£${category.proRate.toFixed(2)}`}/sq ft`}
+                            {category.type === 'sqft' && `${viewMode === 'DIY' ? `$${category.diyRate.toFixed(2)}` : `$${category.proRate.toFixed(2)}`}/sq ft`}
                             {category.type === 'fixed' && `${formatCurrency(viewMode === 'DIY' ? category.diyRate : category.proRate)} fixed`}
                             {category.type === 'per_bath' && `${formatCurrency(viewMode === 'DIY' ? category.diyRate : category.proRate)} per bath`}
                           </p>

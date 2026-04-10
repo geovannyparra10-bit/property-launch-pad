@@ -40,7 +40,37 @@ export function Pricing() {
                 <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
                   <Check className="h-4 w-4 text-green-400" />
                 </div>
-                <span className="text-gray-300">Mortgage calculator access</span>
+                <span className="text-gray-300">Mortgage Calculator</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-green-400" />
+                </div>
+                <span className="text-gray-300">Rental Yield Calculator</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-green-400" />
+                </div>
+                <span className="text-gray-300">House Hack Calculator</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-green-400" />
+                </div>
+                <span className="text-gray-300">Quick Deal Screener (1% Rule + Cap Rate)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-green-400" />
+                </div>
+                <span className="text-gray-300">Refinance Break-Even Calculator</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-green-400" />
+                </div>
+                <span className="text-gray-300">Repairs Estimator, ARV Comps &amp; more</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="rounded-full p-1 bg-green-500/20 flex-shrink-0">
@@ -85,7 +115,55 @@ export function Pricing() {
                 <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
                   <Check className="h-4 w-4 text-blue-400" />
                 </div>
-                <span className="text-white font-medium">All tools included</span>
+                <span className="text-white font-medium">Everything in Free</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-blue-400" />
+                </div>
+                <span className="text-white font-medium">Deal Analyzer — full rental investment analysis</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-blue-400" />
+                </div>
+                <span className="text-white font-medium">BRRR Calculator — recycle capital analysis</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-blue-400" />
+                </div>
+                <span className="text-white font-medium">Flip Calculator — fix-and-flip ROI &amp; profit</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-blue-400" />
+                </div>
+                <span className="text-white font-medium">DSCR Calculator — qualify investment loans</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-blue-400" />
+                </div>
+                <span className="text-white font-medium">Portfolio Analyzer &amp; Document Analyzer</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-blue-400" />
+                </div>
+                <span className="text-white font-medium">5 Crash Courses (BRRR, Flip, Rental &amp; more)</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-blue-400" />
+                </div>
+                <span className="text-white font-medium">Document Templates — Lease, Offer Letter, Owner Carry</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
+                  <Check className="h-4 w-4 text-blue-400" />
+                </div>
+                <span className="text-white font-medium">PDF Export on all tools</span>
               </li>
               <li className="flex items-start gap-3">
                 <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
@@ -98,18 +176,6 @@ export function Pricing() {
                   <Check className="h-4 w-4 text-blue-400" />
                 </div>
                 <span className="text-white font-medium">Priority support</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
-                  <Check className="h-4 w-4 text-blue-400" />
-                </div>
-                <span className="text-white font-medium">Advanced analytics</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <div className="rounded-full p-1 bg-blue-500/20 flex-shrink-0">
-                  <Check className="h-4 w-4 text-blue-400" />
-                </div>
-                <span className="text-white font-medium">Export to PDF</span>
               </li>
             </ul>
 

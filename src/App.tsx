@@ -56,6 +56,9 @@ import { Pipeline } from './pages/pipeline/Pipeline'
 import { Community } from './pages/community/Community'
 import { PostDetail } from './pages/community/PostDetail'
 import { NewPost } from './pages/community/NewPost'
+import DSCRCalculator from './pages/DSCRCalculator'
+import RefinanceCalculator from './pages/RefinanceCalculator'
+import DealScreener from './pages/DealScreener'
 
 function AppRoutes() {
   const location = useLocation()
@@ -83,6 +86,9 @@ function AppRoutes() {
         <Route path="/tools/document_analyzer" element={<PremiumRoute featureName="Document Analyzer"><DocumentAnalyzer /></PremiumRoute>} />
         <Route path="/tools/arv_comps" element={<ARVCompsAnalyzer />} />
         <Route path="/tools/owner_finance" element={<OwnerFinanceCalculator />} />
+        <Route path="/tools/dscr" element={<PremiumRoute featureName="DSCR Calculator"><DSCRCalculator /></PremiumRoute>} />
+        <Route path="/tools/refinance" element={<RefinanceCalculator />} />
+        <Route path="/tools/deal_screener" element={<DealScreener />} />
         <Route path="/templates" element={<Templates />} />
         <Route path="/templates/owner-carry" element={<PremiumRoute featureName="Document Templates"><OwnerCarryAgreement /></PremiumRoute>} />
         <Route path="/templates/lease-agreement" element={<PremiumRoute featureName="Document Templates"><LeaseAgreement /></PremiumRoute>} />
